@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CobroMovil</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_menu_principal">MenuPrincipal</string>
+    <string name="title_activity_mensaje_error">MainActivity</string>
+    <string name="bienvenido_">Bienvenido:</string>
+
+</resources>
