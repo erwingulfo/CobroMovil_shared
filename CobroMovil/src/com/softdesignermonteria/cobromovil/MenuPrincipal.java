@@ -14,6 +14,7 @@ public class MenuPrincipal extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//Comentario agregado por el clientes
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_principal);
 	
