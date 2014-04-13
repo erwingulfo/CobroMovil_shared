@@ -20,11 +20,11 @@ public class MenuPrincipal extends Activity {
 	
 		userlogueado = (TextView) findViewById(R.id.userlogueado);
 		nombre_usuario = (TextView) findViewById(R.id.nombre_usuario);
-		clave_usuario = (TextView) findViewById(R.id.clave_usuario);
+		//clave_usuario = (TextView) findViewById(R.id.clave_usuario);
 		Bundle bundle = getIntent().getExtras();
 		userlogueado.setText(bundle.getString("pnombre_usuario"));
-		nombre_usuario.setText(bundle.getString("pnombre_usuario"));
-		clave_usuario.setText(bundle.getString("pclave_usuario"));
+		//nombre_usuario.setText(bundle.getString("pnombre_usuario"));
+		//clave_usuario.setText(bundle.getString("pclave_usuario"));
 		
 	}
 
