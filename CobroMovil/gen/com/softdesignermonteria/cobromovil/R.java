@@ -38,7 +38,7 @@ public final class R {
         public static final int SubMnuOpc2=0x7f080013;
         public static final int action_settings=0x7f08000e;
         public static final int b_m_clientes=0x7f080008;
-        public static final int button1=0x7f080005;
+        public static final int bt_sincronizar_clientes=0x7f080005;
         public static final int campo_vacio=0x7f08000a;
         public static final int clave=0x7f080003;
         public static final int clave_usuario=0x7f080007;
