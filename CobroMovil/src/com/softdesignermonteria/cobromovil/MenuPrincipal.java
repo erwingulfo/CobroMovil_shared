@@ -36,6 +36,7 @@ public class MenuPrincipal extends Activity {
 			}
 		});
 		
+		/*probando cambios  alejandro betancourt*/
 	}
 	
 	 
