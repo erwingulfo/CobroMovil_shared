@@ -10,7 +10,7 @@ public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
 	 
  
 	    //Sentencia SQL para crear la tabla de Usuarios
-	    String sqlCreate = "CREATE TABLE usuarios (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45) NOT NULL, clave VARCHAR(45) NOT NULL)";
+	   private String sqlCreate = "CREATE TABLE usuarios (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45) NOT NULL, clave VARCHAR(45) NOT NULL)";
 	   
 	 
 	    public UsuariosSQLiteHelper(Context contexto, String nombre,

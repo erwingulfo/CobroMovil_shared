@@ -55,15 +55,16 @@ public class Menu_clientes extends Activity {
 	public boolean sincronizar_clientes(){
 		boolean sw = true;
 		
-		//Abrimos la base de datos
+		Log.i(this.getClass().toString(), "Entrando a funcion sincronizar_clientes");	
+		
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet del = new HttpGet("http://107.170.28.129/prestamos/clientes_movil/extraer_clientes");
 		del.setHeader("content-type", "application/json");
 		try
 		{
-			
-			ClientesSQLiteHelper usdbh =new ClientesSQLiteHelper(this, "cobro_movil" , null, 1);
+			Log.i(this.getClass().toString(), "antes de ClientesSQLiteHelper");
+			ClientesSQLiteHelper usdbh = new ClientesSQLiteHelper(this, "cobro_movil" , null, 1);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			//Si hemos abierto correctamente la base de datos
 			if(db != null)
@@ -100,7 +101,9 @@ public class Menu_clientes extends Activity {
 		catch(Exception ex)
 		{
 		        Log.e("ServicioRest","Error!", ex);
+		        sw = false;	
 		}
+		
 		return sw;
 	}
 
