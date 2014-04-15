@@ -19,7 +19,6 @@ public class MainActivity extends Activity {
 		private EditText usuario;
 		private EditText clave;
 		private SQLiteDatabase db;
-		private TextView LblMensaje;
 		private TextView userlogueado;
 
 				
@@ -37,7 +36,7 @@ public class MainActivity extends Activity {
 			entrar = (Button)findViewById(R.id.entrar);
 						
 			//Abrimos la base de datos 'Cobro' en modo escritura
-			UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "Cobro", null, 1);
+			UsuariosSQLiteHelper usdbh = new UsuariosSQLiteHelper(this, "cobro_movil", null, 1);
 	 
 	        db = usdbh.getWritableDatabase();
 	        

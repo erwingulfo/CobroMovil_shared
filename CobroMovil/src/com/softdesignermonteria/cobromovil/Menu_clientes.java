@@ -1,7 +1,5 @@
 package com.softdesignermonteria.cobromovil;
 
-import java.io.Console;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -12,14 +10,11 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.SearchManager.OnCancelListener;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 public class Menu_clientes extends Activity {
@@ -30,19 +25,18 @@ public class Menu_clientes extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_clientes);
-		
-		
-		
+		Log.i(this.getClass().toString(), "Actividad Menu Clientes");			
 		bt_clientes_sincoronizar = (Button)findViewById(R.id.bt_sincronizar_clientes);
 		bt_clientes_sincoronizar.setOnClickListener(new OnClickListener() {  
 			public void onClick(View arg0){
-				
+				    Log.i(this.getClass().toString(), "Preciona Boton Sincronizar");
 			    	//setContentView(R.layout.activity_menu_clientes);
 					if(sincronizar_clientes()){
 						System.out.println("sincronizados satisfactoriamente");
-						
+						Log.i(this.getClass().toString(), "sincronizados satisfactoriamente");	
 					}else{
 						System.out.println("Ups no sincronizados");
+						Log.i(this.getClass().toString(), "Ups no sincronizados");	
 					}
 				}
 		});
@@ -69,7 +63,7 @@ public class Menu_clientes extends Activity {
 		try
 		{
 			
-			UsuariosSQLiteHelper usdbh =new UsuariosSQLiteHelper(this, "cobromovil" , null, 1);
+			ClientesSQLiteHelper usdbh =new ClientesSQLiteHelper(this, "cobro_movil" , null, 1);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			//Si hemos abierto correctamente la base de datos
 			if(db != null)

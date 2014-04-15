@@ -3,7 +3,6 @@ package com.softdesignermonteria.cobromovil;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.Menu;
 import android.widget.TextView;
 
 public class rescata_usuario extends Activity {
