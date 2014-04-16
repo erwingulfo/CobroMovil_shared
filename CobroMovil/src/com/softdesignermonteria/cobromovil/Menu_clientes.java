@@ -19,21 +19,21 @@ import android.widget.Button;
 
 public class Menu_clientes extends Activity {
 	
-	private Button bt_clientes_sincoronizar;
+	private Button bt_clientes_sincronizar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_clientes);
 		Log.i(this.getClass().toString(), "Actividad Menu Clientes");			
-		bt_clientes_sincoronizar = (Button)findViewById(R.id.bt_sincronizar_clientes);
-		bt_clientes_sincoronizar.setOnClickListener(new OnClickListener() {  
+		bt_clientes_sincronizar = (Button)findViewById(R.id.bt_sincronizar_clientes);
+		bt_clientes_sincronizar.setOnClickListener(new OnClickListener() {  
 			public void onClick(View arg0){
-				    Log.i(this.getClass().toString(), "Preciona Boton Sincronizar");
+				    Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
 			    	//setContentView(R.layout.activity_menu_clientes);
 					if(sincronizar_clientes()){
-						System.out.println("sincronizados satisfactoriamente");
-						Log.i(this.getClass().toString(), "sincronizados satisfactoriamente");	
+						System.out.println("Clientes Sincronizados Satisfactoriamente");
+						Log.i(this.getClass().toString(), "Sincronizados Satisfactoriamente");	
 					}else{
 						System.out.println("Ups no sincronizados");
 						Log.i(this.getClass().toString(), "Ups no sincronizados");	
@@ -55,16 +55,15 @@ public class Menu_clientes extends Activity {
 	public boolean sincronizar_clientes(){
 		boolean sw = true;
 		
-		Log.i(this.getClass().toString(), "Entrando a funcion sincronizar_clientes");	
-		
+		//Abrimos la base de datos
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet del = new HttpGet("http://107.170.28.129/prestamos/clientes_movil/extraer_clientes");
 		del.setHeader("content-type", "application/json");
 		try
 		{
-			Log.i(this.getClass().toString(), "antes de ClientesSQLiteHelper");
-			ClientesSQLiteHelper usdbh = new ClientesSQLiteHelper(this, "cobro_movil" , null, 1);
+			
+			TablasSQLiteHelper usdbh =new TablasSQLiteHelper(this, "cobro" , null, 1);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			//Si hemos abierto correctamente la base de datos
 			if(db != null)
@@ -101,10 +100,11 @@ public class Menu_clientes extends Activity {
 		catch(Exception ex)
 		{
 		        Log.e("ServicioRest","Error!", ex);
-		        sw = false;	
 		}
 		
 		return sw;
+		
+		
 	}
 
 }
