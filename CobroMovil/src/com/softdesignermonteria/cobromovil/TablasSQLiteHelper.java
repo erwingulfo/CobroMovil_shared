@@ -4,13 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	 
 	 
 	 //Sentencia SQL para crear la tablas del sistema
     String sqlCreateUsuarios = "CREATE TABLE usuarios (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45) NOT NULL, clave VARCHAR(45) NOT NULL)";
-    String sqlCreateClientes = "CREATE TABLE clientes (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombres VARCHAR(300) NOT NULL, direccion_oficina VARCHAR(250) NOT NULL, direccion_casa VARCHAR(250) NOT NULL, telefono1 VARCHAR(20) NOT NULL)";
+    String sqlCreateClientes = "CREATE TABLE clientes (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, clientes_id INTEGER NOT NULL, nombres VARCHAR(300) NOT NULL, direccion_oficina VARCHAR(250) NOT NULL, direccion_casa VARCHAR(250) NOT NULL, telefono1 VARCHAR(20) NOT NULL)";
     
     
     public TablasSQLiteHelper(Context contexto, String nombre,
@@ -22,9 +23,15 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Se ejecuta la sentencia SQL de creación de la tabla
+    	Log.i(this.getClass().toString(), "On Create...");
         db.execSQL(sqlCreateUsuarios);
         db.execSQL(sqlCreateClientes);
-        System.out.println("Base de Datos Creada............");
+        Log.i(this.getClass().toString(), "Base de datos creada..");
+        
+        String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
+        db.execSQL(insert_usu);
+        
+        Log.i(this.getClass().toString(), "Usuario creado por defecto..");
            
     }
  
@@ -36,21 +43,24 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
         //      a la nueva, por lo que este método debería ser más elaborado.
  
         //Se elimina la versión anterior de la tabla
+    	
+    	Log.i(this.getClass().toString(), "On Upgrade...");
+    	
         db.execSQL("DROP TABLE IF EXISTS usuarios");
         db.execSQL("DROP TABLE IF EXISTS clientes");
         
-        System.out.println("Base de Datos Borrada............");  
+        Log.i(this.getClass().toString(), "Tablas Borradas");  
  
         //Se crea la nueva versión de la tabla
         db.execSQL(sqlCreateUsuarios);
         db.execSQL(sqlCreateClientes);
        
-        System.out.println("Base de Datos Creada en Actualizacion............");  
+        Log.i(this.getClass().toString(), "Tablas Creadas despues de actualizar");  
         
         String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
         db.execSQL(insert_usu);
         
-        System.out.println("Insertando Registro por defecto............");
+        Log.i(this.getClass().toString(), "Insercion de usuario por defecto despues de actualizar");
         
     }
 }
