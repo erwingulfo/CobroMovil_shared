@@ -17,12 +17,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class Menu_clientes extends Activity {
 
 	private Button bt_clientes_sincronizar;
+	private ListView lstClientes;
 
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Override
@@ -30,6 +34,7 @@ public class Menu_clientes extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_clientes);
 		
+		lstClientes = (ListView) findViewById(R.id.lstClientes);
 		
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 
@@ -94,7 +99,8 @@ public class Menu_clientes extends Activity {
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
 				JSONArray respJSON = new JSONArray(respStr);
-				// String[] clientes = new String[respJSON.length()];
+				
+				String[] clientes = new String[respJSON.length()];
 				for (int i = 0; i < respJSON.length(); i++) {
 					JSONObject obj = respJSON.getJSONObject(i);
 					int clientes_id = obj.getInt("id");
@@ -110,15 +116,15 @@ public class Menu_clientes extends Activity {
 							+ direccion_casa + "','" + telefono1 + "') ";
 					Log.i(this.getClass().toString(),sql_insert_clientes);
 					db.execSQL(sql_insert_clientes);
-					// clientes[i] = "" + idCli + "-" + nombCli + "-" +
-					// telefCli;
+					
+					clientes[i] = "" + clientes_id + "-" + nombres + "-" + telefono1;
 				}
 
 				// Rellenamos la lista con los resultados
-				// ArrayAdapter<String> adaptador =
-				// new ArrayAdapter<String>(ServicioWebRest.this,
-				// android.R.layout.simple_list_item_1, clientes);
-				// lstClientes.setAdapter(adaptador);
+				ArrayAdapter<String> adaptador =
+			    new ArrayAdapter<String>(Menu_clientes.this,
+				android.R.layout.simple_list_item_1, clientes);
+				lstClientes.setAdapter(adaptador);
 			}
 
 		} catch (Exception ex) {

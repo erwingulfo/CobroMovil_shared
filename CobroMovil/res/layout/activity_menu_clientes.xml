@@ -16,4 +16,13 @@
         android:layout_alignParentRight="true"
         android:text="Sincronizar Clientes" />
 
+    <ListView
+        android:id="@+id/lstClientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_clientes"
+        android:layout_below="@+id/bt_sincronizar_clientes" >
+
+    </ListView>
+
 </RelativeLayout>

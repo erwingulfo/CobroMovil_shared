@@ -31,24 +31,25 @@ public final class R {
         public static final int marcador=0x7f020007;
     }
     public static final class id {
-        public static final int MnuOpc1=0x7f08000f;
-        public static final int MnuOpc2=0x7f080010;
-        public static final int MnuOpc3=0x7f080011;
-        public static final int SubMnuOpc1=0x7f080012;
-        public static final int SubMnuOpc2=0x7f080013;
-        public static final int action_settings=0x7f08000e;
-        public static final int b_m_clientes=0x7f080008;
+        public static final int MnuOpc1=0x7f080010;
+        public static final int MnuOpc2=0x7f080011;
+        public static final int MnuOpc3=0x7f080012;
+        public static final int SubMnuOpc1=0x7f080013;
+        public static final int SubMnuOpc2=0x7f080014;
+        public static final int action_settings=0x7f08000f;
+        public static final int b_m_clientes=0x7f080009;
         public static final int bt_sincronizar_clientes=0x7f080005;
-        public static final int campo_vacio=0x7f08000a;
+        public static final int campo_vacio=0x7f08000b;
         public static final int clave=0x7f080003;
-        public static final int clave_usuario=0x7f080007;
+        public static final int clave_usuario=0x7f080008;
         public static final int entrar=0x7f080004;
-        public static final int imgIcono=0x7f08000b;
-        public static final int lyt1=0x7f080009;
-        public static final int lytLayout=0x7f08000c;
-        public static final int nombre_usuario=0x7f080006;
+        public static final int imgIcono=0x7f08000c;
+        public static final int lstClientes=0x7f080006;
+        public static final int lyt1=0x7f08000a;
+        public static final int lytLayout=0x7f08000d;
+        public static final int nombre_usuario=0x7f080007;
         public static final int textView1=0x7f080001;
-        public static final int txtMensaje=0x7f08000d;
+        public static final int txtMensaje=0x7f08000e;
         public static final int userlogueado=0x7f080002;
         public static final int usuario=0x7f080000;
     }
