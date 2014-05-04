@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Menu_clientes" >
+
+    <Button
+        android:id="@+id/bt_sincronizar_clientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Clientes" />
+
+    <Button
+        android:id="@+id/bt_sincronizar_cobradores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_clientes"
+        android:layout_alignRight="@+id/bt_sincronizar_clientes"
+        android:layout_below="@+id/bt_sincronizar_clientes"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Cobradores" />
+
+    <Button
+        android:id="@+id/bt_sincronizar_cartera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_cobradores"
+        android:layout_alignRight="@+id/bt_sincronizar_cobradores"
+        android:layout_below="@+id/bt_sincronizar_cobradores"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Cartera" />
+
+    <Button
+        android:id="@+id/bt_sincronizar_todos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_cartera"
+        android:layout_alignRight="@+id/bt_sincronizar_cartera"
+        android:layout_below="@+id/bt_sincronizar_cartera"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Todos" />
+
+    <ListView
+        android:id="@+id/lst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_todos"
+        android:layout_alignParentBottom="true" >
+    </ListView>
+
+</RelativeLayout>
