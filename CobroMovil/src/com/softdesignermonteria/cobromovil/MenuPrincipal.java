@@ -35,7 +35,7 @@ public class MenuPrincipal extends Activity {
 		public void onClick(View arg0){
 		    	//setContentView(R.layout.activity_menu_clientes);
 					Intent i = new Intent();
-					i.setClass(MenuPrincipal.this, Menu_clientes.class);
+					i.setClass(MenuPrincipal.this, Menu_sincronizar.class);
 			        startActivity(i);
 			}
 		});

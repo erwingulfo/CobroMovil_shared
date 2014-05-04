@@ -8,5 +8,6 @@
     <string name="title_activity_mensaje_error">MainActivity</string>
     <string name="bienvenido_">Bienvenido:</string>
     <string name="title_activity_menu_clientes">Menu_clientes</string>
+    <string name="title_activity_menu_sincronizar">Menu_sincronizar</string>
 
 </resources>

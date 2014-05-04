@@ -42,7 +42,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView1"
-        android:drawableLeft="@drawable/leer_clientes"
-        android:text="Clientes" />
+        android:drawableLeft="@drawable/ic_action_import_export"
+        android:gravity="left"
+        android:text="Sincronizar" />
 
 </RelativeLayout>

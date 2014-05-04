@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 			entrar = (Button)findViewById(R.id.entrar);
 						
 			//Abrimos la base de datos 'Cobro' en modo escritura
-			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, "cobro_movil", null, 3);
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, "cobro_movil", null, 4);
 	        db = usdbh.getWritableDatabase();
 			
 			//Asociamos al evento Onclik la validación del usuario y la clave contra la bd
