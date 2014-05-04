@@ -11,7 +11,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	 
 	 //Sentencia SQL para crear la tablas del sistema
     String sqlCreateUsuarios = "CREATE TABLE usuarios (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45) NOT NULL, clave VARCHAR(45) NOT NULL)";
-    String sqlCreateClientes = "CREATE TABLE clientes (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, clientes_id INTEGER NOT NULL, nombres VARCHAR(300) NOT NULL, direccion_oficina VARCHAR(250) NOT NULL, direccion_casa VARCHAR(250) NOT NULL, telefono1 VARCHAR(20) NOT NULL)";
+    String sqlCreateClientes = "CREATE TABLE clientes (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, clientes_id INTEGER NOT NULL, nombres VARCHAR(300) NOT NULL, direccion VARCHAR(250) NOT NULL, telefono VARCHAR(20) NOT NULL, celular VARCHAR(20) NOT NULL)";
     
     
     public TablasSQLiteHelper(Context contexto, String nombre,
