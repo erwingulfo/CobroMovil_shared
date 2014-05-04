@@ -58,7 +58,7 @@ public class Menu_clientes extends Activity {
 					Log.i(this.getClass().toString(),
 							"Sincronizados Satisfactoriamente");
 				} else {
-					System.out.println("Oops, Clientes no sincronizados");
+					System.out.println("Ups no sincronizados");
 					Log.i(this.getClass().toString(), "Ups no sincronizados");
 				}
 			}
@@ -83,7 +83,7 @@ public class Menu_clientes extends Activity {
 		try {
 			Log.i(this.getClass().toString(), "Antes de Abrir Database");
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,
-					"cobro_movil", null, 3);
+					"cobro_movil", null, 2);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
 			if (db != null) {
@@ -91,10 +91,10 @@ public class Menu_clientes extends Activity {
 						"Base de datos abierta en modo lectura y escritura");
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet del = new HttpGet(
-						"http://inversionesjd.dydsoluciones.net/clientes_movil/extraer_clientes");
+						"http://107.170.28.129/prestamos/clientes_movil/extraer_clientes");
 				del.setHeader("content-type", "application/json");
 				Log.i(this.getClass().toString(),
-						"Url : http://inversionesjd.dydsoluciones.net/clientes_movil/extraer_clientes");
+						"Url : http://107.170.28.129/prestamos/clientes_movil/extraer_clientes");
 				
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
@@ -105,19 +105,19 @@ public class Menu_clientes extends Activity {
 					JSONObject obj = respJSON.getJSONObject(i);
 					int clientes_id = obj.getInt("id");
 					String nombres = obj.getString("nombres");
-					String direccion = obj
-							.getString("direccion");
-					String telefono = obj.getString("telefono");
-					String celular = obj.getString("celular");
+					String direccion_oficina = obj
+							.getString("direccion_oficina");
+					String direccion_casa = obj.getString("direccion_casa");
+					String telefono1 = obj.getString("telefono1");
 					String sql_insert_clientes = "insert into clientes "
-							+ " (clientes_id,nombres,direccion,telefono,celular) "
+							+ " (clientes_id,nombres,direccion_oficina,direccion_casa,telefono1) "
 							+ "values" + " (" + clientes_id + ",'" + nombres
-							+ "','" + direccion + "','"
-							+ telefono + "','" + celular + "') ";
+							+ "','" + direccion_oficina + "','"
+							+ direccion_casa + "','" + telefono1 + "') ";
 					Log.i(this.getClass().toString(),sql_insert_clientes);
 					db.execSQL(sql_insert_clientes);
 					
-					clientes[i] = "" + clientes_id + "-" + nombres + "-" + telefono + "-"+celular;
+					clientes[i] = "" + clientes_id + "-" + nombres + "-" + telefono1;
 				}
 
 				// Rellenamos la lista con los resultados

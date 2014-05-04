@@ -20,14 +20,12 @@ public class MainActivity extends Activity {
 		private EditText clave;
 		private SQLiteDatabase db;
 		private TextView userlogueado;
-		
+
 				
         public void onCreate(Bundle savedInstanceState){
         	
         	super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_main);
-			
-			
 			
 			//LblMensaje = (TextView)findViewById(R.id.LblMensaje);
 								
@@ -38,7 +36,7 @@ public class MainActivity extends Activity {
 			entrar = (Button)findViewById(R.id.entrar);
 						
 			//Abrimos la base de datos 'Cobro' en modo escritura
-			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, "cobro_movil", null, 3);
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, "cobro_movil", null, 2);
 	        db = usdbh.getWritableDatabase();
 			
 			//Asociamos al evento Onclik la validación del usuario y la clave contra la bd
