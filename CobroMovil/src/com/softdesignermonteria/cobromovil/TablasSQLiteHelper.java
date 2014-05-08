@@ -8,63 +8,153 @@ import android.util.Log;
 
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	 
-	 
-	 //Sentencia SQL para crear la tablas del sistema
-    String sqlCreateUsuarios = "CREATE TABLE usuarios (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45) NOT NULL, clave VARCHAR(45) NOT NULL)";
-    String sqlCreateClientes = "CREATE TABLE clientes (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, clientes_id INTEGER NOT NULL, nombres VARCHAR(300) NOT NULL, direccion VARCHAR(250) NOT NULL, telefono VARCHAR(20) NOT NULL, celular VARCHAR(20) NOT NULL)";
-    String sqlCreateCobradores = "CREATE TABLE cobradores (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, cobradores_id INTEGER NOT NULL, nombres VARCHAR(300) NOT NULL, direccion VARCHAR(250) NOT NULL, telefono VARCHAR(20) NOT NULL, celular VARCHAR(20) NOT NULL)";
+	/**
+	 * Base de datos en desarrollo
+	 * version antes de lanzamiento oficial
+	 * Version=5
+	 */
+	
+	
+		
+
+	/**
+     * Creation Tabla Usuarios
+     * 
+     **/
+	String sqlCreateUsuarios   = "CREATE TABLE usuarios ("
+									+ "		id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+									+ "		nombre VARCHAR(45) NOT NULL, "
+									+ "		clave VARCHAR(45) NOT NULL"
+									+ "					)";
+    /**
+     * Creation Tabla Clientes
+     * 
+     **/
+    String sqlCreateClientes   = "CREATE TABLE clientes ("
+									+ "		id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+									+ "		clientes_id INTEGER NOT NULL, "
+									+ "		nombres VARCHAR(300) NOT NULL, "
+									+ "		direccion VARCHAR(250) NOT NULL, "
+									+ "		telefono VARCHAR(20) NOT NULL, "
+									+ "		celular VARCHAR(20) NOT NULL"
+									+ "					)";
     
-    public TablasSQLiteHelper(Context contexto, String nombre,
-                               CursorFactory factory, int version) {
+    /**
+     * Creation Tabla Cobradores
+     * 
+     **/
+    String sqlCreateCobradores = "CREATE TABLE cobradores ("
+    							+ "			id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+    							+ "			cobradores_id INTEGER NOT NULL, "
+    							+ "			nombres VARCHAR(300) NOT NULL, "
+    							+ "			direccion VARCHAR(250) NOT NULL, "
+    							+ "			telefono VARCHAR(20) NOT NULL, "
+    							+ "			celular VARCHAR(20) NOT NULL"
+    							+ "						)";
+    
+    /**
+     * Creation Tabla Cartera
+     * 
+     **/
+    String sqlCreateCartera    = " CREATE TABLE cartera ("
+    							+ "			id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+    							+ "			detalle_cxc_id INTEGER NOT NULL, "
+    							+ "			creditos_id INTEGER NOT NULL, "
+    							+ "			clientes_id INTEGER NOT NULL, "
+    							+ "			cedula VARCHAR(20) NOT NULL, "
+    							+ "			cobradores_id INTEGER NOT NULL,"
+    							+ "			cedula_cobrador VARCHAR(20) NOT NULL, "
+    							+ "			vencimiento VARCHAR(10) NOT NULL, "
+    							+ "			valor numeric(10,2) NOT NULL "
+    							+ "						)";
+    
+    public TablasSQLiteHelper(Context contexto, String nombre,CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);
+       
     }
- 
+    
+   
  
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //Se ejecuta la sentencia SQL de creación de la tabla
-    	Log.i(this.getClass().toString(), "On Create...");
-        db.execSQL(sqlCreateUsuarios);
-        db.execSQL(sqlCreateClientes);
-        db.execSQL(sqlCreateCobradores);
-        Log.i(this.getClass().toString(), "Base de datos creada..");
+        /**
+         * Se ejecuta la sentencia SQL de creación de la tabla
+         */
+    	creacion_tablas(db);
         
-        String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
+    	String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
         db.execSQL(insert_usu);
-        
-        Log.i(this.getClass().toString(), "Usuario creado por defecto..");
            
     }
  
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
-        //NOTA: Por simplicidad del ejemplo aquí utilizamos directamente la opción de
-        //      eliminar la tabla anterior y crearla de nuevo vacía con el nuevo formato.
-        //      Sin embargo lo normal será que haya que migrar datos de la tabla antigua
-        //      a la nueva, por lo que este método debería ser más elaborado.
- 
-        //Se elimina la versión anterior de la tabla
+        /**
+         * NOTA: Por simplicidad del ejemplo aquí utilizamos directamente la opción de
+         * eliminar la tabla anterior y crearla de nuevo vacía con el nuevo formato.
+         * Sin embargo lo normal será que haya que migrar datos de la tabla antigua
+         * a la nueva, por lo que este método debería ser más elaborado.
+         * Se elimina la versión anterior de la tabla
+         * 
+         */
     	
     	Log.i(this.getClass().toString(), "On Upgrade...");
-    	
-        db.execSQL("DROP TABLE IF EXISTS usuarios");
-        db.execSQL("DROP TABLE IF EXISTS clientes");
-        db.execSQL("DROP TABLE IF EXISTS cobradores");
-        
-        Log.i(this.getClass().toString(), "Tablas Borradas");  
- 
-        //Se crea la nueva versión de la tabla
-        db.execSQL(sqlCreateUsuarios);
-        db.execSQL(sqlCreateClientes);
-        db.execSQL(sqlCreateCobradores);
-       
-        Log.i(this.getClass().toString(), "Tablas Creadas despues de actualizar");  
-        
+    	borrar_tablas(db);
+        creacion_tablas(db);
         String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
         db.execSQL(insert_usu);
-        
         Log.i(this.getClass().toString(), "Insercion de usuario por defecto despues de actualizar");
         
     }
+    
+    private void creacion_tablas(SQLiteDatabase db){
+    	/**
+    	 * Sentence creation table users
+    	 */
+    	
+        db.execSQL(sqlCreateUsuarios);
+        
+        /**
+    	 * Sentence creation table clients
+    	 */
+        db.execSQL(sqlCreateClientes);
+        
+        /**
+    	 * Sentence creation table cooperators
+    	 */
+        db.execSQL(sqlCreateCobradores);
+        
+        /**
+    	 * Sentence creation table carter
+    	 */
+        db.execSQL(sqlCreateCartera);
+    }
+    
+    
+    private void borrar_tablas(SQLiteDatabase db){
+    	
+    	/**
+    	 * Sentence creation table users
+    	 */
+    	
+    	db.execSQL("DROP TABLE IF EXISTS usuarios");
+    	/**
+    	 * Sentence creation table clients
+    	 */
+        db.execSQL("DROP TABLE IF EXISTS clientes");
+        /**
+    	 * Sentence creation table cooperators
+    	 */
+        db.execSQL("DROP TABLE IF EXISTS cobradores");
+        /**
+    	 * Sentence creation table carter
+    	 */
+        db.execSQL("DROP TABLE IF EXISTS cartera");
+    }
+    
+    
+    
+	
+	
 }
 

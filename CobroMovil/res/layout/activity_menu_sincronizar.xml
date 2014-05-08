@@ -52,7 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/bt_sincronizar_todos"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/bt_sincronizar_todos" >
+
     </ListView>
 
 </RelativeLayout>

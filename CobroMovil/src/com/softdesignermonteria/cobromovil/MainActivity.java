@@ -21,25 +21,63 @@ public class MainActivity extends Activity {
 		private SQLiteDatabase db;
 		private TextView userlogueado;
 
+		private String url_servidor;
+		private String nombre_database;
+		private int version_database;
 				
         public void onCreate(Bundle savedInstanceState){
         	
         	super.onCreate(savedInstanceState);
+        	
 			setContentView(R.layout.activity_main);
 			
-			//LblMensaje = (TextView)findViewById(R.id.LblMensaje);
+			/**
+			 * Asignacion de valores de variables globales android
+			 * se especifica nombre de la base de datos
+			 * version de la base de datos
+			 * url de los webservices
+			 */
+			final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+				
+				/*
+				 * 
+				 * Definicion y asignacion de valores globales para la app
+				 * 
+				 * */
+				globalVariable.setNombre_database("cobro_movil");
+				globalVariable.setVersion_database(5);
+				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
+				
+				/*
+				 * 
+				 * asignacion de valores a variables privadas de esta clase
+				 * 
+				 * */
+				url_servidor     = globalVariable.getUrl_servidor();
+				nombre_database  = globalVariable.getNombre_database();
+				version_database = globalVariable.getVersion_database();
 								
-			//Obtenemos las referencias a los controles
+			/*
+			 * 
+			 * Obtenemos las referencias a los controles
+			 */
 			usuario= (EditText)findViewById(R.id.usuario);
 			clave = (EditText)findViewById(R.id.clave);
 			userlogueado = (TextView)findViewById(R.id.userlogueado);
 			entrar = (Button)findViewById(R.id.entrar);
 						
-			//Abrimos la base de datos 'Cobro' en modo escritura
-			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, "cobro_movil", null, 4);
+			/*
+			 * 
+			 * Abrimos la base de datos 'Cobro' en modo escritura
+			 */
+			
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, nombre_database, null, version_database);
 	        db = usdbh.getWritableDatabase();
 			
-			//Asociamos al evento Onclik la validación del usuario y la clave contra la bd
+			/*
+			 * 
+			 * Asociamos al evento Onclik la validación del usuario y la clave contra la bd
+			 */
 	        entrar.setOnClickListener(new OnClickListener() {
 				
 			public void onClick(View v) {
