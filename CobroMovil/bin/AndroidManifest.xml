@@ -19,7 +19,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:permission="android.permission.INTERNET"
+        
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.softdesignermonteria.cobromovil.MainActivity"
@@ -35,19 +35,18 @@
             android:label="@string/title_activity_menu_principal" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.softdesignermonteria.cobromovil.MensajeErrorActivity"
             android:label="@string/title_activity_mensaje_error"
-            android:permission="android.permission.INTERNET" >
+            >
         </activity>
         <activity
             android:name="com.softdesignermonteria.cobromovil.Menu_clientes"
             android:label="@string/title_activity_menu_clientes"
-            android:permission="android.permission.INTERNET" >
+            >
         </activity>
         <activity
             android:name="com.softdesignermonteria.cobromovil.Menu_sincronizar"
