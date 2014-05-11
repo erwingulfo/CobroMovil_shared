@@ -79,7 +79,7 @@ public class Menu_sincronizar extends Activity {
 		setContentView(R.layout.activity_menu_sincronizar);
 		
 		probando = (Button)findViewById(R.id.probando);
-		listView1 = (ListView)findViewById(R.id.listView1);
+		listView1 = (ListView)findViewById(R.id.lv);
 	
 		ArrayList<String> menu = new ArrayList<String>();
 		menu.add("Sincronizar Clientes");
@@ -308,20 +308,21 @@ public class Menu_sincronizar extends Activity {
 				for (int i = 0; i < respJSON.length(); i++) {
 					JSONObject obj = respJSON.getJSONObject(i);
 					int clientes_id = obj.getInt("id");
+					String cedula = obj.getString("nit");
 					String nombres = obj.getString("nombres");
 					String direccion = obj
 							.getString("direccion");
 					String telefono = obj.getString("telefono");
 					String celular = obj.getString("celular");
 					String sql_insert_clientes = "insert into clientes "
-							+ " (clientes_id,nombres,direccion,telefono,celular) "
-							+ "values" + " (" + clientes_id + ",'" + nombres
-							+ "','" + direccion + "','"
+							+ " (clientes_id,cedula,nombres,direccion,telefono,celular) "
+							+ "values" + " (" + clientes_id + ",'" + cedula
+							+ "','" + nombres+ "','" + direccion + "','"
 							+ telefono + "','" + celular + "') ";
 					Log.i(this.getClass().toString(),sql_insert_clientes);
 					db.execSQL(sql_insert_clientes);
 					
-					//clientes[i] = "" + clientes_id + "-" + nombres + "-" + telefono + "-"+ celular ;
+					//clientes[i] = "" + clientes_id +"-"+ cedula + "-"+ nombres + "-" + telefono + "-"+ celular ;
 					
 				}
 				
@@ -371,20 +372,22 @@ public class Menu_sincronizar extends Activity {
 				for (int i = 0; i < respJSON.length(); i++) {
 					JSONObject obj = respJSON.getJSONObject(i);
 					int cobradores_id = obj.getInt("id");
+					String cedula = obj.getString("nit");
 					String nombres = obj.getString("nombres");
 					String direccion = obj
 							.getString("direccion");
 					String telefono = obj.getString("telefono");
 					String celular = obj.getString("celular");
 					String sql_insert_cobradores = "insert into cobradores "
-							+ " (cobradores_id,nombres,direccion,telefono,celular) "
-							+ "values" + " (" + cobradores_id + ",'" + nombres
+							+ " (cobradores_id,cedula,nombres,direccion,telefono,celular) "
+							+ "values" + " (" + cobradores_id + ",'" + cedula
+							+ "','" + nombres
 							+ "','" + direccion + "','"
 							+ telefono + "','" + celular + "') ";
 					Log.i(this.getClass().toString(),sql_insert_cobradores);
 					db.execSQL(sql_insert_cobradores);
 					
-					cobradores[i] = "" + cobradores_id + "-" + nombres + "-" + telefono + "-"+ celular ;
+					//cobradores[i] = "" + cobradores_id + "-"+ cedula +"-" + nombres + "-" + telefono + "-"+ celular ;
 				}
 
 				// Rellenamos la lista con los resultados
@@ -484,35 +487,5 @@ public class Menu_sincronizar extends Activity {
 		
 	}
 	
-	
-	public void seleccionar_item(int id){
-		
-		switch (id) {
-		case 1:
-			
-			Toast alerta= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
-			alerta.show();
-						
-			break;
-			
-		case 2:
-			
-			Toast alerta2= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
-			alerta2.show();
-						
-			break;
-			
-		 case 3:
-			
-			Toast alerta3= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
-			alerta3.show();
-						
-			break;
-
-		default:
-			break;
-		}
-		
-	}
 	
 }

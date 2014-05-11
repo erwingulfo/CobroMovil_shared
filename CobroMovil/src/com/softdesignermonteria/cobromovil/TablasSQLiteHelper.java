@@ -32,6 +32,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
      **/
     String sqlCreateClientes   = "CREATE TABLE clientes ("
 									+ "		id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+									+ "		cedula VARCHAR(20)  NOT NULL, "
 									+ "		clientes_id INTEGER NOT NULL, "
 									+ "		nombres VARCHAR(300) NOT NULL, "
 									+ "		direccion VARCHAR(250) NOT NULL, "
@@ -46,6 +47,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     String sqlCreateCobradores = "CREATE TABLE cobradores ("
     							+ "			id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
     							+ "			cobradores_id INTEGER NOT NULL, "
+    							+ "			cedula VARCHAR(20)  NOT NULL, "
     							+ "			nombres VARCHAR(300) NOT NULL, "
     							+ "			direccion VARCHAR(250) NOT NULL, "
     							+ "			telefono VARCHAR(20) NOT NULL, "

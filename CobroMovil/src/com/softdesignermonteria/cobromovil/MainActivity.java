@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(5);
+				globalVariable.setVersion_database(7);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
 				
 				/*
