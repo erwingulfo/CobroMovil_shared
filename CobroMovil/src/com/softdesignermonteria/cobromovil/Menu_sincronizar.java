@@ -1,6 +1,9 @@
 package com.softdesignermonteria.cobromovil;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,13 +11,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.ls.LSInput;
+
+import android.R.integer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceScreen;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.ClipData.Item;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +32,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -35,7 +45,14 @@ public class Menu_sincronizar extends Activity {
 	private Button bt_sincronizar_clientes;
 	private Button bt_sincronizar_cobradores;
 	private Button bt_sincronizar_cartera;
+	private Button bt_sincronizar_todos;
 	private Button probando;
+	
+	private PreferenceScreen bclientes;
+	private PreferenceScreen bcobrador;
+	private PreferenceScreen cbartera;
+	
+	private ListView listView1;
 	private ProgressBar bprogreso;
 	
 	private MiTareaAsincronaDialog tarea2;
@@ -50,6 +67,7 @@ public class Menu_sincronizar extends Activity {
 	private String url_servidor;
 	private String nombre_database;
 	private int version_database;
+	public long id;
 	
 	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -61,7 +79,23 @@ public class Menu_sincronizar extends Activity {
 		setContentView(R.layout.activity_menu_sincronizar);
 		
 		probando = (Button)findViewById(R.id.probando);
-	    		
+		listView1 = (ListView)findViewById(R.id.listView1);
+	
+		ArrayList<String> menu = new ArrayList<String>();
+		menu.add("Sincronizar Clientes");
+		menu.add("Sincronizar Cobradores");
+		menu.add("Sincronizar Cartera");
+		menu.add("Sincronizar Todos");
+		
+		ArrayAdapter<String> adaptador =
+		new ArrayAdapter<String>(Menu_sincronizar.this,
+		android.R.layout.simple_list_item_1, menu);
+		//setListAdapter(adaptador);
+		//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		
+		listView1.setAdapter(adaptador);
+		
+				
 		/*
 		 * Pegar este codigo en todas las actividades que lo requieran
 		 * */
@@ -77,7 +111,7 @@ public class Menu_sincronizar extends Activity {
 			new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
-
+		
 		bt_sincronizar_clientes = (Button) findViewById(R.id.bt_sincronizar_clientes);
 		bt_sincronizar_clientes.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -94,7 +128,6 @@ public class Menu_sincronizar extends Activity {
 				}
 			}
 		});
-		
 		
 		bt_sincronizar_cobradores = (Button) findViewById(R.id.bt_sincronizar_cobradores);
 		bt_sincronizar_cobradores.setOnClickListener(new OnClickListener() {
@@ -132,6 +165,45 @@ public class Menu_sincronizar extends Activity {
 			}
 		});
 		
+		bt_sincronizar_todos = (Button) findViewById(R.id.bt_sincronizar_todos);
+		bt_sincronizar_todos.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
+				// setContentView(R.layout.activity_menu_clientes);
+				if (sincronizar_clientes()) {
+					System.out
+							.println("Clientes Sincronizados Satisfactoriamente");
+					Log.i(this.getClass().toString(),
+							"Clientes Sincronizados Satisfactoriamente");
+				} else {
+					System.out.println("Oops no sincronizados");
+					Log.i(this.getClass().toString(), "Oops Clientes no sincronizados");
+				}
+				
+				if (sincronizar_cobradores()) {
+					System.out
+							.println("Cobradores Sincronizados Satisfactoriamente");
+					Log.i(this.getClass().toString(),
+							"Cobradores Sincronizados Satisfactoriamente");
+				} else {
+					System.out.println("Oops no sincronizados");
+					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+				}
+				
+				if (sincronizar_cartera()) {
+					System.out
+							.println("Cartera Sincronizada Satisfactoriamente");
+					Log.i(this.getClass().toString(),
+							"Cartera Sincronizada Satisfactoriamente");
+				} else {
+					System.out.println("Oops no sincronizados");
+					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+				}
+				
+				
+			}
+		});
+		
 		probando.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -145,11 +217,11 @@ public class Menu_sincronizar extends Activity {
 				
 				tarea2 = new MiTareaAsincronaDialog();
 				tarea2.execute();
-				
-				
+					
 			}
 		});
-			
+		
+		
 		
 	}
 	
@@ -402,15 +474,45 @@ public class Menu_sincronizar extends Activity {
 
 	}
 	
+	
 	/*funcion para mostrar en forma de alerta los clientes, cobradores y la cartera sincronizada.*/
 	
 	public void mostrar_sincronizados(int num_items,String mensaje){
-		
-		Toast alerta= Toast.makeText(this, mensaje+" : "+num_items, Toast.LENGTH_SHORT);
+			
+		Toast alerta= Toast.makeText(this, mensaje+" : "+num_items, Toast.LENGTH_LONG);
 		alerta.show();
 		
 	}
 	
+	
+	public void seleccionar_item(int id){
 		
+		switch (id) {
+		case 1:
+			
+			Toast alerta= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
+			alerta.show();
+						
+			break;
+			
+		case 2:
+			
+			Toast alerta2= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
+			alerta2.show();
+						
+			break;
+			
+		 case 3:
+			
+			Toast alerta3= Toast.makeText(this, "Hola mi id es:"+id, Toast.LENGTH_LONG);
+			alerta3.show();
+						
+			break;
+
+		default:
+			break;
+		}
+		
+	}
 	
 }

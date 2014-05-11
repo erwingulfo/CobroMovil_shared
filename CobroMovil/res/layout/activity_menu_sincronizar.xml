@@ -58,4 +58,14 @@
         android:layout_below="@+id/bt_sincronizar_todos"
         android:text="Probando AsyncTask" />
 
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_clientes"
+        android:layout_alignRight="@+id/probando"
+        android:layout_below="@+id/probando" >
+
+    </ListView>
+
 </RelativeLayout>

@@ -8,5 +8,9 @@
     <string name="bienvenido_">Bienvenido:</string>
     <string name="title_activity_menu_clientes">Menu Clientes</string>
     <string name="title_activity_menu_sincronizar">Menu Sincronizar</string>
+    <string name="title_activity_menu_list_items">Menu Principal</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_menu_prueba">Menu Prueba</string>
+    <string name="title_activity_busqueda_clientes">Buscar Clientes</string>
 
 </resources>

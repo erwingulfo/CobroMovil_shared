@@ -1,11 +1,14 @@
 package com.softdesignermonteria.cobromovil;
 
+import com.softdesignermonteria.cobromovil.R.menu;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

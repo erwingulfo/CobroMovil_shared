@@ -5,8 +5,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk 
-        android:minSdkVersion="8" 
+    <uses-sdk
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -52,6 +52,18 @@
         <activity
             android:name="com.softdesignermonteria.cobromovil.Menu_sincronizar"
             android:label="@string/title_activity_menu_sincronizar" >
+        </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Menu_list_items"
+            android:label="@string/title_activity_menu_list_items" >
+        </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.MenuPrueba"
+            android:label="@string/title_activity_menu_prueba" >
+        </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Busqueda_clientes"
+            android:label="@string/title_activity_busqueda_clientes" >
         </activity>
     </application>
 

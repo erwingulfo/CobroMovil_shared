@@ -36,7 +36,7 @@
         android:layout_marginTop="27dp" />
 
     <Button
-        android:id="@+id/b_m_clientes"
+        android:id="@+id/b_m_sincronizar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -45,5 +45,16 @@
         android:drawableLeft="@drawable/ic_action_import_export"
         android:gravity="left"
         android:text="Sincronizar" />
+
+    <Button
+        android:id="@+id/b_m_clientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/b_m_sincronizar"
+        android:drawableLeft="@drawable/ic_action_person"
+        android:gravity="left"
+        android:text="Buscar Clientes" />
 
 </RelativeLayout>
