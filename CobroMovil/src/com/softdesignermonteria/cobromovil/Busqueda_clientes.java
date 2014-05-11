@@ -42,7 +42,7 @@ public class Busqueda_clientes extends Activity {
 		consultar_clientes.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.i(this.getClass().toString(), "Presiona Boton Buscar");
-				// setContentView(R.layout.activity_menu_clientes);
+				// setContentView(R.layout.activity_menu_clientes);cambios nuevoss
 				
 				if (consultar_clientes()) {
 					System.out
