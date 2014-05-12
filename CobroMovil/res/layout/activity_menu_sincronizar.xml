@@ -49,22 +49,13 @@
         android:gravity="fill_horizontal|center"
         android:text="Bajar Cartera" />
 
-    <Button
-        android:id="@+id/probando"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_todos"
-        android:layout_alignRight="@+id/bt_sincronizar_todos"
-        android:layout_below="@+id/bt_sincronizar_todos"
-        android:text="Probando AsyncTask" />
-
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/bt_sincronizar_clientes"
-        android:layout_alignRight="@+id/probando"
-        android:layout_below="@+id/probando" >
+        android:layout_alignRight="@+id/bt_sincronizar_todos"
+        android:layout_below="@+id/bt_sincronizar_todos" >
 
     </ListView>
 

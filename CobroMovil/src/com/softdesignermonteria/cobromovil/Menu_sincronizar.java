@@ -1,7 +1,6 @@
 package com.softdesignermonteria.cobromovil;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -11,9 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.ls.LSInput;
-
-import android.R.integer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,18 +17,13 @@ import android.os.StrictMode;
 import android.preference.PreferenceScreen;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.ClipData.Item;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -46,7 +37,6 @@ public class Menu_sincronizar extends Activity {
 	private Button bt_sincronizar_cobradores;
 	private Button bt_sincronizar_cartera;
 	private Button bt_sincronizar_todos;
-	private Button probando;
 	
 	private PreferenceScreen bclientes;
 	private PreferenceScreen bcobrador;
@@ -66,6 +56,15 @@ public class Menu_sincronizar extends Activity {
 	 * */
 	private String url_servidor;
 	private String nombre_database;
+	
+	private String proceso_clientes = "async_clientes"; 
+	private String proceso_cobradores = "async_cobradores";
+	private String proceso_cartera = "async_cartera";
+	
+	private ProgressDialog pDialog_clientes;
+	private ProgressDialog pDialog_cobradores;
+	private ProgressDialog pDialog_cartera;
+	
 	private int version_database;
 	public long id;
 	
@@ -78,7 +77,7 @@ public class Menu_sincronizar extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_sincronizar);
 		
-		probando = (Button)findViewById(R.id.probando);
+		
 		listView1 = (ListView)findViewById(R.id.lv);
 	
 		ArrayList<String> menu = new ArrayList<String>();
@@ -86,6 +85,35 @@ public class Menu_sincronizar extends Activity {
 		menu.add("Sincronizar Cobradores");
 		menu.add("Sincronizar Cartera");
 		menu.add("Sincronizar Todos");
+		
+		
+		/*Dialogo Clientes*/
+		
+		pDialog_clientes = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_clientes.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_clientes.setMessage("Sincronizando...Clientes");
+		pDialog_clientes.setCancelable(true);
+		//pDialog_clientes.setMax(100);
+		
+		
+		/*Dialogo Cobradores*/
+		
+		pDialog_cobradores = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_cobradores.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_cobradores.setMessage("Sincronizando...Cobradores");
+		pDialog_cobradores.setCancelable(true);
+		//pDialog_cobradores.setMax(100);
+		
+		/*Dialogo Cartera*/
+		
+		pDialog_cartera = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_cartera.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_cartera.setMessage("Sincronizando...Cartera");
+		pDialog_cartera.setCancelable(true);
+		//pDialog_cartera.setMax(100);
+		
+		
+		
 		
 		ArrayAdapter<String> adaptador =
 		new ArrayAdapter<String>(Menu_sincronizar.this,
@@ -114,35 +142,23 @@ public class Menu_sincronizar extends Activity {
 		
 		bt_sincronizar_clientes = (Button) findViewById(R.id.bt_sincronizar_clientes);
 		bt_sincronizar_clientes.setOnClickListener(new OnClickListener() {
+			
 			public void onClick(View arg0) {
-				Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
-				// setContentView(R.layout.activity_menu_clientes);
-				if (sincronizar_clientes()) {
-					System.out
-							.println("Clientes Sincronizados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Clientes Sincronizados Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops clientes no sincronizados");
-				}
+				pDialog_clientes.setProgress(0);
+				pDialog_clientes.show();
+				tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_clientes);
 			}
+			
 		});
 		
 		bt_sincronizar_cobradores = (Button) findViewById(R.id.bt_sincronizar_cobradores);
 		bt_sincronizar_cobradores.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
-				// setContentView(R.layout.activity_menu_clientes);
-				if (sincronizar_cobradores()) {
-					System.out
-							.println("Cobradores Sincronizados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Cobradores Sincronizados Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops cobradores no sincronizados");
-				}
+				pDialog_cobradores.setProgress(0);
+				pDialog_cobradores.show();
+				tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_cobradores);
 			}
 		});
 		
@@ -151,73 +167,34 @@ public class Menu_sincronizar extends Activity {
 		bt_sincronizar_cartera = (Button) findViewById(R.id.bt_sincronizar_cartera);
 		bt_sincronizar_cartera.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
-				// setContentView(R.layout.activity_menu_clientes);
-				if (sincronizar_cartera()) {
-					System.out
-							.println("Cartera Sincronizados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Cobradores Sincronizados Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
-				}
+				pDialog_cartera.setProgress(0);
+				pDialog_cartera.show();
+				tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_cartera);
 			}
 		});
 		
 		bt_sincronizar_todos = (Button) findViewById(R.id.bt_sincronizar_todos);
 		bt_sincronizar_todos.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				Log.i(this.getClass().toString(), "Presiona Boton Sincronizar");
-				// setContentView(R.layout.activity_menu_clientes);
-				if (sincronizar_clientes()) {
-					System.out
-							.println("Clientes Sincronizados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Clientes Sincronizados Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops Clientes no sincronizados");
-				}
-				
-				if (sincronizar_cobradores()) {
-					System.out
-							.println("Cobradores Sincronizados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Cobradores Sincronizados Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
-				}
-				
-				if (sincronizar_cartera()) {
-					System.out
-							.println("Cartera Sincronizada Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Cartera Sincronizada Satisfactoriamente");
-				} else {
-					System.out.println("Oops no sincronizados");
-					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
-				}
-				
-				
-			}
-		});
-		
-		probando.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				pDialog = new ProgressDialog(Menu_sincronizar.this);
-				pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				pDialog.setMessage("Sincronizando...");
-				pDialog.setCancelable(true);
-				pDialog.setMax(100);
 				
 				tarea2 = new MiTareaAsincronaDialog();
-				tarea2.execute();
-					
+				
+				pDialog_clientes.setProgress(0);
+				pDialog_clientes.show();
+				
+				//tarea2.execute(proceso_clientes);
+				
+				pDialog_cobradores.setProgress(0);
+				pDialog_cobradores.show();
+				//tarea2 = new MiTareaAsincronaDialog();
+				//tarea2.execute(proceso_cobradores);
+				
+				pDialog_cartera.setProgress(0);
+				pDialog_cartera.show();
+				//tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_clientes,proceso_cobradores,proceso_cartera);
+				
 			}
 		});
 		
@@ -225,40 +202,116 @@ public class Menu_sincronizar extends Activity {
 		
 	}
 	
-	private void tareaLarga()
-    {
-    	try { 
-    		Thread.sleep(1000); 
-    	} catch(InterruptedException e) {}
-    }
+
 	
 		
-    private class MiTareaAsincronaDialog extends AsyncTask<Void, Integer, Boolean> {
+    private class MiTareaAsincronaDialog extends AsyncTask<String, Integer, Boolean> {
     	
     	@Override
-    	protected Boolean doInBackground(Void... params) {
+    	protected Boolean doInBackground(String... params) {
     		
-    		for(int i=1; i<=5; i++) {
-				tareaLarga();
-				publishProgress(i*5);
-				
-				if(isCancelled())
-					break;
-			}
+    		if(params.length==1){
     		
+	    		if(params[0].equals(proceso_clientes)    ){ 
+	    			
+	    			if (sincronizar_clientes()) {
+						System.out.println("Clientes Sincronizados Satisfactoriamente");
+						Log.i(this.getClass().toString(),"Clientes Sincronizados Satisfactoriamente");
+					} else {
+						System.out.println("Oops no sincronizados");
+						Log.i(this.getClass().toString(), "Oops clientes no sincronizados");
+					}
+	    			
+	    			pDialog_clientes.dismiss();
+	    			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion clientes Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		if(params[0].equals(proceso_cartera)     ){ 
+	    				
+	    				if (sincronizar_cartera()) {
+	    					System.out.println("Cartera Sincronizados Satisfactoriamente");
+	    					Log.i(this.getClass().toString(),"Cartera Sincronizados Satisfactoriamente");
+	    				} else {
+	    					System.out.println("Oops no sincronizados Cartera");
+	    					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+	    				}
+	        			
+	        			pDialog_cartera.dismiss();		
+	        			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		
+	    		if(params[0].equals(proceso_cobradores)  ){ 
+	    				
+	    				if (sincronizar_cobradores()) {
+	    					System.out.println("Cobradores Sincronizados Satisfactoriamente");
+	    					Log.i(this.getClass().toString(),"Cobradores Sincronizados Satisfactoriamente");
+	    				} else {
+	    					System.out.println("Oops no sincronizados Cobradores");
+	    					Log.i(this.getClass().toString(), "Oops Cobradores no sincronizados");
+	    				}
+	    				
+	    				pDialog_cobradores.dismiss();	
+	    				//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cobradores Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+    		}else{
+    			
+    			if(params[0].equals(proceso_clientes)    ){ 
+	    			
+	    			if (sincronizar_clientes()) {
+						System.out.println("Clientes Sincronizados Satisfactoriamente");
+						Log.i(this.getClass().toString(),"Clientes Sincronizados Satisfactoriamente");
+					} else {
+						System.out.println("Oops no sincronizados");
+						Log.i(this.getClass().toString(), "Oops clientes no sincronizados");
+					}
+	    			
+	    			pDialog_clientes.dismiss();
+	    			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion clientes Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		
+	    		
+	    		if(params[1].equals(proceso_cobradores)  ){ 
+	    				
+	    				if (sincronizar_cobradores()) {
+	    					System.out.println("Cobradores Sincronizados Satisfactoriamente");
+	    					Log.i(this.getClass().toString(),"Cobradores Sincronizados Satisfactoriamente");
+	    				} else {
+	    					System.out.println("Oops no sincronizados Cobradores");
+	    					Log.i(this.getClass().toString(), "Oops Cobradores no sincronizados");
+	    				}
+	    				
+	    				pDialog_cobradores.dismiss();	
+	    				//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cobradores Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		
+	    		if(params[2].equals(proceso_cartera)     ){ 
+    				
+    				if (sincronizar_cartera()) {
+    					System.out.println("Cartera Sincronizados Satisfactoriamente");
+    					Log.i(this.getClass().toString(),"Cartera Sincronizados Satisfactoriamente");
+    				} else {
+    					System.out.println("Oops no sincronizados Cartera");
+    					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+    				}
+        			
+        			pDialog_cartera.dismiss();		
+        			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		
+    		}
+
     		return true;
     	}
     	
     	@Override
     	public void onProgressUpdate(Integer... values) {
-    		int progreso = values[0].intValue();
-    		pDialog.setProgress(progreso);
+    		//int progreso = values[0].intValue();
+    		//pDialog.setProgress(progreso);
     	}
     	
     	@Override
     	protected void onPreExecute() {
     		
-    		pDialog.setOnCancelListener(new OnCancelListener() {
+    		/*pDialog.setOnCancelListener(new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					MiTareaAsincronaDialog.this.cancel(true);
@@ -266,14 +319,14 @@ public class Menu_sincronizar extends Activity {
 			});
     		
     		pDialog.setProgress(0);
-    		pDialog.show();
+    		pDialog.show();*/
     	}
     	
     	@Override
     	protected void onPostExecute(Boolean result) {
     		if(result)
     		{
-    			pDialog.dismiss();
+    			//pDialog.dismiss();
     			Toast.makeText(Menu_sincronizar.this, "Tarea finalizada!", Toast.LENGTH_SHORT).show();
     		}
     	}
@@ -289,12 +342,16 @@ public class Menu_sincronizar extends Activity {
 	public boolean sincronizar_clientes() {
 		boolean sw = true;
 		
+		
+		
 		try {
 			
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
 			if (db != null) {
+				
+				db.execSQL("delete from clientes");
 				
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet del = new HttpGet(url_servidor+"clientes_movil/extraer_clientes");
@@ -303,6 +360,9 @@ public class Menu_sincronizar extends Activity {
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
 				JSONArray respJSON = new JSONArray(respStr);
+				
+				//modifcamos propiedad del progressbar
+				pDialog_clientes.setMax(respJSON.length());
 				
 				String[] clientes = new String[respJSON.length()];
 				for (int i = 0; i < respJSON.length(); i++) {
@@ -322,6 +382,9 @@ public class Menu_sincronizar extends Activity {
 					Log.i(this.getClass().toString(),sql_insert_clientes);
 					db.execSQL(sql_insert_clientes);
 					
+					//*actualizamos barra de prograso*/
+					pDialog_clientes.setProgress(i+1);
+					
 					//clientes[i] = "" + clientes_id +"-"+ cedula + "-"+ nombres + "-" + telefono + "-"+ celular ;
 					
 				}
@@ -331,7 +394,9 @@ public class Menu_sincronizar extends Activity {
 			    new ArrayAdapter<String>(Menu_sincronizar.this,
 				android.R.layout.simple_list_item_1, clientes);
 				lst.setAdapter(adaptador);*/
-				mostrar_sincronizados(respJSON.length(),"Clientes sincronizados");
+				//mostrar_sincronizados(respJSON.length(),"Clientes sincronizados");
+				
+				//cerramos barra progreso
 				
 								
 			}
@@ -358,7 +423,7 @@ public class Menu_sincronizar extends Activity {
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
 			if (db != null) {
-				
+				db.execSQL("delete from cobradores");
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet del = new HttpGet(url_servidor+"cobradores_movil/extraer_cobradores");
 				del.setHeader("content-type", "application/json");
@@ -366,6 +431,8 @@ public class Menu_sincronizar extends Activity {
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
 				JSONArray respJSON = new JSONArray(respStr);
+				
+				pDialog_cobradores.setMax(respJSON.length());
 				
 				String[] cobradores = new String[respJSON.length()];
 				
@@ -387,6 +454,7 @@ public class Menu_sincronizar extends Activity {
 					Log.i(this.getClass().toString(),sql_insert_cobradores);
 					db.execSQL(sql_insert_cobradores);
 					
+					pDialog_cobradores.setProgress(i+1);
 					//cobradores[i] = "" + cobradores_id + "-"+ cedula +"-" + nombres + "-" + telefono + "-"+ celular ;
 				}
 
@@ -395,7 +463,7 @@ public class Menu_sincronizar extends Activity {
 			    new ArrayAdapter<String>(Menu_sincronizar.this,
 				android.R.layout.simple_list_item_1, cobradores);
 				lst.setAdapter(adaptador);*/
-				mostrar_sincronizados(respJSON.length(),"Cobradores sincronizados");
+				//mostrar_sincronizados(respJSON.length(),"Cobradores sincronizados");
 				
 			}
 			
@@ -420,7 +488,7 @@ public class Menu_sincronizar extends Activity {
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
 			if (db != null) {
-				
+				db.execSQL("delete from cartera");
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet del = new HttpGet(url_servidor+"cartera_movil/extraer_cartera");
 				del.setHeader("content-type", "application/json");
@@ -428,6 +496,8 @@ public class Menu_sincronizar extends Activity {
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
 				JSONArray respJSON = new JSONArray(respStr);
+				
+				pDialog_cartera.setMax(respJSON.length());
 				
 				String[] cartera = new String[respJSON.length()];
 				
@@ -451,8 +521,8 @@ public class Menu_sincronizar extends Activity {
 								
 					Log.i(this.getClass().toString(),sql_insert_caretra);
 					db.execSQL(sql_insert_caretra);
-					
-					cartera[i] = "" + detalle_cxc_id + "-" + creditos_id + "-" + clientes_id + "-"+ cedula ;
+					pDialog_cartera.setProgress(i+1);
+					//cartera[i] = "" + detalle_cxc_id + "-" + creditos_id + "-" + clientes_id + "-"+ cedula ;
 				}
 
 				// Rellenamos la lista con los resultados
@@ -460,7 +530,7 @@ public class Menu_sincronizar extends Activity {
 			    new ArrayAdapter<String>(Menu_sincronizar.this,
 				android.R.layout.simple_list_item_1, cartera);
 				lst.setAdapter(adaptador);*/
-				mostrar_sincronizados(respJSON.length(),"Cartera sincronizada");
+				//mostrar_sincronizados(respJSON.length(),"Cartera sincronizada");
 			
 				
 				
@@ -480,12 +550,12 @@ public class Menu_sincronizar extends Activity {
 	
 	/*funcion para mostrar en forma de alerta los clientes, cobradores y la cartera sincronizada.*/
 	
-	public void mostrar_sincronizados(int num_items,String mensaje){
+	/*public void mostrar_sincronizados(int num_items,String mensaje){
 			
 		Toast alerta= Toast.makeText(this, mensaje+" : "+num_items, Toast.LENGTH_LONG);
 		alerta.show();
 		
-	}
+	}*/
 	
 	
 }
