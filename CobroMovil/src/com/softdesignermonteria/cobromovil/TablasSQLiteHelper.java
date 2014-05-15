@@ -13,9 +13,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	 * version antes de lanzamiento oficial
 	 * Version=5
 	 */
-	
-	
-		
+
 
 	/**
      * Creation Tabla Usuarios
@@ -24,8 +22,10 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	String sqlCreateUsuarios   = "CREATE TABLE usuarios ("
 									+ "		id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
 									+ "		nombre VARCHAR(45) NOT NULL, "
-									+ "		clave VARCHAR(45) NOT NULL"
-									+ "					)";
+									+ "		clave VARCHAR(45) NOT NULL,"
+									+ "		cobradores_id VARCHAR(20) NOT NULL,"
+									+ "		cedula_cobrador VARCHAR(20) NOT NULL"
+									+ "					 )";
     /**
      * Creation Tabla Clientes
      * 
@@ -52,7 +52,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     							+ "			direccion VARCHAR(250) NOT NULL, "
     							+ "			telefono VARCHAR(20) NOT NULL, "
     							+ "			celular VARCHAR(20) NOT NULL"
-    							+ "						)";
+    							+ "						  )";
     
     /**
      * Creation Tabla Cartera
@@ -69,6 +69,36 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     							+ "			vencimiento VARCHAR(10) NOT NULL, "
     							+ "			valor numeric(10,2) NOT NULL "
     							+ "						)";
+    /**
+     * Creation Tabla Recaudos
+     * 
+     **/
+    
+    String sqlCreateRecaudos    = " CREATE TABLE recaudos ("
+			+ "			id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+			+ "			provisional VARCHAR(100) NOT NULL, "
+			+ "			clientes_id INTEGER NOT NULL, "
+			+ "			cedula VARCHAR(20) NOT NULL, "
+			+ "			creditos_id INTEGER NOT NULL, "
+			+ "			detalle_cxc_id INTEGER NOT NULL, "	
+			+ "			cobradores_id INTEGER NOT NULL,"
+			+ "			cedula_cobrador VARCHAR(20) NOT NULL, "
+			+ "			fecha VARCHAR(10) NOT NULL, "
+			+ "			valor_pagado numeric(10,2) NOT NULL, "
+			+ "			sincronizado VARCHAR(2) default '0' "
+			+ "											  )";
+   
+    /**
+     * Creation Tabla Recaudos_Detalles
+     * 
+     **/
+    
+    String sqlCreateRecaudos_Detalles    = " CREATE TABLE recaudos_detalles ("
+			+ "			id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, "
+			+ "			provisional VARCHAR(100) NOT NULL, "
+			+ "			detalle_cxc_id INTEGER NOT NULL, "	
+			+ "			valor_pagado numeric(10,2) NOT NULL "
+			+ "						                                        )";
     
     public TablasSQLiteHelper(Context contexto, String nombre,CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);
@@ -103,7 +133,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     	Log.i(this.getClass().toString(), "On Upgrade...");
     	borrar_tablas(db);
         creacion_tablas(db);
-        String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
+        String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','admin','2','34444');";
         db.execSQL(insert_usu);
         Log.i(this.getClass().toString(), "Insercion de usuario por defecto despues de actualizar");
         
@@ -130,6 +160,15 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     	 * Sentence creation table carter
     	 */
         db.execSQL(sqlCreateCartera);
+        /**
+    	 * Sentence creation table Recaudos
+    	 */
+        db.execSQL(sqlCreateRecaudos);
+        /**
+    	 * Sentence creation table Detalle_Recaudos
+    	 */
+        db.execSQL(sqlCreateRecaudos_Detalles);
+        
     }
     
     
@@ -152,6 +191,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     	 * Sentence creation table carter
     	 */
         db.execSQL("DROP TABLE IF EXISTS cartera");
+        
     }
     
     

@@ -36,13 +36,10 @@ public class Menu_sincronizar extends Activity {
 	private Button bt_sincronizar_clientes;
 	private Button bt_sincronizar_cobradores;
 	private Button bt_sincronizar_cartera;
+	private Button bt_sincronizar_usuarios;
 	private Button bt_sincronizar_todos;
 	
-	private PreferenceScreen bclientes;
-	private PreferenceScreen bcobrador;
-	private PreferenceScreen cbartera;
-	
-	private ListView listView1;
+	//private ListView lv;
 	private ProgressBar bprogreso;
 	
 	private MiTareaAsincronaDialog tarea2;
@@ -60,10 +57,12 @@ public class Menu_sincronizar extends Activity {
 	private String proceso_clientes = "async_clientes"; 
 	private String proceso_cobradores = "async_cobradores";
 	private String proceso_cartera = "async_cartera";
+	private String proceso_usuarios = "async_usuarios";
 	
 	private ProgressDialog pDialog_clientes;
 	private ProgressDialog pDialog_cobradores;
 	private ProgressDialog pDialog_cartera;
+	private ProgressDialog pDialog_usuarios;
 	
 	private int version_database;
 	public long id;
@@ -78,13 +77,13 @@ public class Menu_sincronizar extends Activity {
 		setContentView(R.layout.activity_menu_sincronizar);
 		
 		
-		listView1 = (ListView)findViewById(R.id.lv);
+		//lv = (ListView)findViewById(R.id.lv);
 	
 		ArrayList<String> menu = new ArrayList<String>();
-		menu.add("Sincronizar Clientes");
+		/*menu.add("Sincronizar Clientes");
 		menu.add("Sincronizar Cobradores");
 		menu.add("Sincronizar Cartera");
-		menu.add("Sincronizar Todos");
+		menu.add("Sincronizar Todos");*/
 		
 		
 		/*Dialogo Clientes*/
@@ -112,16 +111,22 @@ public class Menu_sincronizar extends Activity {
 		pDialog_cartera.setCancelable(true);
 		//pDialog_cartera.setMax(100);
 		
+		/*Dialogo Usuarios del Sistema*/
+		
+		pDialog_usuarios = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_usuarios.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_usuarios.setMessage("Sincronizando...Usuarios");
+		pDialog_usuarios.setCancelable(true);
 		
 		
 		
-		ArrayAdapter<String> adaptador =
+		/*ArrayAdapter<String> adaptador =
 		new ArrayAdapter<String>(Menu_sincronizar.this,
-		android.R.layout.simple_list_item_1, menu);
+		android.R.layout.simple_list_item_1, menu);*/
 		//setListAdapter(adaptador);
 		//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		
-		listView1.setAdapter(adaptador);
+		//lv.setAdapter(adaptador);
 		
 				
 		/*
@@ -174,6 +179,16 @@ public class Menu_sincronizar extends Activity {
 			}
 		});
 		
+		bt_sincronizar_usuarios= (Button) findViewById(R.id.bt_sincronizar_usuarios);
+		bt_sincronizar_usuarios.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				pDialog_usuarios.setProgress(0);
+				pDialog_usuarios.show();
+				tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_usuarios);
+			}
+		});
+		
 		bt_sincronizar_todos = (Button) findViewById(R.id.bt_sincronizar_todos);
 		bt_sincronizar_todos.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
@@ -193,7 +208,10 @@ public class Menu_sincronizar extends Activity {
 				pDialog_cartera.setProgress(0);
 				pDialog_cartera.show();
 				//tarea2 = new MiTareaAsincronaDialog();
-				tarea2.execute(proceso_clientes,proceso_cobradores,proceso_cartera);
+				
+				pDialog_usuarios.setProgress(0);
+				pDialog_usuarios.show();
+				tarea2.execute(proceso_clientes,proceso_cobradores,proceso_cartera,proceso_usuarios);
 				
 			}
 		});
@@ -252,6 +270,20 @@ public class Menu_sincronizar extends Activity {
 	    				pDialog_cobradores.dismiss();	
 	    				//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cobradores Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
+	    		
+	    		if(params[0].equals(proceso_usuarios)  ){ 
+    				
+    				if (sincronizar_usuarios()) {
+    					System.out.println("Usuarios Sincronizados Satisfactoriamente");
+    					Log.i(this.getClass().toString(),"Usuarios Sincronizados Satisfactoriamente");
+    				} else {
+    					System.out.println("Oops no sincronizados Usuarios");
+    					Log.i(this.getClass().toString(), "Oops Usuarios no sincronizados");
+    				}
+    				
+    				pDialog_usuarios.dismiss();	
+    				//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cobradores Finalizada!", Toast.LENGTH_SHORT).show();
+    		}
     		}else{
     			
     			if(params[0].equals(proceso_clientes)    ){ 
@@ -286,6 +318,20 @@ public class Menu_sincronizar extends Activity {
 	    		if(params[2].equals(proceso_cartera)     ){ 
     				
     				if (sincronizar_cartera()) {
+    					System.out.println("Cartera Sincronizados Satisfactoriamente");
+    					Log.i(this.getClass().toString(),"Cartera Sincronizados Satisfactoriamente");
+    				} else {
+    					System.out.println("Oops no sincronizados Cartera");
+    					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+    				}
+        			
+        			pDialog_cartera.dismiss();		
+        			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+	    		
+	    		if(params[3].equals(proceso_cartera)     ){ 
+    				
+    				if (sincronizar_usuarios()) {
     					System.out.println("Cartera Sincronizados Satisfactoriamente");
     					Log.i(this.getClass().toString(),"Cartera Sincronizados Satisfactoriamente");
     				} else {
@@ -533,6 +579,68 @@ public class Menu_sincronizar extends Activity {
 				//mostrar_sincronizados(respJSON.length(),"Cartera sincronizada");
 			
 				
+				
+			}
+			
+			db.close();
+
+		} catch (Exception ex) {
+			Log.e("ServicioRest", "Error!", ex);
+			sw = false;
+		}
+
+		return sw;
+
+	}
+	
+	public boolean sincronizar_usuarios() {
+		boolean sw = true;
+
+		
+		try {
+			
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+			SQLiteDatabase db = usdbh.getWritableDatabase();
+			// Si hemos abierto correctamente la base de datos
+			if (db != null) {
+				//db.execSQL("delete from usuarios");
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet del = new HttpGet(url_servidor+"usuarios_movil/extraer_usuarios");
+				del.setHeader("content-type", "application/json");
+				
+				HttpResponse resp = httpClient.execute(del);
+				String respStr = EntityUtils.toString(resp.getEntity());
+				JSONArray respJSON = new JSONArray(respStr);
+				
+				pDialog_usuarios.setMax(respJSON.length());
+				
+				String[] usuarios = new String[respJSON.length()];
+				
+				for (int i = 0; i < respJSON.length(); i++) {
+					JSONObject obj = respJSON.getJSONObject(i);
+					String nombre = obj.getString("nombre");
+					String clave = obj.getString("clave");
+					String cobradores_id = obj.getString("cobradores_id");
+					String cedula_cobrador = obj.getString("cedula_cobrador");
+					
+					String sql_insert_usuarios = "insert into usuarios "
+							+ " (nombre,clave,cobradores_id,cedula_cobrador) "
+							+ "values" + " (" + nombre + ",'"+ clave
+							+ "','" + cobradores_id
+							+ "','" + cedula_cobrador + "') ";
+					Log.i(this.getClass().toString(),sql_insert_usuarios);
+					db.execSQL(sql_insert_usuarios);
+					
+					pDialog_usuarios.setProgress(i+1);
+					//cobradores[i] = "" + cobradores_id + "-"+ cedula +"-" + nombres + "-" + telefono + "-"+ celular ;
+				}
+
+				// Rellenamos la lista con los resultados
+				/*ArrayAdapter<String> adaptador =
+			    new ArrayAdapter<String>(Menu_sincronizar.this,
+				android.R.layout.simple_list_item_1, cobradores);
+				lst.setAdapter(adaptador);*/
+				//mostrar_sincronizados(respJSON.length(),"Cobradores sincronizados");
 				
 			}
 			

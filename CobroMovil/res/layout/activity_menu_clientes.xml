@@ -8,12 +8,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Menu_clientes" >
 
-    <Button
-        android:id="@+id/bt_sincronizar_clientes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Sincronizar Clientes" />
-
 </RelativeLayout>

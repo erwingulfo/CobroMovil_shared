@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
         	
 			setContentView(R.layout.activity_main);
 			
+			
 			/**
 			 * Asignacion de valores de variables globales android
 			 * se especifica nombre de la base de datos
@@ -45,7 +46,7 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(7);
+				globalVariable.setVersion_database(8);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
 				
 				/*
@@ -65,7 +66,7 @@ public class MainActivity extends Activity {
 			clave = (EditText)findViewById(R.id.clave);
 			userlogueado = (TextView)findViewById(R.id.userlogueado);
 			entrar = (Button)findViewById(R.id.entrar);
-						
+			usuario.requestFocus();			
 			/*
 			 * 
 			 * Abrimos la base de datos 'Cobro' en modo escritura

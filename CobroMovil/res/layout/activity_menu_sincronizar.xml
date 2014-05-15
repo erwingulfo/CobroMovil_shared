@@ -30,16 +30,6 @@
         android:text="Bajar Cobradores" />
 
     <Button
-        android:id="@+id/bt_sincronizar_todos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_cartera"
-        android:layout_alignRight="@+id/bt_sincronizar_cartera"
-        android:layout_below="@+id/bt_sincronizar_cartera"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Todos" />
-
-    <Button
         android:id="@+id/bt_sincronizar_cartera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,14 +39,24 @@
         android:gravity="fill_horizontal|center"
         android:text="Bajar Cartera" />
 
-    <ListView
-        android:id="@+id/lv"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/bt_sincronizar_usuarios"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_clientes"
-        android:layout_alignRight="@+id/bt_sincronizar_todos"
-        android:layout_below="@+id/bt_sincronizar_todos" >
+        android:layout_alignLeft="@+id/bt_sincronizar_cartera"
+        android:layout_alignRight="@+id/bt_sincronizar_cartera"
+        android:layout_below="@+id/bt_sincronizar_cartera"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Usuarios Sistema" />
 
-    </ListView>
+    <Button
+        android:id="@+id/bt_sincronizar_todos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt_sincronizar_usuarios"
+        android:layout_alignRight="@+id/bt_sincronizar_usuarios"
+        android:layout_below="@+id/bt_sincronizar_usuarios"
+        android:gravity="fill_horizontal|center"
+        android:text="Bajar Todos" />
 
 </RelativeLayout>

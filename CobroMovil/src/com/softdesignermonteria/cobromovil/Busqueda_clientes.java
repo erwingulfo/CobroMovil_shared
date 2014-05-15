@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,13 +24,16 @@ public class Busqueda_clientes extends Activity {
 	
 	private EditText nit_nombres;
 	private Button consultar_clientes;
-	private ListView lv;
+	private Button limpiar;
+	private EditText txt;
 	
 	private String url_servidor;
 	private String nombre_database;
 	private int version_database;
 	private String parametro;
-	ArrayList<String> menu = new ArrayList<String>();
+	public ArrayList<String> menu = new ArrayList<String>();
+	public ArrayList<String> adaptador = new ArrayList<String>();
+	
 	
 	
 	@Override
@@ -44,7 +49,7 @@ public class Busqueda_clientes extends Activity {
 		nombre_database  = globalVariable.getNombre_database();
 		version_database = globalVariable.getVersion_database();
 		
-		lv = (ListView)findViewById(R.id.lv);
+		txt = (EditText)findViewById(R.id.txt);
 		nit_nombres=(EditText)findViewById(R.id.nit_nombres);
 
 		consultar_clientes = (Button) findViewById(R.id.consultar_clientes);
@@ -54,11 +59,11 @@ public class Busqueda_clientes extends Activity {
 				// setContentView(R.layout.activity_menu_clientes);cambios nuevoss
 				
 				/*Limpiamos el listview*/
-				ArrayList<String> borrar = new ArrayList<String>();
+				/*ArrayList<String> borrar = new ArrayList<String>();
 				borrar.add("");
 				ArrayAdapter<String> limpiar = new ArrayAdapter<String>(Busqueda_clientes.this,
-			    android.R.layout.simple_list_item_1, borrar);
-			
+			    android.R.layout.simple_list_item_1, borrar);*/
+				
 				
 				if (consultar_clientes()) {
 					System.out
@@ -72,10 +77,13 @@ public class Busqueda_clientes extends Activity {
 			}
 		});
 		
+		
+		
 	}
 	
 	public boolean consultar_clientes() {
 		boolean sw = true;
+		
 		
 		parametro=nit_nombres.getText().toString();
 			
@@ -85,21 +93,22 @@ public class Busqueda_clientes extends Activity {
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
 			
-						
+								
 			if (db != null) {
 				
 					Cursor c = db.rawQuery("select * from clientes where cedula like"+"'%"+parametro+"%'" +
 						 	   "or nombres like"+"'%"+parametro+"%'", null);
 					
-					String cadena="select * from clientes where cedula="+"'"+parametro+"' " +
-						 	   "or nombres like"+"'%"+parametro+"%'";
+					String cadena="select * from clientes where cedula="+"'"+parametro+"'";
 					
 					Log.i("Sql", "Sentencia:"+cadena);
 															
 					if (c.moveToFirst()) {
 					     //Recorremos el cursor hasta que no haya más registros
 						do{
-					    	
+					
+						//Log.i("Sql", "pos"+pos+":"+pos);
+							
 						String id = c.getString(0);
 						String cedula = c.getString(1);
 					    String nombres = c.getString(2);
@@ -107,19 +116,21 @@ public class Busqueda_clientes extends Activity {
 					    String telefono = c.getString(4);
 					    String celular = c.getString(5);
 					    
-					    					    					    
-					    menu.add(" " + id +" - "+ cedula +" - " + nombres + " - "+ nombres +" - "+ direccion+ " - "+ telefono+ " - " + celular+"\n");
+					    					    					    					    
+					    txt.append(" " + id +" - "+ cedula +" - " + nombres + " - "+ direccion+ " - "+ telefono+ " - " + celular+"\n");
 					    
 					    ArrayAdapter<String> adaptador =
 					    		new ArrayAdapter<String>(Busqueda_clientes.this,
 					    android.R.layout.simple_list_item_1, menu);
-					    lv.setAdapter(adaptador);
+					    //lv.setAdapter(adaptador);
 					    
+					    					    
 					    } while(c.moveToNext());
-						
-				 
+										
+				    }else{
+				    	txt.append("Cliente no existe");
 				    }
-		
+				  
 				 
 				}
 				
