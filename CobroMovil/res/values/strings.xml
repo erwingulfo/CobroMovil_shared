@@ -12,5 +12,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_menu_prueba">Menu Prueba</string>
     <string name="title_activity_busqueda_clientes">Buscar Clientes</string>
+    <string name="title_activity_recaudos">Recaudos</string>
 
 </resources>

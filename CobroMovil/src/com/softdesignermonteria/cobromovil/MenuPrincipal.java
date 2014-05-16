@@ -1,5 +1,7 @@
 package com.softdesignermonteria.cobromovil;
 
+import org.apache.http.auth.BasicUserPrincipal;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +18,7 @@ public class MenuPrincipal extends Activity {
 	private TextView clave_usuario;
 	private Button b_m_sincronizar;
 	private Button b_m_clientes;
+	private Button b_m_recaudos;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,19 @@ public class MenuPrincipal extends Activity {
 			//startActivity(in);
 			  Intent i = new Intent();
 			  i.setClass(MenuPrincipal.this, Busqueda_clientes.class);
+			  startActivity(i);
+			}
+		});
+		
+		b_m_recaudos = (Button)findViewById(R.id.b_m_recaudos);
+		b_m_recaudos.setOnClickListener(new View.OnClickListener() {
+		
+		//Intent in = new Intent("com.softdesignermonteria.cobromovil.prueba");
+		public void onClick(View arg0){
+			
+			//startActivity(in);
+			  Intent i = new Intent();
+			  i.setClass(MenuPrincipal.this, Recaudos.class);
 			  startActivity(i);
 			}
 		});
