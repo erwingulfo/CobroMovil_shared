@@ -13,6 +13,10 @@ public class GlobalClass extends Application{
 	private String nombre_database;
 	
 	private String url_servidor;
+	
+	private String cobradores_id;
+	
+	private String cedula_cobrador;
      
 	
 	
@@ -33,6 +37,18 @@ public class GlobalClass extends Application{
 	}
 	public void setUrl_servidor(String url_servidor) {
 		this.url_servidor = url_servidor;
+	}
+	public String getCobradores_id() {
+		return cobradores_id;
+	}
+	public void setCobradores_id(String cobradores_id) {
+		this.cobradores_id = cobradores_id;
+	}
+	public String getCedula_cobrador() {
+		return cedula_cobrador;
+	}
+	public void setCedula_cobrador(String cedula_cobrador) {
+		this.cedula_cobrador = cedula_cobrador;
 	}
 	
  

@@ -220,8 +220,6 @@ public class Menu_sincronizar extends Activity {
 		
 	}
 	
-
-	
 		
     private class MiTareaAsincronaDialog extends AsyncTask<String, Integer, Boolean> {
     	
@@ -329,19 +327,20 @@ public class Menu_sincronizar extends Activity {
         			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
 	    		
-	    		if(params[3].equals(proceso_cartera)     ){ 
+	    		if(params[3].equals(proceso_usuarios)     ){ 
     				
     				if (sincronizar_usuarios()) {
-    					System.out.println("Cartera Sincronizados Satisfactoriamente");
-    					Log.i(this.getClass().toString(),"Cartera Sincronizados Satisfactoriamente");
+    					System.out.println("Usuarios Sincronizados Satisfactoriamente");
+    					Log.i(this.getClass().toString(),"Usuarios Sincronizados Satisfactoriamente");
     				} else {
-    					System.out.println("Oops no sincronizados Cartera");
-    					Log.i(this.getClass().toString(), "Oops Cartera no sincronizados");
+    					System.out.println("Oops no sincronizados Usuarios");
+    					Log.i(this.getClass().toString(), "Oops Usuarios no sincronizados");
     				}
         			
-        			pDialog_cartera.dismiss();		
+        			pDialog_usuarios.dismiss();		
         			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
+	    		
 	    		
     		}
 
@@ -625,7 +624,7 @@ public class Menu_sincronizar extends Activity {
 					
 					String sql_insert_usuarios = "insert into usuarios "
 							+ " (nombre,clave,cobradores_id,cedula_cobrador) "
-							+ "values" + " (" + nombre + ",'"+ clave
+							+ "values" + " ('" + nombre + "','"+ clave
 							+ "','" + cobradores_id
 							+ "','" + cedula_cobrador + "') ";
 					Log.i(this.getClass().toString(),sql_insert_usuarios);
@@ -641,6 +640,7 @@ public class Menu_sincronizar extends Activity {
 				android.R.layout.simple_list_item_1, cobradores);
 				lst.setAdapter(adaptador);*/
 				//mostrar_sincronizados(respJSON.length(),"Cobradores sincronizados");
+				pDialog_usuarios.dismiss();
 				
 			}
 			
