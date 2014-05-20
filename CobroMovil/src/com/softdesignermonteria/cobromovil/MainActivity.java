@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(8);
+				globalVariable.setVersion_database(10);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
 				
 				/*
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 					//Alternativa 1: método rawQuery()
 					Cursor c = db.rawQuery("select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'", null);
 					
-					Log.e("SOY MD5:","select nombre,clave from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'");
+					Log.e("SOY MD5:","select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + cla + "'");
 										
 					if (c.moveToFirst()) {
 						//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
@@ -113,8 +113,8 @@ public class MainActivity extends Activity {
 				        globalVariable.setCobradores_id(cobradores_id);
 				        globalVariable.setCedula_cobrador(cedula_cobrador);
 				        
-				        Log.e("SOY cobradores_id:",cobradores_id);
-				        Log.e("SOY cobradores_cedula:",cedula_cobrador);
+				        //Log.e("SOY cobradores_id:",cobradores_id);
+				        //Log.e("SOY cobradores_cedula:",cedula_cobrador);
 				        
 				        startActivity(i);
 						
@@ -162,27 +162,8 @@ public class MainActivity extends Activity {
 	        toast.show();
         }
         
-        
-       /* public String md5(String s) {
-            try {
-                // Create MD5 Hash
-                MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-                digest.update(s.getBytes());
-                byte messageDigest[] = digest.digest();
-
-                // Create Hex String
-                StringBuffer hexString = new StringBuffer();
-                for (int i=0; i<messageDigest.length; i++)
-                    hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-                return hexString.toString();
-
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }*/
-        public static String md5(String s) 
-        {
+  
+        public static String md5(String s){
             MessageDigest digest;
             try 
             {

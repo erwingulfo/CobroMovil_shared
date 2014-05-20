@@ -1,5 +1,9 @@
 package com.softdesignermonteria.cobromovil;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,7 +15,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	/**
 	 * Base de datos en desarrollo
 	 * version antes de lanzamiento oficial
-	 * Version=5
+	 * Version=10
 	 */
 
 
@@ -80,10 +84,9 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 			+ "			clientes_id INTEGER NOT NULL, "
 			+ "			cedula VARCHAR(20) NOT NULL, "
 			+ "			creditos_id INTEGER NOT NULL, "
-			+ "			detalle_cxc_id INTEGER NOT NULL, "	
 			+ "			cobradores_id INTEGER NOT NULL,"
 			+ "			cedula_cobrador VARCHAR(20) NOT NULL, "
-			+ "			fecha VARCHAR(10) NOT NULL, "
+			+ "			fecha VARCHAR(20) NOT NULL, "
 			+ "			valor_pagado numeric(10,2) NOT NULL, "
 			+ "			sincronizado VARCHAR(2) default '0' "
 			+ "											  )";
@@ -105,17 +108,18 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
        
     }
     
-   
- 
-    @Override
+     
     public void onCreate(SQLiteDatabase db) {
         /**
          * Se ejecuta la sentencia SQL de creación de la tabla
          */
     	creacion_tablas(db);
-        
-    	String insert_usu = "insert into usuarios (nombre,clave) values ('admin','admin');";
+    	
+    	
+    	String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"+md5("admin")+"','2','34444');";
+    	String cadena="insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','admin','2','34444');";
         db.execSQL(insert_usu);
+        Log.e("", cadena);
            
     }
  
@@ -133,7 +137,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     	Log.i(this.getClass().toString(), "On Upgrade...");
     	borrar_tablas(db);
         creacion_tablas(db);
-        String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','admin','2','34444');";
+        String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"+md5("admin")+"','2','34444');";
         db.execSQL(insert_usu);
         Log.i(this.getClass().toString(), "Insercion de usuario por defecto despues de actualizar");
         
@@ -192,6 +196,24 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
     	 */
         db.execSQL("DROP TABLE IF EXISTS cartera");
         
+      
+        
+    }
+    
+    public static String md5(String s){
+        MessageDigest digest;
+        try 
+        {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes(),0,s.length());
+            String hash = new BigInteger(1, digest.digest()).toString(16);
+            return hash;
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {
+            e.printStackTrace();
+        }
+        return "";
     }
     
     
