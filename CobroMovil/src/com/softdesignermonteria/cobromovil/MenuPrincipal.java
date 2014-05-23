@@ -19,6 +19,7 @@ public class MenuPrincipal extends Activity {
 	private Button b_m_sincronizar;
 	private Button b_m_clientes;
 	private Button b_m_recaudos;
+	private Button b_m_reportes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,22 @@ public class MenuPrincipal extends Activity {
 			//startActivity(in);
 			  Intent i = new Intent();
 			  i.setClass(MenuPrincipal.this, Recaudos.class);
+			  startActivity(i);
+			}
+		});
+		
+		/*probando camps  alejandro betancourt*/
+		
+	
+		b_m_reportes = (Button)findViewById(R.id.b_m_reportes);
+		b_m_reportes.setOnClickListener(new View.OnClickListener() {
+		
+		//Intent in = new Intent("com.softdesignermonteria.cobromovil.prueba");
+		public void onClick(View arg0){
+			
+			//startActivity(in);
+			  Intent i = new Intent();
+			  i.setClass(MenuPrincipal.this, Reportes.class);
 			  startActivity(i);
 			}
 		});

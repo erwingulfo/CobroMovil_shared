@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -38,6 +39,8 @@ public class Menu_sincronizar extends Activity {
 	private Button bt_sincronizar_cartera;
 	private Button bt_sincronizar_usuarios;
 	private Button bt_sincronizar_todos;
+	
+	private TextView tv2;
 	
 	//private ListView lv;
 	private ProgressBar bprogreso;
@@ -53,6 +56,7 @@ public class Menu_sincronizar extends Activity {
 	 * */
 	private String url_servidor;
 	private String nombre_database;
+	private String user_logueado;
 	
 	private String proceso_clientes = "async_clientes"; 
 	private String proceso_cobradores = "async_cobradores";
@@ -76,9 +80,10 @@ public class Menu_sincronizar extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_sincronizar);
 		
+		tv2 = (TextView) findViewById(R.id.tv7);
 		
 		//lv = (ListView)findViewById(R.id.lv);
-	
+		
 		ArrayList<String> menu = new ArrayList<String>();
 		/*menu.add("Sincronizar Clientes");
 		menu.add("Sincronizar Cobradores");
@@ -136,7 +141,9 @@ public class Menu_sincronizar extends Activity {
 		url_servidor     = globalVariable.getUrl_servidor();
 		nombre_database  = globalVariable.getNombre_database();
 		version_database = globalVariable.getVersion_database();
+		user_logueado	 = globalVariable.getUserlogueado();
 		
+		tv2.setText(user_logueado);
 		//lst = (ListView) findViewById(R.id.lst);
 		
 		if (android.os.Build.VERSION.SDK_INT > 9) {

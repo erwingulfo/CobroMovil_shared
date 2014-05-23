@@ -110,8 +110,12 @@ public class MainActivity extends Activity {
 				        int index2 = c.getColumnIndex("cedula_cobrador");
 				        String cedula_cobrador = c.getString(index2);
 				        
+				        int index3 = c.getColumnIndex("nombre");
+				        String nombre_usuario = c.getString(index3);
+				        
 				        globalVariable.setCobradores_id(cobradores_id);
 				        globalVariable.setCedula_cobrador(cedula_cobrador);
+				        globalVariable.setUserlogueado(nombre_usuario);
 				        
 				        //Log.e("SOY cobradores_id:",cobradores_id);
 				        //Log.e("SOY cobradores_cedula:",cedula_cobrador);

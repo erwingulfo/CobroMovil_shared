@@ -2,29 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#494949"
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:textColor="#ffffff"
         android:text="Bienvenido:" />
 
     <TextView
         android:id="@+id/userlogueado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignBottom="@+id/tv1"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView1" />
+        android:textColor="#ffffff"
+        android:layout_toRightOf="@+id/tv1" />
 
     <TextView
         android:id="@+id/nombre_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tv1"
+        android:textColor="#ffffff"
         android:layout_marginTop="22dp" />
 
     <TextView
@@ -33,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/nombre_usuario"
+        android:textColor="#ffffff"
         android:layout_marginTop="27dp" />
 
     <Button
@@ -41,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tv1"
+        android:textColor="#ffffff"
         android:drawableLeft="@drawable/ic_action_import_export"
         android:gravity="left"
         android:text="Sincronizar" />
@@ -54,6 +60,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/b_m_sincronizar"
         android:drawableLeft="@drawable/ic_action_person"
+        android:textColor="#ffffff"
         android:gravity="left"
         android:text="Buscar Clientes" />
 
@@ -64,8 +71,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/b_m_clientes"
+        android:textColor="#ffffff"
         android:drawableLeft="@drawable/ic_action_cloud"
         android:gravity="left"
         android:text="Recaudos" />
+
+    <Button
+        android:id="@+id/b_m_reportes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/b_m_recaudos"
+        android:textColor="#ffffff"
+        android:drawableLeft="@drawable/ic_action_copy"
+        android:gravity="left"
+        android:text="Reportes" />
 
 </RelativeLayout>

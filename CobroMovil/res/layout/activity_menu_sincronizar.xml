@@ -1,12 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#494949"
     android:layout_gravity="start"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Menu_clientes" >
 
     <Button
@@ -15,48 +12,78 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="24dp"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Clientes" />
-
-    <Button
-        android:id="@+id/bt_sincronizar_cobradores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_clientes"
-        android:layout_alignRight="@+id/bt_sincronizar_clientes"
-        android:layout_below="@+id/bt_sincronizar_clientes"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Cobradores" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/ic_action_download"
+        android:gravity="left"
+        android:text="Bajar Clientes"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/bt_sincronizar_cartera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_cobradores"
-        android:layout_alignRight="@+id/bt_sincronizar_cobradores"
-        android:layout_below="@+id/bt_sincronizar_cobradores"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Cartera" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/bt_sincronizar_clientes"
+        android:layout_below="@+id/bt_sincronizar_clientes"
+        android:drawableLeft="@drawable/ic_action_download"
+        android:gravity="left"
+        android:text="Bajar Cartera"
+        android:textColor="#ffffff" />
 
     <Button
-        android:id="@+id/bt_sincronizar_usuarios"
+        android:id="@+id/bt_sincronizar_cobradores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_cartera"
+        android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/bt_sincronizar_cartera"
         android:layout_below="@+id/bt_sincronizar_cartera"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Usuarios Sistema" />
+        android:drawableLeft="@drawable/ic_action_download"
+        android:gravity="left"
+        android:text="Bajar Cobradores"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="#ffffff"
+        android:text="Bienvenido:" />
 
     <Button
         android:id="@+id/bt_sincronizar_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bt_sincronizar_usuarios"
-        android:layout_alignRight="@+id/bt_sincronizar_usuarios"
-        android:layout_below="@+id/bt_sincronizar_usuarios"
-        android:gravity="fill_horizontal|center"
-        android:text="Bajar Todos" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:drawableLeft="@drawable/ic_action_download"
+        android:gravity="left"
+        android:text="Bajar Todos"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/bt_sincronizar_usuarios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bt_sincronizar_cobradores"
+        android:drawableLeft="@drawable/ic_action_download"
+        android:gravity="left"
+        android:text="Bajar Usuarios Sistema"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tv1"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

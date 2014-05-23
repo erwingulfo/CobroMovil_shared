@@ -13,5 +13,6 @@
     <string name="title_activity_menu_prueba">Menu Prueba</string>
     <string name="title_activity_busqueda_clientes">Buscar Clientes</string>
     <string name="title_activity_recaudos">Recaudos</string>
+    <string name="title_activity_reportes">Reportes</string>
 
 </resources>

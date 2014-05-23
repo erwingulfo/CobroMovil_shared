@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#494949"
     tools:context=".MainActivity" >
 
     <EditText
@@ -14,25 +15,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="22dp"
+        android:textColor="#ffffff"
+        android:hint="Nombre de usuario"
         android:ems="10" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/usuario"
         android:layout_marginRight="14dp"
         android:layout_toLeftOf="@+id/usuario"
+        android:textColor="#ffffff"
         android:text="Usuario:" />
 
     <TextView
         android:id="@+id/userlogueado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/tv1"
+        android:layout_alignRight="@+id/tv1"
+        android:layout_below="@+id/tv1"
         android:layout_marginTop="28dp"
+        android:textColor="#ffffff"
         android:text="Clave:" />
 
     <EditText
@@ -41,8 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/userlogueado"
         android:layout_alignBottom="@+id/userlogueado"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/tv1"
         android:ems="10"
+        android:textColor="#ffffff"
+        android:hint="Clave"
         android:inputType="textPassword" >
 
         <requestFocus />
@@ -56,6 +63,8 @@
         android:layout_alignRight="@+id/clave"
         android:layout_below="@+id/clave"
         android:layout_marginTop="36dp"
-        android:text="Entrar" />
+        android:drawableLeft="@drawable/ic_action_secure"
+        android:text="Entrar"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

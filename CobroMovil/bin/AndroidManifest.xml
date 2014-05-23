@@ -64,6 +64,10 @@
             android:name="com.softdesignermonteria.cobromovil.Recaudos"
             android:label="@string/title_activity_recaudos" >
         </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Reportes"
+            android:label="@string/title_activity_reportes" >
+        </activity>
     </application>
 
 </manifest>

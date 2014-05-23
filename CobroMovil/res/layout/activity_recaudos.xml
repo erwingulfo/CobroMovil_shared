@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#494949"
+    tools:context=".Recaudos" >
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/valor_recaudo"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/bt_recaudar"
+        android:layout_marginBottom="74dp"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/cedula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv1"
+        android:ems="10"
+        android:hint="Ingrese Cédula"
+        android:inputType="number"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bt_buscar_cliente"
+        android:text="1. Información del Cliente"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv7"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv3"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/bt_buscar_cliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cedula"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/cedula"
+        android:drawableLeft="@drawable/ic_action_search"
+        android:text="Buscar"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="#ffffff"
+        android:text="Bienvenido:" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv6"
+        android:text="Ingrese Cédula"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tv6"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv"
+        android:text="2. Información del crédito"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/valor_recaudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv2"
+        android:layout_toLeftOf="@+id/bt_recaudar"
+        android:ems="10"
+        android:hint="Valor a recaudar"
+        android:inputType="number"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/bt_recaudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/valor_recaudo"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/valor_recaudo"
+        android:drawableLeft="@drawable/ic_action_save"
+        android:text="Guardar"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+</RelativeLayout>

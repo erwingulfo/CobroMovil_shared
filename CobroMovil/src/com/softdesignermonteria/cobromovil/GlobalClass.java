@@ -17,6 +17,8 @@ public class GlobalClass extends Application{
 	private String cobradores_id;
 	
 	private String cedula_cobrador;
+	
+	private String userlogueado;
      
 	
 	
@@ -49,6 +51,12 @@ public class GlobalClass extends Application{
 	}
 	public void setCedula_cobrador(String cedula_cobrador) {
 		this.cedula_cobrador = cedula_cobrador;
+	}
+	public String getUserlogueado() {
+		return userlogueado;
+	}
+	public void setUserlogueado(String userlogueado) {
+		this.userlogueado = userlogueado;
 	}
 	
  

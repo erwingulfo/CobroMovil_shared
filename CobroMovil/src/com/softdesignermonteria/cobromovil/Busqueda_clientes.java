@@ -25,7 +25,10 @@ public class Busqueda_clientes extends Activity {
 	private EditText nit_nombres;
 	private Button consultar_clientes;
 	private Button limpiar;
-	private EditText txt;
+	private TextView tv2;
+	private TextView tv3;
+	private TextView tv4;
+	private String user_logueado;
 	
 	private String url_servidor;
 	private String nombre_database;
@@ -48,9 +51,14 @@ public class Busqueda_clientes extends Activity {
 		url_servidor     = globalVariable.getUrl_servidor();
 		nombre_database  = globalVariable.getNombre_database();
 		version_database = globalVariable.getVersion_database();
+		user_logueado	 = globalVariable.getUserlogueado();
 		
-		txt = (EditText)findViewById(R.id.txt);
+		tv2 = (TextView)findViewById(R.id.tv7);
+		tv3 = (TextView)findViewById(R.id.tv3);
+		tv4 = (TextView)findViewById(R.id.tv4);
 		nit_nombres=(EditText)findViewById(R.id.nit_nombres);
+		
+		tv4.setText(user_logueado);
 
 		consultar_clientes = (Button) findViewById(R.id.consultar_clientes);
 		consultar_clientes.setOnClickListener(new OnClickListener() {
@@ -92,12 +100,13 @@ public class Busqueda_clientes extends Activity {
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			// Si hemos abierto correctamente la base de datos
-			
+			tv3.setText("");
 								
 			if (db != null) {
 				
-					Cursor c = db.rawQuery("select * from clientes where cedula like"+"'%"+parametro+"%'" +
-						 	   "or nombres like"+"'%"+parametro+"%'", null);
+				   tv2.setVisibility(View.VISIBLE);
+				
+					Cursor c = db.rawQuery("select * from clientes where cedula="+"'"+parametro+"'", null);
 					
 					String cadena="select * from clientes where cedula="+"'"+parametro+"'";
 					
@@ -115,9 +124,8 @@ public class Busqueda_clientes extends Activity {
 					    String direccion = c.getString(3);
 					    String telefono = c.getString(4);
 					    String celular = c.getString(5);
-					    
-					    					    					    					    
-					    txt.append(" " + id +" - "+ cedula +" - " + nombres + " - "+ direccion+ " - "+ telefono+ " - " + celular+"\n");
+					  					    
+					    tv3.append(" " + id +" - "+ cedula +" - " + nombres + " - "+ direccion+ " - "+ telefono+ " - " + celular+"\n");
 					    
 					    ArrayAdapter<String> adaptador =
 					    		new ArrayAdapter<String>(Busqueda_clientes.this,
@@ -128,7 +136,9 @@ public class Busqueda_clientes extends Activity {
 					    } while(c.moveToNext());
 										
 				    }else{
-				    	txt.append("Cliente no existe");
+				    	
+				    	tv2.setVisibility(View.VISIBLE);				    	
+				    	tv3.append("Cliente no existe");
 				    }
 				  
 				 
