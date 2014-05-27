@@ -14,19 +14,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceScreen;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -647,7 +642,7 @@ public class Menu_sincronizar extends Activity {
 				android.R.layout.simple_list_item_1, cobradores);
 				lst.setAdapter(adaptador);*/
 				//mostrar_sincronizados(respJSON.length(),"Cobradores sincronizados");
-				pDialog_usuarios.dismiss();
+				//pDialog_usuarios.dismiss();
 				
 			}
 			

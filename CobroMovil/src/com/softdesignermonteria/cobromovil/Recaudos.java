@@ -2,20 +2,13 @@ package com.softdesignermonteria.cobromovil;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-import org.w3c.dom.Text;
-
-import android.R.integer;
-import android.R.string;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -54,8 +47,6 @@ public class Recaudos extends Activity {
 	private String cedula_cobrador;
 	private String user_logueado;
 	private String valor_cuota_global;
-	private int tam=0;
-		
 	String[] listado = new String[0];
 	
 	
@@ -184,10 +175,10 @@ public class Recaudos extends Activity {
 						String saldo = c.getString(2);
 					    String creditos_id = c.getString(3);
 					    String celular = c.getString(4);
-					    String detalle_cxc_id=c.getString(5);
+					    c.getString(5);
 					    String clientes_id=c.getString(6);
-					    String cobradores_id=c.getString(7);
-					    String cedula_cobrador=c.getString(8);
+					    c.getString(7);
+					    c.getString(8);
 					    String vrcuota=c.getString(9);
 					    valor_cuota_global=vrcuota;
 					    
@@ -258,6 +249,8 @@ public class Recaudos extends Activity {
 		String valor_recaudo_temp=valor_recaudo.getText().toString();
 		TextView4.setText("");
 		
+		int tmp_cuotas_pagadas = 0;
+		
 		if(valor_recaudado==0){
 			
 			 Toast m=Toast.makeText(this, "Ingrese un valor diferente de cero.", Toast.LENGTH_SHORT);
@@ -282,14 +275,12 @@ public class Recaudos extends Activity {
 			
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
+
 			// Si hemos abierto correctamente la base de datos
-			
-								
 			if (db != null) {
 					
 				
 					String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-					
 					String provisional = UUID.randomUUID().toString();
 			    	//System.out.println("uuid = " + provisional);
 			    	Log.i("Sql", "temp:"+provisional);
@@ -298,34 +289,24 @@ public class Recaudos extends Activity {
 						       "cedula_cobrador,fecha,valor_pagado)" +
 						       "values('"+provisional+"','"+this.clientes_id+"','"+this.cedula_cliente+"','"+this.creditos_id+"'," +
 						       "'"+this.cobradores_id+"','"+this.cedula_cobrador+"','"+fecha+"','"+valor_recaudado+"')";	
+					     
+			        db.execSQL(insert_recaudos);
 						       
-						       String sql="insert into recaudos(provisional,clientes_id,cedula,creditos_id,cobradores_id," +
-						       "cedula_cobrador,fecha,valor_pagado)" +
-						       "values('"+provisional+"','"+this.clientes_id+"','"+this.cedula_cliente+"','"+this.creditos_id+"'," +
-						       "'"+cobradores_id+"','"+this.cedula_cobrador+"','"+fecha+"','"+valor_recaudado+"'";
-						       db.execSQL(insert_recaudos);
-						       
-						       Log.e("Sql", "Sentencia:"+sql);
-						       
-			       Cursor c = db.rawQuery("select detalle_cxc_id,creditos_id,clientes_id,cedula," +
+			        Log.e("Sql", "Sentencia:"+insert_recaudos);
+			       
+			        String Sql1 = "select detalle_cxc_id,creditos_id,clientes_id,cedula," +
 							"cobradores_id,cedula_cobrador,vencimiento," +
 							"(valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd where rd.detalle_cxc_id=c.detalle_cxc_id),0)) as valor," +
 							"(select count(*) from cartera where cedula="+"'"+parametro+"') as tam " +
-							"from cartera c where c.cedula="+"'"+parametro+"' order by vencimiento asc", null);
-					
-					String cadena="select detalle_cxc_id,creditos_id,clientes_id,cedula," +
-							"cobradores_id,cedula_cobrador,vencimiento," +
-							"(valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd " +
-							"where rd.detalle_cxc_id=c.detalle_cxc_id),0)) as valor," +
-							"from cartera c where c.cedula="+"'"+parametro+"' order by vencimiento asc";
-					
-					Log.i("Sql", "Sentencia:"+cadena);	     
+							"from cartera c where c.cedula="+"'"+parametro+"' order by vencimiento asc" ;
+			       
+			        Cursor c = db.rawQuery(Sql1, null);
+			        Log.i("Sql", "Sentencia:"+Sql1);	     
 					
 						       
 					int valor_pagado_tmp = valor_recaudado;     //50000 
 															
 					if (c.moveToFirst()) {
-					
 					//Recorremos el cursor hasta que no haya más registros
 						
 					String detalle_cxc_id;
@@ -338,7 +319,6 @@ public class Recaudos extends Activity {
 						tmp = c.getColumnIndex("detalle_cxc_id");
 						detalle_cxc_id=c.getString(tmp);
 						tmp = c.getColumnIndex("valor");
-						
 						cuota = c.getInt(tmp);
 						Log.i("Sql", "cuota: "+cuota);
 						
@@ -356,15 +336,7 @@ public class Recaudos extends Activity {
 								db.execSQL(insert_recaudos_detalles);
 					       
 						        String cuota1=formateador.format(cuota);
-						     
-						        /*TextView4.setVisibility(View.VISIBLE);
-						        TextView4.append("Se pagó la cuota Nro: "+ detalle_cxc_id +"-por valor de: " + cuota1 +"\n");*/
-						       
-						       						       
-						      /* ArrayAdapter<String> adaptador =
-							   new ArrayAdapter<String>(Recaudos.this,
-							   android.R.layout.simple_list_item_1, menu);
-							   lv.setAdapter(adaptador);*/
+						        tmp_cuotas_pagadas = tmp_cuotas_pagadas +1;
 						       
 						       String sql2="insert into recaudos_detalles(provisional,detalle_cxc_id,valor_pagado) " +
 						       		"values('"+provisional+"','"+detalle_cxc_id+"','"+cuota1+"'";
@@ -380,20 +352,8 @@ public class Recaudos extends Activity {
 							       		"values('"+provisional+"','"+detalle_cxc_id+"','"+valor_pagado_tmp+"')";
 							       db.execSQL(insert_recaudos_detalles);
 							       
-							       String cuota2=formateador.format(valor_pagado_tmp);
-							       
-							       /*TextView4.setVisibility(View.VISIBLE);
-							       TextView4.append("Se abonó a la cuota Nro: "+ detalle_cxc_id +"-por valor de: " + cuota2 +"\n");
-							       Log.e("Sql", "Sentencia 2:"+insert_recaudos_detalles);*/
-							       
-							       
-							       //Log.i("Sql", "tam1 array: "+tam1);
-							      /* menu[]= "" + detalle_cxc_id + "-" + cuota2 + "-";
-							       
-							       ArrayAdapter<String> adaptador =
-								   new ArrayAdapter<String>(Recaudos.this,
-								   android.R.layout.simple_list_item_1, menu);
-								   lv.setAdapter(adaptador);*/
+							       formateador.format(valor_pagado_tmp);
+							       tmp_cuotas_pagadas = tmp_cuotas_pagadas +1;
 							     
 							    }
 						
@@ -414,53 +374,46 @@ public class Recaudos extends Activity {
 										
 				    }//Ubicarse en el primer registro;
 					
-					TablasSQLiteHelper usdbh1 = new TablasSQLiteHelper(this,nombre_database, null, version_database);
-					SQLiteDatabase db1 = usdbh1.getWritableDatabase();
 					
-								
-					Cursor c1 = db1.rawQuery("select detalle_cxc_id,valor_pagado," +
-							"(select count(*) from recaudos_detalles rd where rd.provisional=rd1.provisional) as tam " +
-							"from recaudos_detalles rd1 where rd1.provisional='"+provisional+"'",null);
-																	
-					String sql2="select detalle_cxc_id,valor_pagado," +
-							"(select count(*) from recaudos_detalles rd where rd.provisional=rd1.provisional) as tam " +
-							"from recaudos_detalles rd1 where rd1.provisional='"+provisional+"'";
+					
+					//TablasSQLiteHelper usdbh1 = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+					//SQLiteDatabase db1 = usdbh1.getWritableDatabase();
+					
+					String Sql2 = " select detalle_cxc_id,valor_pagado " +
+							" from recaudos_detalles "
+							+ "	where "
+							+ " provisional='"+provisional+"' " ;			
+					Cursor c1 = db.rawQuery(Sql2,null);
+					Log.e("","Yo soy el query :"+Sql2);
 				    
-					Log.e("","Yo soy el query :"+sql2);
-				    
-				    String detalle_cxc_id;
-					int cuota = 0;
+				    String tmpdetalle_cxc_id;
+					int tmpcuota = 0;
 					int tmp = 0;
-					int tam1=0;
-					int k=0;
-								    
+					String[] ListadoList = new String[tmp_cuotas_pagadas];
+					int TmpIndex = 0;			    
 					if (c1.moveToFirst()) {
 				
-					//Recorremos el cursor hasta que no haya más registros
-					do{
-						
-						tam1 = c1.getColumnIndex("tam");
-					    tam = c1.getInt(tam1);
-					    
-					    tmp = c1.getColumnIndex("detalle_cxc_id");
-						detalle_cxc_id=c1.getString(tmp);
-						
-						tmp = c1.getColumnIndex("valor_pagado");
-						cuota = c1.getInt(tmp);		
-												
-						Log.i("Sql", "Yo soy k: "+k);
-						/*"Se pagó la cuota "+detalle_cxc_id+" por valor de: "+cuota;*/
-						listado[k]= "Se pagó la cuota "+detalle_cxc_id+" por valor de: "+cuota;
-						Log.i("Sql", "array: "+listado[k]);
-						
-						
-						k=k+1;
-				 
-									
-					}while(c1.moveToNext());
+							//Recorremos el cursor hasta que no haya más registros
+							do{
+							    tmp = c1.getColumnIndex("detalle_cxc_id");
+							    tmpdetalle_cxc_id=c1.getString(tmp);
+								tmp = c1.getColumnIndex("valor_pagado");
+								tmpcuota = c1.getInt(tmp);		
+								Log.i("Sql", "Yo soy TmpIndex: "+TmpIndex);
+								/*"Se pagó la cuota "+detalle_cxc_id+" por valor de: "+cuota;*/
+								ListadoList[TmpIndex]= "Se pagó la cuota "+tmpdetalle_cxc_id+" por valor de: "+tmpcuota;
+								Log.i("Sql", "array: "+ListadoList[TmpIndex]);
+								TmpIndex = TmpIndex +1;			
+							}while(c1.moveToNext());
+							
+							
+					} //fin ubicarse en primer registro	
+				
 					
-					
-					}
+					ArrayAdapter<String> adaptador =
+							   new ArrayAdapter<String>(Recaudos.this,
+							   android.R.layout.simple_list_item_1, ListadoList);
+							   lv.setAdapter(adaptador);
 					
 				
 			   }
@@ -485,21 +438,6 @@ public class Recaudos extends Activity {
 
 	}
 	
-
-	private void setListAdapter(ArrayAdapter<String> arrayAdapter) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private int Double(String string) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private int Integer(String string) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
