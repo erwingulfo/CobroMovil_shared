@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tv1"
-        android:ems="10"
+        android:layout_toLeftOf="@+id/bt_buscar_cliente"
         android:hint="Ingrese Cédula"
         android:inputType="number"
         android:textColor="#ffffff" />
@@ -109,9 +109,9 @@
         android:id="@+id/valor_recaudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/cedula"
         android:layout_below="@+id/tv2"
-        android:layout_toLeftOf="@+id/bt_recaudar"
-        android:ems="10"
         android:hint="Valor a recaudar"
         android:inputType="number"
         android:textColor="#ffffff"
@@ -122,11 +122,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/valor_recaudo"
+        android:layout_alignLeft="@+id/bt_buscar_cliente"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/valor_recaudo"
         android:drawableLeft="@drawable/ic_action_save"
         android:text="Guardar"
         android:textColor="#ffffff"
         android:visibility="invisible" />
+
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/valor_recaudo"
+        android:layout_marginTop="53dp" >
+
+    </ListView>
 
 </RelativeLayout>

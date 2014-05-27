@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class Recaudos extends Activity {
 	private TextView TextView4;
 	private TextView tv5;
 	private EditText valor_recaudo;
+	private ListView lv;
 	
 	private String url_servidor;
 	private String nombre_database;
@@ -52,9 +54,10 @@ public class Recaudos extends Activity {
 	private String cedula_cobrador;
 	private String user_logueado;
 	private String valor_cuota_global;
+	private int tam=0;
+		
+	String[] listado = new String[0];
 	
-	public ArrayList<String> menu = new ArrayList<String>();
-	public ArrayList<String> adaptador = new ArrayList<String>();
 	
 
 	DecimalFormat formateador = new DecimalFormat("###,###.00");
@@ -73,7 +76,7 @@ public class Recaudos extends Activity {
 		nombre_database  = globalVariable.getNombre_database();
 		version_database = globalVariable.getVersion_database();
 		user_logueado = globalVariable.getUserlogueado();
-	
+					
 		this.cedula_cobrador = globalVariable.getCedula_cobrador();
 		this.cobradores_id = globalVariable.getCobradores_id();
 		
@@ -88,9 +91,10 @@ public class Recaudos extends Activity {
 		TextView3 = (TextView)findViewById(R.id.tv3);
 		TextView4 = (TextView)findViewById(R.id.tv4);
 		tv5 = (TextView)findViewById(R.id.tv5);
-		
+		lv = (ListView)findViewById(R.id.lv);
+						
 		tv5.setText(user_logueado);
-	
+			
 		bt_buscar_cliente.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.i(this.getClass().toString(), "Presiona Boton Buscar");
@@ -101,8 +105,7 @@ public class Recaudos extends Activity {
 				borrar.add("");
 				ArrayAdapter<String> limpiar = new ArrayAdapter<String>(Busqueda_clientes.this,
 			    android.R.layout.simple_list_item_1, borrar);*/
-				
-				
+								
 				if (consultar_clientes()) {
 					System.out
 							.println("Clientes Consultados Satisfactoriamente");
@@ -215,12 +218,8 @@ public class Recaudos extends Activity {
 					    	//Log.i("Error", "Vr Cuota formateado:"+formateador.format(vr_cuota2));
 					    					    						  
 					    }
-					    ArrayAdapter<String> adaptador =
-					    		new ArrayAdapter<String>(Recaudos.this,
-					    android.R.layout.simple_list_item_1, menu);
-					    //lv.setAdapter(adaptador);
 					    
-					    					    
+					   					    					    
 					    } while(c.moveToNext());
 										
 				    }else{
@@ -310,31 +309,39 @@ public class Recaudos extends Activity {
 						       
 			       Cursor c = db.rawQuery("select detalle_cxc_id,creditos_id,clientes_id,cedula," +
 							"cobradores_id,cedula_cobrador,vencimiento," +
-							"(valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd where rd.detalle_cxc_id=c.detalle_cxc_id),0)) as valor " +
-							"from cartera c where cedula="+"'"+parametro+"' order by vencimiento asc", null);
+							"(valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd where rd.detalle_cxc_id=c.detalle_cxc_id),0)) as valor," +
+							"(select count(*) from cartera where cedula="+"'"+parametro+"') as tam " +
+							"from cartera c where c.cedula="+"'"+parametro+"' order by vencimiento asc", null);
 					
-					String cadena="select valor from cartera where cedula="+"'"+parametro+"' order by vencimiento";
+					String cadena="select detalle_cxc_id,creditos_id,clientes_id,cedula," +
+							"cobradores_id,cedula_cobrador,vencimiento," +
+							"(valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd " +
+							"where rd.detalle_cxc_id=c.detalle_cxc_id),0)) as valor," +
+							"from cartera c where c.cedula="+"'"+parametro+"' order by vencimiento asc";
 					
-					Log.i("Sql", "Sentencia:"+cadena);	       
+					Log.i("Sql", "Sentencia:"+cadena);	     
+					
 						       
 					int valor_pagado_tmp = valor_recaudado;     //50000 
 															
 					if (c.moveToFirst()) {
-						
+					
 					//Recorremos el cursor hasta que no haya más registros
 						
 					String detalle_cxc_id;
 					int cuota = 0;
 					int tmp = 0;
-					
+								
+										
 					do{
-					
+						
 						tmp = c.getColumnIndex("detalle_cxc_id");
 						detalle_cxc_id=c.getString(tmp);
 						tmp = c.getColumnIndex("valor");
 						
 						cuota = c.getInt(tmp);
 						Log.i("Sql", "cuota: "+cuota);
+						
 						//Log.i("Sql", "pos"+pos+":"+pos);
 						String insert_recaudos_detalles="";
 						
@@ -343,15 +350,21 @@ public class Recaudos extends Activity {
 							
 							if(valor_pagado_tmp>=cuota){ 
 					    	
-					       
+								
 								insert_recaudos_detalles="insert into recaudos_detalles(provisional,detalle_cxc_id,valor_pagado) " +
 					       		"values('"+provisional+"','"+detalle_cxc_id+"','"+cuota+"')";
 								db.execSQL(insert_recaudos_detalles);
 					       
-						       String cuota1=formateador.format(cuota);
+						        String cuota1=formateador.format(cuota);
 						     
-						       TextView4.setVisibility(View.VISIBLE);
-						       TextView4.append("Se pagó la cuota Nro: "+ detalle_cxc_id +"-por valor de: " + cuota1 +"\n");
+						        /*TextView4.setVisibility(View.VISIBLE);
+						        TextView4.append("Se pagó la cuota Nro: "+ detalle_cxc_id +"-por valor de: " + cuota1 +"\n");*/
+						       
+						       						       
+						      /* ArrayAdapter<String> adaptador =
+							   new ArrayAdapter<String>(Recaudos.this,
+							   android.R.layout.simple_list_item_1, menu);
+							   lv.setAdapter(adaptador);*/
 						       
 						       String sql2="insert into recaudos_detalles(provisional,detalle_cxc_id,valor_pagado) " +
 						       		"values('"+provisional+"','"+detalle_cxc_id+"','"+cuota1+"'";
@@ -369,9 +382,18 @@ public class Recaudos extends Activity {
 							       
 							       String cuota2=formateador.format(valor_pagado_tmp);
 							       
-							       TextView4.setVisibility(View.VISIBLE);
+							       /*TextView4.setVisibility(View.VISIBLE);
 							       TextView4.append("Se abonó a la cuota Nro: "+ detalle_cxc_id +"-por valor de: " + cuota2 +"\n");
-							       Log.e("Sql", "Sentencia 2:"+insert_recaudos_detalles);
+							       Log.e("Sql", "Sentencia 2:"+insert_recaudos_detalles);*/
+							       
+							       
+							       //Log.i("Sql", "tam1 array: "+tam1);
+							      /* menu[]= "" + detalle_cxc_id + "-" + cuota2 + "-";
+							       
+							       ArrayAdapter<String> adaptador =
+								   new ArrayAdapter<String>(Recaudos.this,
+								   android.R.layout.simple_list_item_1, menu);
+								   lv.setAdapter(adaptador);*/
 							     
 							    }
 						
@@ -387,10 +409,59 @@ public class Recaudos extends Activity {
 							   
 						    }//fin de la condicion si couta>0;
 					    
-					    
+					 					    
 					    } while(c.moveToNext());//recorrido de la consulta sql, Cursor c
 										
 				    }//Ubicarse en el primer registro;
+					
+					TablasSQLiteHelper usdbh1 = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+					SQLiteDatabase db1 = usdbh1.getWritableDatabase();
+					
+								
+					Cursor c1 = db1.rawQuery("select detalle_cxc_id,valor_pagado," +
+							"(select count(*) from recaudos_detalles rd where rd.provisional=rd1.provisional) as tam " +
+							"from recaudos_detalles rd1 where rd1.provisional='"+provisional+"'",null);
+																	
+					String sql2="select detalle_cxc_id,valor_pagado," +
+							"(select count(*) from recaudos_detalles rd where rd.provisional=rd1.provisional) as tam " +
+							"from recaudos_detalles rd1 where rd1.provisional='"+provisional+"'";
+				    
+					Log.e("","Yo soy el query :"+sql2);
+				    
+				    String detalle_cxc_id;
+					int cuota = 0;
+					int tmp = 0;
+					int tam1=0;
+					int k=0;
+								    
+					if (c1.moveToFirst()) {
+				
+					//Recorremos el cursor hasta que no haya más registros
+					do{
+						
+						tam1 = c1.getColumnIndex("tam");
+					    tam = c1.getInt(tam1);
+					    
+					    tmp = c1.getColumnIndex("detalle_cxc_id");
+						detalle_cxc_id=c1.getString(tmp);
+						
+						tmp = c1.getColumnIndex("valor_pagado");
+						cuota = c1.getInt(tmp);		
+												
+						Log.i("Sql", "Yo soy k: "+k);
+						/*"Se pagó la cuota "+detalle_cxc_id+" por valor de: "+cuota;*/
+						listado[k]= "Se pagó la cuota "+detalle_cxc_id+" por valor de: "+cuota;
+						Log.i("Sql", "array: "+listado[k]);
+						
+						
+						k=k+1;
+				 
+									
+					}while(c1.moveToNext());
+					
+					
+					}
+					
 				
 			   }
 			
@@ -414,6 +485,11 @@ public class Recaudos extends Activity {
 
 	}
 	
+
+	private void setListAdapter(ArrayAdapter<String> arrayAdapter) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private int Double(String string) {
 		// TODO Auto-generated method stub
