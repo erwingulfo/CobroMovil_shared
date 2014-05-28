@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 			 * version de la base de datos
 			 * url de los webservices
 			 */
-			final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+				final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 				
 				/*
 				 * 

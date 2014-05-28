@@ -41,7 +41,7 @@
         android:layout_marginTop="27dp" />
 
     <Button
-        android:id="@+id/b_m_sincronizar"
+        android:id="@+id/m_reportes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/b_m_sincronizar"
+        android:layout_below="@+id/m_reportes"
         android:drawableLeft="@drawable/ic_action_person"
         android:textColor="#ffffff"
         android:gravity="left"

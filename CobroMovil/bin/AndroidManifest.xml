@@ -68,6 +68,10 @@
             android:name="com.softdesignermonteria.cobromovil.Reportes"
             android:label="@string/title_activity_reportes" >
         </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Cobro_Diario"
+            android:label="@string/title_activity_cobro__diario" >
+        </activity>
     </application>
 
 </manifest>

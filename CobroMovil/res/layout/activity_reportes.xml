@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textColor="#ffffff"
-        android:text="Bienvenido:" />
+        android:text="Bienvenido:"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/tv7"
@@ -21,7 +21,19 @@
         android:layout_alignBottom="@+id/tv1"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:textColor="#ffffff"
-        android:layout_toRightOf="@+id/tv1" />
+        android:layout_toRightOf="@+id/tv1"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/m_reportes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv1"
+        android:drawableLeft="@drawable/ic_action_computer"
+        android:gravity="left"
+        android:text="Recaudo Diario"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

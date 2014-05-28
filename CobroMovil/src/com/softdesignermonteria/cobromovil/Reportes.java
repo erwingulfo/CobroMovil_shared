@@ -2,7 +2,10 @@ package com.softdesignermonteria.cobromovil;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -10,6 +13,7 @@ public class Reportes extends Activity {
 	
 	private TextView tv1;
 	private TextView tv7;
+	private Button m_reportes;
 	
 	private String url_servidor;
 	private String nombre_database;
@@ -30,6 +34,20 @@ public class Reportes extends Activity {
 		tv1 = (TextView)findViewById(R.id.tv1);
 		tv7 = (TextView)findViewById(R.id.tv7);
 		tv7.setText(user_logueado);
+		
+		m_reportes= (Button)findViewById(R.id.m_reportes);
+		
+		m_reportes.setOnClickListener(new View.OnClickListener() {
+		
+		//Intent in = new Intent("com.softdesignermonteria.cobromovil.prueba");
+		public void onClick(View arg0){
+			
+			//startActivity(in);
+			  Intent i = new Intent();
+			  i.setClass(Reportes.this, Cobro_Diario.class);
+			  startActivity(i);
+			}
+		});
 		
 	}
 

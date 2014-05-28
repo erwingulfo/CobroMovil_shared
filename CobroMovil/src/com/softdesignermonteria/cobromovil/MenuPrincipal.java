@@ -35,7 +35,7 @@ public class MenuPrincipal extends Activity {
 		//nombre_usuario.setText(bundle.getString("pnombre_usuario"));
 		//clave_usuario.setText(bundle.getString("pclave_usuario"));
 		
-		b_m_sincronizar = (Button)findViewById(R.id.b_m_sincronizar);
+		b_m_sincronizar = (Button)findViewById(R.id.m_reportes);
 		b_m_sincronizar.setOnClickListener(new View.OnClickListener() {
 		
 		//Intent in = new Intent("com.softdesignermonteria.cobromovil.prueba");
