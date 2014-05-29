@@ -35,7 +35,13 @@ public class MainActivity extends Activity {
         	super.onCreate(savedInstanceState);
         	
 			setContentView(R.layout.activity_main);
-			
+			/**
+			 * 
+			 * Lanzando servicio por debajo de sincronizacion de recaudos
+			 * 
+			 * */
+			Intent service = new Intent(this, SincronizarCobroMovil.class);
+			startService(service);
 			
 			/**
 			 * Asignacion de valores de variables globales android

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.os.StrictMode;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +38,7 @@ public class Menu_sincronizar extends Activity {
 	private Button bt_sincronizar_cartera;
 	private Button bt_sincronizar_usuarios;
 	private Button bt_sincronizar_todos;
+	private Button bt_sincronizar_recaudos;
 	
 	private TextView tv2;
 	
@@ -57,11 +62,13 @@ public class Menu_sincronizar extends Activity {
 	private String proceso_cobradores = "async_cobradores";
 	private String proceso_cartera = "async_cartera";
 	private String proceso_usuarios = "async_usuarios";
+	private String proceso_recaudos = "async_recaudos";
 	
 	private ProgressDialog pDialog_clientes;
 	private ProgressDialog pDialog_cobradores;
 	private ProgressDialog pDialog_cartera;
 	private ProgressDialog pDialog_usuarios;
+	private ProgressDialog pDialog_recaudos;
 	
 	private int version_database;
 	public long id;
@@ -76,15 +83,6 @@ public class Menu_sincronizar extends Activity {
 		setContentView(R.layout.activity_menu_sincronizar);
 		
 		tv2 = (TextView) findViewById(R.id.tv7);
-		
-		//lv = (ListView)findViewById(R.id.lv);
-		
-		ArrayList<String> menu = new ArrayList<String>();
-		/*menu.add("Sincronizar Clientes");
-		menu.add("Sincronizar Cobradores");
-		menu.add("Sincronizar Cartera");
-		menu.add("Sincronizar Todos");*/
-		
 		
 		/*Dialogo Clientes*/
 		
@@ -118,19 +116,16 @@ public class Menu_sincronizar extends Activity {
 		pDialog_usuarios.setMessage("Sincronizando...Usuarios");
 		pDialog_usuarios.setCancelable(true);
 		
+		/*Dialogo Usuarios del Sistema*/
 		
-		
-		/*ArrayAdapter<String> adaptador =
-		new ArrayAdapter<String>(Menu_sincronizar.this,
-		android.R.layout.simple_list_item_1, menu);*/
-		//setListAdapter(adaptador);
-		//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		
-		//lv.setAdapter(adaptador);
-		
+		pDialog_usuarios = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_usuarios.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_usuarios.setMessage("Sincronizando...Recaudos");
+		pDialog_usuarios.setCancelable(true);
 				
 		/*
 		 * Pegar este codigo en todas las actividades que lo requieran
+		 * 
 		 * */
 		final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 		url_servidor     = globalVariable.getUrl_servidor();
@@ -157,6 +152,16 @@ public class Menu_sincronizar extends Activity {
 				tarea2.execute(proceso_clientes);
 			}
 			
+		});
+		
+		bt_sincronizar_recaudos= (Button) findViewById(R.id.btn_subir_ecaudos);
+		bt_sincronizar_recaudos.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				pDialog_recaudos.setProgress(0);
+				pDialog_recaudos.show();
+				tarea2 = new MiTareaAsincronaDialog();
+				tarea2.execute(proceso_recaudos);
+			}
 		});
 		
 		bt_sincronizar_cobradores = (Button) findViewById(R.id.bt_sincronizar_cobradores);
@@ -197,23 +202,31 @@ public class Menu_sincronizar extends Activity {
 				
 				tarea2 = new MiTareaAsincronaDialog();
 				
+				pDialog_clientes.dismiss();
 				pDialog_clientes.setProgress(0);
 				pDialog_clientes.show();
 				
-				//tarea2.execute(proceso_clientes);
+				pDialog_recaudos.dismiss();
+				pDialog_recaudos.setProgress(0);
+				pDialog_recaudos.show();
 				
+				//tarea2.execute(proceso_clientes);
+				pDialog_cobradores.dismiss();
 				pDialog_cobradores.setProgress(0);
 				pDialog_cobradores.show();
+				
 				//tarea2 = new MiTareaAsincronaDialog();
 				//tarea2.execute(proceso_cobradores);
-				
+				pDialog_cartera.dismiss();
 				pDialog_cartera.setProgress(0);
 				pDialog_cartera.show();
-				//tarea2 = new MiTareaAsincronaDialog();
 				
+				//tarea2 = new MiTareaAsincronaDialog();
+				pDialog_usuarios.dismiss();
 				pDialog_usuarios.setProgress(0);
 				pDialog_usuarios.show();
-				tarea2.execute(proceso_clientes,proceso_cobradores,proceso_cartera,proceso_usuarios);
+				
+				tarea2.execute(proceso_recaudos,proceso_clientes,proceso_cobradores,proceso_cartera,proceso_usuarios);
 				
 			}
 		});
@@ -243,6 +256,21 @@ public class Menu_sincronizar extends Activity {
 	    			pDialog_clientes.dismiss();
 	    			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion clientes Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
+	    		
+	    		if(params[0].equals(proceso_recaudos)     ){ 
+    				
+    				if (sincronizar_recaudos()) {
+    					System.out.println("Recaudos Sincronizados Satisfactoriamente");
+    					Log.i(this.getClass().toString(),"Recaudos Sincronizados Satisfactoriamente");
+    				} else {
+    					System.out.println("Oops no sincronizados Recaudos");
+    					Log.i(this.getClass().toString(), "Oops Recaudos no sincronizados");
+    				}
+        			
+        			pDialog_recaudos.dismiss();		
+        			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
+    		}
+	    		
 	    		if(params[0].equals(proceso_cartera)     ){ 
 	    				
 	    				if (sincronizar_cartera()) {
@@ -286,7 +314,21 @@ public class Menu_sincronizar extends Activity {
     		}
     		}else{
     			
-    			if(params[0].equals(proceso_clientes)    ){ 
+    			if(params[0].equals(proceso_recaudos)    ){ 
+	    			
+	    			if (sincronizar_recaudos()) {
+						System.out.println("Recaudos Sincronizados Satisfactoriamente");
+						Log.i(this.getClass().toString(),"Recaudos Sincronizados Satisfactoriamente");
+					} else {
+						System.out.println("Oops Recaudos no  sincronizados");
+						Log.i(this.getClass().toString(), "Oops Recaudos no sincronizados");
+					}
+	    			
+	    			pDialog_recaudos.dismiss();
+	    			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion clientes Finalizada!", Toast.LENGTH_SHORT).show();
+	    		}
+    			
+    			if(params[1].equals(proceso_clientes)    ){ 
 	    			
 	    			if (sincronizar_clientes()) {
 						System.out.println("Clientes Sincronizados Satisfactoriamente");
@@ -301,7 +343,7 @@ public class Menu_sincronizar extends Activity {
 	    		}
 	    		
 	    		
-	    		if(params[1].equals(proceso_cobradores)  ){ 
+	    		if(params[2].equals(proceso_cobradores)  ){ 
 	    				
 	    				if (sincronizar_cobradores()) {
 	    					System.out.println("Cobradores Sincronizados Satisfactoriamente");
@@ -315,7 +357,7 @@ public class Menu_sincronizar extends Activity {
 	    				//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cobradores Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
 	    		
-	    		if(params[2].equals(proceso_cartera)     ){ 
+	    		if(params[3].equals(proceso_cartera)     ){ 
     				
     				if (sincronizar_cartera()) {
     					System.out.println("Cartera Sincronizados Satisfactoriamente");
@@ -329,7 +371,7 @@ public class Menu_sincronizar extends Activity {
         			//Toast.makeText(Menu_sincronizar.this, "Sincronizacion cartera Finalizada!", Toast.LENGTH_SHORT).show();
 	    		}
 	    		
-	    		if(params[3].equals(proceso_usuarios)     ){ 
+	    		if(params[4].equals(proceso_usuarios)     ){ 
     				
     				if (sincronizar_usuarios()) {
     					System.out.println("Usuarios Sincronizados Satisfactoriamente");
@@ -385,6 +427,118 @@ public class Menu_sincronizar extends Activity {
     }
 
 	
+    
+    
+    
+    public boolean sincronizar_recaudos() {
+		boolean sw = true;
+		
+		try {
+			
+			int total_recibos = 0;
+			int temp = 0;
+			
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+			SQLiteDatabase db = usdbh.getWritableDatabase();
+			// Si hemos abierto correctamente la base de datos
+			if (db != null) {
+				
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpPost post = new HttpPost(url_servidor+"recibos_caja_movil/add");
+				post.setHeader("content-type", "application/json");
+				
+				/*calculando total de registros a actualizar*/
+				String sql = "select count(*) as total from recaudos where sincronizado = 0 ";
+				Log.i("Variable", "Query: "+sql);
+				Cursor c1 = db.rawQuery(sql, null);
+				if (c1.moveToFirst()) {
+					do{
+						temp = c1.getColumnIndex("total");
+						total_recibos=c1.getInt(temp);
+					}while(c1.moveToNext());
+				}
+				//modifcamos propiedad del progressbar
+				pDialog_recaudos.setMax(total_recibos);
+			
+				String sql_recaudos; 
+				String sql_recaudos_detalles;
+				
+				sql_recaudos = "select * from recaudos where sincronizado = 0 ";
+				
+				Log.i("Variable", "Query: "+sql_recaudos);
+				Cursor cRecaudos = db.rawQuery(sql_recaudos, null);
+				String provisional,clientes_id,cedula,creditos_id,cobradores_id,cedula_cobrador,fecha,valor_pagado_total;
+				String detalle_cxc_id,valor_pagado_cuota;
+				int i = 1;
+				if (cRecaudos.moveToFirst()) {
+					do{
+						JSONObject encabezado = new JSONObject();
+						//temp = cRecaudos.getColumnIndex("total");
+						//total_recibos=c1.getInt(temp);
+						temp = cRecaudos.getColumnIndex("provisinal");
+						provisional      = cRecaudos.getString(temp);        encabezado.put("provisinal", provisional);
+						temp = cRecaudos.getColumnIndex("clientes_id");
+						clientes_id     = cRecaudos.getString(temp);         encabezado.put("clientes_id", clientes_id);
+						temp = cRecaudos.getColumnIndex("cedula");
+						cedula          = cRecaudos.getString(temp);         encabezado.put("cedula", cedula);
+						temp = cRecaudos.getColumnIndex("creditos_id");
+						creditos_id     = cRecaudos.getString(temp);         encabezado.put("creditos_id", creditos_id);
+						temp = cRecaudos.getColumnIndex("cobradores_id");
+						cobradores_id   = cRecaudos.getString(temp);         encabezado.put("cobradores_id", cobradores_id);
+						temp = cRecaudos.getColumnIndex("cedula_cobrador");
+						cedula_cobrador = cRecaudos.getString(temp);         encabezado.put("cedula_cobrador", cedula_cobrador);
+						temp = cRecaudos.getColumnIndex("fecha");
+						fecha           = cRecaudos.getString(temp);         encabezado.put("fecha", fecha);
+						temp = cRecaudos.getColumnIndex("valor_pagado");
+						valor_pagado_total    = cRecaudos.getString(temp);   encabezado.put("valor_pagado_total", valor_pagado_total);
+						
+						JSONObject detalles = new JSONObject();
+						sql_recaudos_detalles = "select * from recaudos_detalles where provisional= '"+provisional+"' ";
+						Cursor cRecaudosDetalles = db.rawQuery(sql_recaudos_detalles, null);
+						if (cRecaudosDetalles.moveToFirst()) {
+							do{
+								temp = cRecaudos.getColumnIndex("detalle_cxc_id");
+								detalle_cxc_id     = cRecaudos.getString(temp);        detalles.put("detalle_cxc_id", detalle_cxc_id);
+								temp = cRecaudos.getColumnIndex("valor_pagado");
+								valor_pagado_cuota = cRecaudos.getString(temp);        detalles.put("valor_pagado_cuota", valor_pagado_cuota);
+							}while(cRecaudosDetalles.moveToNext());
+						}
+						
+						encabezado.put("detalles",detalles);
+						
+						StringEntity entity = new StringEntity(encabezado.toString());
+						post.setEntity(entity);
+						
+						HttpResponse resp = httpClient.execute(post);
+						String respStr = EntityUtils.toString(resp.getEntity());
+						 
+						if(respStr.equals("true")){
+							db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
+							pDialog_recaudos.setProgress(i);
+						}else{
+							Log.i(this.getClass().toString(),sql_recaudos_detalles);
+							Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
+						}
+						
+					}while(cRecaudos.moveToNext());
+				}
+				
+				
+				
+			}
+			
+			db.close();
+
+		} catch (Exception ex) {
+			Log.e("ServicioRest", "Error!", ex);
+			sw = false;
+		}
+
+		return sw;
+		
+
+	}
+    
 
 	public boolean sincronizar_clientes() {
 		boolean sw = true;
