@@ -1,10 +1,14 @@
 package com.softdesignermonteria.cobromovil;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.transform.Templates;
 
+import org.w3c.dom.Text;
+
+import android.R.integer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,15 +31,21 @@ public class Cobro_Diario extends Activity {
 	private String url_servidor;
 	private SQLiteDatabase db;
 	private TextView userlogueado;
+	private TextView textView1;
+	private TextView sum_rec;
 	private ListView lv_recaudos;
 	private String nombre_database;
 	private int version_database;
 	private String cobradores_id;
+	
+	DecimalFormat formateador = new DecimalFormat("###,###.00");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cobro__diario);
+		
+		String fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		
 		final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 		
@@ -56,6 +66,10 @@ public class Cobro_Diario extends Activity {
 		fecha_recaudo=(EditText)findViewById(R.id.fecha_recaudo);
 		ver_recaudo=  (Button)findViewById(R.id.ver_recaudo);
 		lv_recaudos=  (ListView)findViewById(R.id.lv_recaudos);
+		textView1=    (TextView)findViewById(R.id.textView1);
+		sum_rec=      (TextView)findViewById(R.id.sum_rec);
+		
+		fecha_recaudo.append(fecha);
 		
 		TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, nombre_database, null, version_database);
         db = usdbh.getWritableDatabase();
@@ -88,10 +102,7 @@ public class Cobro_Diario extends Activity {
 		public boolean ver_recaudos(){
 			//Recuperamos los valores de los campos de texto
 			
-			String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 			boolean sw = true;
-			
-			String f_recaudo = fecha_recaudo.getText().toString();
 			
 			try {
 				
@@ -100,27 +111,49 @@ public class Cobro_Diario extends Activity {
 				
 				if (db != null) {
 					
-						Cursor c = db.rawQuery("select c.cedula,c.nombres,r.valor_pagado from clientes c,recaudos r " +
-								" where c.cedula=r.cedula and r.cobradores_id='"+cobradores_id+"'", null);
-						
-						String sql="select c.cedula,c.nombres,r.valor_pagado from clientes c,recaudos r " +
-								" where c.cedula=r.cedula and r.cobradores_id='"+cobradores_id+"'";
-						
+						String sql = "select c.cedula,c.nombres,r.valor_pagado from clientes c,recaudos r " +
+								" where c.cedula=r.cedula and r.cobradores_id='"+cobradores_id+"' " +
+								" and r.fecha like'%"+fecha_recaudo.getText().toString()+"%'";
+												
 						Log.i("Variable", "Query: "+sql);
 						
-						if(c.moveToFirst()){
-							
-							int cedula_temp=0;
-							String cedula;
-							int nombres_temp=0;
-							String nombres;
-							int valor_pagado_temp=0;
-							String valor_pagado;
-							int total_recaudo=0;
-								
-							int TmpIndex = 0;	
-															
+						String sql_count =" select count(*) as total from ("+sql+") h ";
+						Cursor c1 = db.rawQuery(sql_count, null);
+						
+						Log.i("Variable", "Query: "+sql_count);
+						
+						int temp = 0;
+						int total_reg = 0;
+						
+						
+						if (c1.moveToFirst()) {
+						
 							do{
+								temp = c1.getColumnIndex("total");
+								total_reg=c1.getInt(temp);
+								
+							}while(c1.moveToNext());
+												
+						}
+						
+						Log.i("Variable", "Total_registros: "+total_reg);
+						String[] ListadoRecaudos = new String[total_reg];
+						
+						Cursor c = db.rawQuery(sql, null);
+						
+						int cedula_temp=0;
+						String cedula;
+						int nombres_temp=0;
+						String nombres;
+						int valor_pagado_temp=0;
+						double valor_pagado=0;
+						double total_recaudo=0;
+						int TmpIndex = 0;
+						
+						if(c.moveToFirst()){
+												
+							
+						    do{
 							
 							cedula_temp = c.getColumnIndex("cedula");
 							cedula=c.getString(cedula_temp);
@@ -129,41 +162,32 @@ public class Cobro_Diario extends Activity {
 							nombres=c.getString(nombres_temp);
 							
 							valor_pagado_temp= c.getColumnIndex("valor_pagado");
-							valor_pagado=c.getString(valor_pagado_temp);
+							valor_pagado=c.getDouble(valor_pagado_temp);
 														
+							total_recaudo=total_recaudo+valor_pagado;
+							
+							//Log.i("Variable", "Cédula: "+cedula+ " nombres: "+nombres+ " Valor Pagado: "+valor_pagado+ " Total Rec: "+total_recaudo);
+							
+							ListadoRecaudos[TmpIndex]= "Cédula: "+cedula+" -Nombres: "+nombres+ " -Valor Pagado: "+formateador.format(valor_pagado);
+							
 							TmpIndex = TmpIndex +1;	
-							
-							total_recaudo=total_recaudo+Integer.parseInt(valor_pagado);
-							
-							Log.i("Variable", "Datos: "+cedula+ " nombres: "+nombres+ " Valor Pagado: "+valor_pagado+ " Total Rec: "+total_recaudo);
-							
-							Log.i("Variable", "TmpIndex: "+TmpIndex);
-							
+							//Log.i("Sql", "array: "+ListadoRecaudos[TmpIndex]);
+													
 							}while(c.moveToNext());
-							
-							/*String[] Listado_recaudos = new String[TmpIndex];
-							
-							
-							
-							ArrayAdapter<String> adaptador =
-							new ArrayAdapter<String>(Cobro_Diario.this,
-							android.R.layout.simple_list_item_1, Listado_recaudos);
-							lv_recaudos.setAdapter(adaptador);*/
-							
+						    
+						    
+						    sum_rec.append(" "+formateador.format(total_recaudo));	
+						}
 						
-						
+						ArrayAdapter<String> adaptador1 =
+						new ArrayAdapter<String>(Cobro_Diario.this,
+						android.R.layout.simple_list_item_1, ListadoRecaudos);
+						lv_recaudos.setAdapter(adaptador1);
+													
 						}
 						
 						db.close();
-							
-						}
-						
-						//Alternativa 1: método rawQuery()
-						/*Cursor c = db.rawQuery("select c.cedula,c.nombres,sum(r.valor_pagado) as valor_pagado from clientes c,recaudos r " +
-								"where c.cedula=r.cedula and r.cobradores_id='"+cobradores_id+"' " +
-								"and r.fecha like'%'"+f_recaudo+"'%';", null);*/
-			
-				
+									
 			}catch (Exception ex) {
 				Log.e("Consulta de clientes", "Error!", ex);
 				sw = false;
