@@ -72,6 +72,13 @@
             android:name="com.softdesignermonteria.cobromovil.Cobro_Diario"
             android:label="@string/title_activity_cobro__diario" >
         </activity>
-        <service android:name=".SincronizarCobroMovil" />
+
+        <service android:name="com.softdesignermonteria.cobromovil.SincronizarCobroMovil" />
+
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Imprimir_recibo"
+            android:label="@string/title_activity_imprimir_recibo" >
+        </activity>
     </application>
+
 </manifest>

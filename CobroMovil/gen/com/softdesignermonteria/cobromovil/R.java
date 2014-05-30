@@ -42,12 +42,12 @@ public final class R {
         public static final int marcador=0x7f020012;
     }
     public static final class id {
-        public static final int MnuOpc1=0x7f08002a;
-        public static final int MnuOpc2=0x7f08002b;
-        public static final int MnuOpc3=0x7f08002c;
-        public static final int SubMnuOpc1=0x7f08002d;
-        public static final int SubMnuOpc2=0x7f08002e;
-        public static final int action_settings=0x7f080029;
+        public static final int MnuOpc1=0x7f08002b;
+        public static final int MnuOpc2=0x7f08002c;
+        public static final int MnuOpc3=0x7f08002d;
+        public static final int SubMnuOpc1=0x7f08002e;
+        public static final int SubMnuOpc2=0x7f08002f;
+        public static final int action_settings=0x7f08002a;
         public static final int b_m_clientes=0x7f080013;
         public static final int b_m_recaudos=0x7f080014;
         public static final int b_m_reportes=0x7f080015;
@@ -58,19 +58,20 @@ public final class R {
         public static final int bt_sincronizar_cobradores=0x7f080018;
         public static final int bt_sincronizar_todos=0x7f08001a;
         public static final int bt_sincronizar_usuarios=0x7f08001b;
+        public static final int btn_imprimir=0x7f080024;
         public static final int btn_subir_ecaudos=0x7f080017;
-        public static final int campo_vacio=0x7f080025;
+        public static final int campo_vacio=0x7f080026;
         public static final int cedula=0x7f08001e;
         public static final int clave=0x7f08000e;
         public static final int clave_usuario=0x7f080011;
         public static final int consultar_clientes=0x7f080002;
         public static final int entrar=0x7f08000f;
         public static final int fecha_recaudo=0x7f080006;
-        public static final int imgIcono=0x7f080026;
+        public static final int imgIcono=0x7f080027;
         public static final int lv=0x7f080023;
         public static final int lv_recaudos=0x7f080008;
-        public static final int lyt1=0x7f080024;
-        public static final int lytLayout=0x7f080027;
+        public static final int lyt1=0x7f080025;
+        public static final int lytLayout=0x7f080028;
         public static final int m_reportes=0x7f080012;
         public static final int nit_nombres=0x7f080003;
         public static final int nombre_usuario=0x7f080010;
@@ -84,7 +85,7 @@ public final class R {
         public static final int tv5=0x7f080022;
         public static final int tv6=0x7f080000;
         public static final int tv7=0x7f080004;
-        public static final int txtMensaje=0x7f080028;
+        public static final int txtMensaje=0x7f080029;
         public static final int userlogueado=0x7f08000d;
         public static final int usuario=0x7f08000b;
         public static final int valor_recaudo=0x7f08001c;
@@ -93,34 +94,38 @@ public final class R {
     public static final class layout {
         public static final int activity_busqueda_clientes=0x7f030000;
         public static final int activity_cobro__diario=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_menu_clientes=0x7f030003;
-        public static final int activity_menu_principal=0x7f030004;
-        public static final int activity_menu_sincronizar=0x7f030005;
-        public static final int activity_recaudos=0x7f030006;
-        public static final int activity_reportes=0x7f030007;
-        public static final int campo_usuario_vacio=0x7f030008;
-        public static final int mensaje_error=0x7f030009;
+        public static final int activity_imprimir_recibo=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_menu_clientes=0x7f030004;
+        public static final int activity_menu_principal=0x7f030005;
+        public static final int activity_menu_sincronizar=0x7f030006;
+        public static final int activity_recaudos=0x7f030007;
+        public static final int activity_reportes=0x7f030008;
+        public static final int campo_usuario_vacio=0x7f030009;
+        public static final int mensaje_error=0x7f03000a;
     }
     public static final class menu {
         public static final int busqueda_clientes=0x7f070000;
         public static final int cobro__diario=0x7f070001;
-        public static final int main=0x7f070002;
-        public static final int mensaje_error=0x7f070003;
-        public static final int menu_clientes=0x7f070004;
-        public static final int menu_principal=0x7f070005;
-        public static final int menu_prueba=0x7f070006;
-        public static final int menu_sincronizar=0x7f070007;
-        public static final int recaudos=0x7f070008;
-        public static final int reportes=0x7f070009;
+        public static final int imprimir_recibo=0x7f070002;
+        public static final int main=0x7f070003;
+        public static final int mensaje_error=0x7f070004;
+        public static final int menu_clientes=0x7f070005;
+        public static final int menu_principal=0x7f070006;
+        public static final int menu_prueba=0x7f070007;
+        public static final int menu_sincronizar=0x7f070008;
+        public static final int recaudos=0x7f070009;
+        public static final int reportes=0x7f07000a;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int bienvenido_=0x7f050004;
         public static final int hello_world=0x7f050008;
+        public static final int imprimir=0x7f05000f;
         public static final int title_activity_busqueda_clientes=0x7f05000a;
         public static final int title_activity_cobro__diario=0x7f05000d;
+        public static final int title_activity_imprimir_recibo=0x7f05000e;
         public static final int title_activity_mensaje_error=0x7f050003;
         public static final int title_activity_menu_clientes=0x7f050005;
         public static final int title_activity_menu_list_items=0x7f050007;

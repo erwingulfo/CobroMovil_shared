@@ -15,5 +15,7 @@
     <string name="title_activity_recaudos">Recaudos</string>
     <string name="title_activity_reportes">Reportes</string>
     <string name="title_activity_cobro__diario">Cobro Diario</string>
+    <string name="title_activity_imprimir_recibo">Imprimir_recibo</string>
+    <string name="imprimir">Imprimir</string>
 
 </resources>

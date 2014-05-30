@@ -5,8 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+
+
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -25,6 +29,7 @@ public class Recaudos extends Activity {
 	private EditText cedula;
 	private Button bt_buscar_cliente;
 	private Button bt_recaudar;
+	private Button bt_imprimir;
 	private TextView tv;
 	private TextView tv2;
 	private TextView TextView1;
@@ -122,6 +127,18 @@ public class Recaudos extends Activity {
 					System.out.println("Oops clientes no encontrado");
 					Log.i(this.getClass().toString(), "Oops recaudos no ingresados");
 				}
+			}
+		});
+		
+		
+		bt_imprimir= (Button) findViewById(R.id.btn_imprimir);
+		bt_imprimir.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				Intent i = new Intent();
+				i.setClass(Recaudos.this, Imprimir_recibo.class);
+		        //i.putExtra("pnombre_usuario", usuario.getText().toString());
+		        //i.putExtra("pclave_usuario", clave.getText().toString());
+		        startActivity(i);
 			}
 		});
 		
