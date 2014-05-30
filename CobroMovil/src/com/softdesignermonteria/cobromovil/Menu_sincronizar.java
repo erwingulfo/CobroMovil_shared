@@ -118,10 +118,10 @@ public class Menu_sincronizar extends Activity {
 		
 		/*Dialogo Usuarios del Sistema*/
 		
-		pDialog_usuarios = new ProgressDialog(Menu_sincronizar.this);
-		pDialog_usuarios.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pDialog_usuarios.setMessage("Sincronizando...Recaudos");
-		pDialog_usuarios.setCancelable(true);
+		pDialog_recaudos = new ProgressDialog(Menu_sincronizar.this);
+		pDialog_recaudos.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pDialog_recaudos.setMessage("Sincronizando...Recaudos");
+		pDialog_recaudos.setCancelable(true);
 				
 		/*
 		 * Pegar este codigo en todas las actividades que lo requieran
@@ -475,8 +475,8 @@ public class Menu_sincronizar extends Activity {
 						JSONObject encabezado = new JSONObject();
 						//temp = cRecaudos.getColumnIndex("total");
 						//total_recibos=c1.getInt(temp);
-						temp = cRecaudos.getColumnIndex("provisinal");
-						provisional      = cRecaudos.getString(temp);        encabezado.put("provisinal", provisional);
+						temp = cRecaudos.getColumnIndex("provisional");
+						provisional      = cRecaudos.getString(temp);        encabezado.put("provisional", provisional);
 						temp = cRecaudos.getColumnIndex("clientes_id");
 						clientes_id     = cRecaudos.getString(temp);         encabezado.put("clientes_id", clientes_id);
 						temp = cRecaudos.getColumnIndex("cedula");
@@ -497,10 +497,10 @@ public class Menu_sincronizar extends Activity {
 						Cursor cRecaudosDetalles = db.rawQuery(sql_recaudos_detalles, null);
 						if (cRecaudosDetalles.moveToFirst()) {
 							do{
-								temp = cRecaudos.getColumnIndex("detalle_cxc_id");
-								detalle_cxc_id     = cRecaudos.getString(temp);        detalles.put("detalle_cxc_id", detalle_cxc_id);
-								temp = cRecaudos.getColumnIndex("valor_pagado");
-								valor_pagado_cuota = cRecaudos.getString(temp);        detalles.put("valor_pagado_cuota", valor_pagado_cuota);
+								temp = cRecaudosDetalles.getColumnIndex("detalle_cxc_id");
+								detalle_cxc_id     = cRecaudosDetalles.getString(temp);        detalles.put("detalle_cxc_id", detalle_cxc_id);
+								temp = cRecaudosDetalles.getColumnIndex("valor_pagado");
+								valor_pagado_cuota = cRecaudosDetalles.getString(temp);        detalles.put("valor_pagado_cuota", valor_pagado_cuota);
 							}while(cRecaudosDetalles.moveToNext());
 						}
 						
@@ -517,7 +517,7 @@ public class Menu_sincronizar extends Activity {
 							pDialog_recaudos.setProgress(i);
 						}else{
 							Log.i(this.getClass().toString(),sql_recaudos_detalles);
-							Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
 						}
 						
 					}while(cRecaudos.moveToNext());
@@ -530,7 +530,7 @@ public class Menu_sincronizar extends Activity {
 			db.close();
 
 		} catch (Exception ex) {
-			Log.e("ServicioRest", "Error!", ex);
+			Log.e("ServicioRest", "Error!" + ex.getMessage(), ex);
 			sw = false;
 		}
 
