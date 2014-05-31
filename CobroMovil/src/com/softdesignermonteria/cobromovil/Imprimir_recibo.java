@@ -15,6 +15,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
@@ -22,7 +24,11 @@ import android.widget.Toast;
 public class Imprimir_recibo extends Activity {
 	
 	/** Called when the activity is first created. */
-
+	private String url_servidor;
+	private String nombre_database;
+	private int version_database;
+	private String user_logueado;
+	
 	BluetoothAdapter mBTAdapter;
 	BluetoothSocket mBTSocket = null;
 	Dialog dialogProgress;
@@ -45,7 +51,18 @@ public class Imprimir_recibo extends Activity {
 				PRINTER_MAC_ID = device.toString();
 
 			}
-
+			final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+			
+			/*
+			 * 
+			 * asignacion de valores a variables privadas de esta clase
+			 * 
+			 * */
+			url_servidor = globalVariable.getUrl_servidor();
+			nombre_database = globalVariable.getNombre_database();
+			version_database = globalVariable.getVersion_database();
+			user_logueado = globalVariable.getUserlogueado();
+			
 			// BILL = getIntent().getStringExtra("TO_PRINT");
 			// TRANS_ID = getIntent().getStringExtra("TRANS_ID");
 
@@ -53,13 +70,99 @@ public class Imprimir_recibo extends Activity {
 			// PRINTER_MAC_ID = "00:1F:B7:02:8F:44";
 			// PRINTER_MAC_ID = "10:00:E8:65:46:02";
 			// TRANS_ID="12345678";
-			BILL = "\nSale Slip No: 12345678" + "          " + "04-08-2011\n";
+			/*
+			BILL =        "\nSale Slip No: 12345678" + "          " + "04-08-2011\n";
 			BILL = BILL + "1sdsa\n";	
 			BILL = BILL + "2asdas\n";
 			BILL = BILL + "3asda\n";			
 			BILL = BILL + "Total Qty:" + "     " + "2.0\n";
-			BILL = BILL + "Total Value:" + "     " + "17625.0\n";
+			BILL = BILL + "Total Value:" + "     " + "17625.0\n";*/
+			Bundle bundle = getIntent().getExtras();
+			String provisional   = bundle.getString("provisional");
+			String clientes_id   = bundle.getString("clientes_id");
+			String cobradores_id = bundle.getString("cobradores_id");
+			
+			
+			
+			BILL =        "\n                    INVERSIONES JD                  \n";
+			
+			BILL = BILL + "\nRecibo No: "+provisional+"\n";
+			
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,
+					nombre_database, null, version_database);
+			SQLiteDatabase db = usdbh.getWritableDatabase();
+			int tmp=0;
+			String nombre_cliente="",dir_cliente="",cedula_cliente="",valor_pagado="0",vencimiento="",total="0";
+			if (db != null) {
+				String sqlEncabezado = "Select  c.nombres as nombre_cliente, c.direccion as dir_cliente, c.cedula as cedula_cliente "
+										+ "from "
+										+ "	recaudos r, clientes c, cobradores cr  "
+										+ "	where "
+										+ " r.clientes_id = c.clientes_id "
+										+ "	and provisional = '"+provisional+"' ";
+				Cursor recaudos = db.rawQuery(sqlEncabezado,null);
+				if (recaudos.moveToFirst()) {
+					
+					do {
+						
+						tmp = recaudos.getColumnIndex("cedula_cliente");
+						cedula_cliente = recaudos.getString(tmp);	
+						BILL = BILL + "\n Cedula: "+cedula_cliente+"\n";
+						
+						tmp = recaudos.getColumnIndex("nombre_cliente");
+						nombre_cliente = recaudos.getString(tmp);	
+						BILL = BILL + "\n Cliente: "+nombre_cliente+"\n";
+						
+						tmp = recaudos.getColumnIndex("dir_cliente");
+						dir_cliente = recaudos.getString(tmp);
+						
+						tmp = recaudos.getColumnIndex("valor_pagado");
+						total = recaudos.getString(tmp);
+						
+						BILL = BILL + "\n Direccion: "+dir_cliente+"\n";
+						BILL = BILL + "\n";
+						BILL = BILL + "\n";
+						BILL = BILL + "\n";
+				
+						
+					}while (recaudos.moveToNext());
+				}
+						BILL = BILL + "\n   Nro:    Vencimiento     Valor Recaudado \n";
+						
+				String sqlDetalles   = "Select c.vencimiento,d.valor_pagado  from  "
+											+ "	 detalle_recaudos d, cartera c "
+											+ "  where 1=1 "
+											+ "  and c.detalle_cxc_id = d.detalle_cxc_id "
+											+ "  and d.provisional = '"+provisional+"' ";
+				Cursor detalles = db.rawQuery(sqlDetalles,null);
+				int i = 1;
+					if (detalles.moveToFirst()) {
+						
+						do {
+							
+							tmp = recaudos.getColumnIndex("valor_pagado");
+							valor_pagado = detalles.getString(tmp);	
+							
+							tmp = recaudos.getColumnIndex("vencimiento");
+							vencimiento = detalles.getString(tmp);	
+							
+							BILL = BILL + "\n   "+i+" -> "+vencimiento+"      "+valor_pagado+"\n";
+							i=i+1;
+						}while (recaudos.moveToNext());
+					}
+			}
+			
+			BILL = BILL + "\n   Total Cancelado:          "+total+"  \n";
+			BILL = BILL + "\n";
+			BILL = BILL + "\n";
+			BILL = BILL + "\n";
 
+			BILL = BILL + "\n  Imprimido desde "+url_servidor+"\n";
+			BILL = BILL + "\n             Aplicacion: Cobromovil                 \n";
+			BILL = BILL + "\n     Desarrollado Por: DyDsoluciones.net            \n";
+			BILL = BILL + "\n             Derechos Reservados                    \n";
+			BILL = BILL + "\n  Email de Contacto: contactanos@dydsoluciones.net  \n";
+			
 			mBTAdapter = BluetoothAdapter.getDefaultAdapter();
 			dialogProgress = new Dialog(Imprimir_recibo.this);
 
