@@ -79,89 +79,106 @@ public class Imprimir_recibo extends Activity {
 			BILL = BILL + "Total Value:" + "     " + "17625.0\n";*/
 			Bundle bundle = getIntent().getExtras();
 			String provisional   = bundle.getString("provisional");
-			String clientes_id   = bundle.getString("clientes_id");
-			String cobradores_id = bundle.getString("cobradores_id");
+			//String clientes_id   = bundle.getString("clientes_id");
+			//String cobradores_id = bundle.getString("cobradores_id");
 			
 			
 			
-			BILL =        "\n                    INVERSIONES JD                  \n";
+			BILL =        "\n       INVERSIONES JD            \n";
 			
-			BILL = BILL + "\nRecibo No: "+provisional+"\n";
+			BILL = BILL + "\nRecibo No: ;";
+			BILL = BILL + "\n"+provisional+"\n";
 			
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,
 					nombre_database, null, version_database);
 			SQLiteDatabase db = usdbh.getWritableDatabase();
 			int tmp=0;
-			String nombre_cliente="",dir_cliente="",cedula_cliente="",valor_pagado="0",vencimiento="",total="0";
+			String nombre_cliente="",dir_cliente="",cedula_cliente="",valor_pagado="0",vencimiento="",total="0",nombre_cobrador="";
 			if (db != null) {
-				String sqlEncabezado = "Select  c.nombres as nombre_cliente, c.direccion as dir_cliente, c.cedula as cedula_cliente "
+				String sqlEncabezado = "Select  c.nombres as nombre_cliente, c.direccion as dir_cliente, "
+												+ "	c.cedula as cedula_cliente, r.valor_pagado, cr.nombres as nombre_cobrador  "
 										+ "from "
 										+ "	recaudos r, clientes c, cobradores cr  "
 										+ "	where "
 										+ " r.clientes_id = c.clientes_id "
+										+ " and r.cobradores_id = cr.cobradores_id "
 										+ "	and provisional = '"+provisional+"' ";
+				Log.i("Sql", "Sentencia:" + sqlEncabezado);
 				Cursor recaudos = db.rawQuery(sqlEncabezado,null);
 				if (recaudos.moveToFirst()) {
 					
 					do {
 						
+						tmp = recaudos.getColumnIndex("nombre_cobrador");
+						nombre_cobrador = recaudos.getString(tmp);
+						BILL = BILL + "\nCobrador:";
+						BILL = BILL + "\n"+nombre_cobrador+"";
+						
 						tmp = recaudos.getColumnIndex("cedula_cliente");
 						cedula_cliente = recaudos.getString(tmp);	
-						BILL = BILL + "\n Cedula: "+cedula_cliente+"\n";
+						BILL = BILL + "\nCedula: "+cedula_cliente+"";
 						
 						tmp = recaudos.getColumnIndex("nombre_cliente");
 						nombre_cliente = recaudos.getString(tmp);	
-						BILL = BILL + "\n Cliente: "+nombre_cliente+"\n";
+						BILL = BILL + "\nCliente:";
+						BILL = BILL + "\n"+nombre_cliente+"";
 						
 						tmp = recaudos.getColumnIndex("dir_cliente");
 						dir_cliente = recaudos.getString(tmp);
 						
-						tmp = recaudos.getColumnIndex("valor_pagado");
-						total = recaudos.getString(tmp);
-						
-						BILL = BILL + "\n Direccion: "+dir_cliente+"\n";
-						BILL = BILL + "\n";
+						BILL = BILL + "\nDireccion:";
+						BILL = BILL + "\n"+dir_cliente+"";
 						BILL = BILL + "\n";
 						BILL = BILL + "\n";
 				
 						
+						tmp = recaudos.getColumnIndex("valor_pagado");
+						total = recaudos.getString(tmp);
+						
+						
+						
 					}while (recaudos.moveToNext());
 				}
-						BILL = BILL + "\n   Nro:    Vencimiento     Valor Recaudado \n";
+						BILL = BILL + "\nNro:   Vencimiento     Valor\n";
 						
 				String sqlDetalles   = "Select c.vencimiento,d.valor_pagado  from  "
-											+ "	 detalle_recaudos d, cartera c "
+											+ "	 recaudos_detalles d, cartera c "
 											+ "  where 1=1 "
 											+ "  and c.detalle_cxc_id = d.detalle_cxc_id "
 											+ "  and d.provisional = '"+provisional+"' ";
+				Log.i("Sql", "Sentencia:" + sqlDetalles);
 				Cursor detalles = db.rawQuery(sqlDetalles,null);
 				int i = 1;
 					if (detalles.moveToFirst()) {
 						
 						do {
 							
-							tmp = recaudos.getColumnIndex("valor_pagado");
+							tmp = detalles.getColumnIndex("valor_pagado");
 							valor_pagado = detalles.getString(tmp);	
 							
-							tmp = recaudos.getColumnIndex("vencimiento");
+							tmp = detalles.getColumnIndex("vencimiento");
 							vencimiento = detalles.getString(tmp);	
 							
-							BILL = BILL + "\n   "+i+" -> "+vencimiento+"      "+valor_pagado+"\n";
+							BILL = BILL + "\n"+i+" -> "+vencimiento+"           "+valor_pagado+"\n";
 							i=i+1;
-						}while (recaudos.moveToNext());
+						}while (detalles.moveToNext());
 					}
 			}
 			
-			BILL = BILL + "\n   Total Cancelado:          "+total+"  \n";
+			BILL = BILL + "\nTotal Cancelado:          "+total+"  \n";
 			BILL = BILL + "\n";
 			BILL = BILL + "\n";
 			BILL = BILL + "\n";
 
-			BILL = BILL + "\n  Imprimido desde "+url_servidor+"\n";
-			BILL = BILL + "\n             Aplicacion: Cobromovil                 \n";
-			BILL = BILL + "\n     Desarrollado Por: DyDsoluciones.net            \n";
-			BILL = BILL + "\n             Derechos Reservados                    \n";
-			BILL = BILL + "\n  Email de Contacto: contactanos@dydsoluciones.net  \n";
+			//BILL = BILL + "\n Imprimido desde "+url_servidor+"\n";
+			BILL = BILL + "\n   Aplicacion: Cobromovil ";
+			BILL = BILL + "\nDisenado Por: DyDsoluciones.net";
+			BILL = BILL + "\n      Derechos Reservados    ";
+			BILL = BILL + "\n contactanos@dydsoluciones.net";
+			BILL = BILL + "\n";
+			BILL = BILL + "\n";
+			
+			db.close();
 			
 			mBTAdapter = BluetoothAdapter.getDefaultAdapter();
 			dialogProgress = new Dialog(Imprimir_recibo.this);

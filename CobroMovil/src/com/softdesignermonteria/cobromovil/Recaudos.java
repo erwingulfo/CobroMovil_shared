@@ -120,16 +120,25 @@ public class Recaudos extends Activity {
 			}
 		});
 
-		/*bt_imprimir = (Button) findViewById(R.id.btn_imprimir);
+		bt_imprimir = (Button) findViewById(R.id.btn_imprimir);
 		bt_imprimir.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
+		
+				/*
+				 * Mandamos a la actividad Imprimir y pasamos el codigo
+				 * provisional del recibo de caja
+				 * */
 				Intent i = new Intent();
 				i.setClass(Recaudos.this, Imprimir_recibo.class);
-				// i.putExtra("pnombre_usuario", usuario.getText().toString());
+				i.putExtra("provisional", provisional);
+				
 				// i.putExtra("pclave_usuario", clave.getText().toString());
 				startActivity(i);
+				
+				bt_recaudar.setVisibility(View.INVISIBLE);
+				
 			}
-		});*/
+		});
 		
 		bt_imprimir.setVisibility(View.INVISIBLE);
 
@@ -446,43 +455,10 @@ public class Recaudos extends Activity {
 
 					}
 
-					/*
-					 * Mandamos a la actividad Imprimir y pasamos el codigo
-					 * provisional del recibo de caja
-					 * */
-					Intent i = new Intent();
-					i.setClass(Recaudos.this, Imprimir_recibo.class);
-					i.putExtra("provisional", provisional);
-					i.putExtra("clientes_id", this.clientes_id);
-					i.putExtra("cobradores_id", this.cobradores_id);
-					// i.putExtra("pclave_usuario", clave.getText().toString());
-					startActivity(i);
 					
 					
-					/*
-					 * Mandamos a la actividad Imprimir y pasamos el codigo
-					 * provisional del recibo de caja
-					 * */
-					Intent i2 = new Intent();
-					i2.setClass(Recaudos.this, Recaudos.class);
-					// i.putExtra("pclave_usuario", clave.getText().toString());
-					startActivity(i2);
-					
-					/*tv.setText("");
-					tv2.setText("");
-					
-					TextView2.setText("");
-					TextView3.setText("");
-					TextView4.setText("");
-					
-					
-					TextView2.setVisibility(View.INVISIBLE);
-					TextView3.setVisibility(View.INVISIBLE);
-					TextView4.setVisibility(View.INVISIBLE);
-					valor_recaudo.setText("");
-					cedula.setText("");*/
-					
-					//lv.removeAllViews();
+				    bt_recaudar.setVisibility(View.INVISIBLE);
+					bt_imprimir.setVisibility(View.VISIBLE);
 
 				db.close();
 
