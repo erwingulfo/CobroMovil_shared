@@ -17,5 +17,30 @@
     <string name="title_activity_cobro__diario">Cobro Diario</string>
     <string name="title_activity_imprimir_recibo">Imprimir_recibo</string>
     <string name="imprimir">Imprimir</string>
+    <string name="title_activity_clientes">Clientes</string>
+    <string name="Registrese">Registrese</string>
+    <string name="Entrar">Entrar</string>
+    <string name="Usuario">Usuario:</string>
+    <string name="Clave">Clave:</string>
+    <string name="NombreDeUsuario">Nombre de Usuario</string>
+    <string name="Clave2">Clave</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="clave">Clave</string>
+    <string name="cedula">Cedula</string>
+    <string name="nombre1">Nombre1</string>
+    <string name="nombre2">Nombre2</string>
+    <string name="apellido1">Apellido1</string>
+    <string name="apellido2">Apellido2</string>
+    <string name="direccion">Direccion</string>
+    <string name="referencia">Referencia</string>
+    <string name="enviar">Enviar</string>
+    <string name="telefono">Telefono</string>
+    <string name="valor_a_prestar">Valor a Prestar</string>
+    <string name="agregar_clientes">Agregar Clientes</string>
+    <string name="sincronizar">Sincronizar</string>
+    <string name="buscar_clientes">Bucar Clientes</string>
+    <string name="recaudos">Recaudos</string>
+    <string name="reportes">Reportes</string>
+    <string name="bienvenidos">Bienvenidos</string>
 
 </resources>

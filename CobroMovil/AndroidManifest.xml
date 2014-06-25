@@ -13,9 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name="com.softdesignermonteria.cobromovil.GlobalClass"
@@ -76,11 +75,17 @@
             android:label="@string/title_activity_cobro__diario" >
         </activity>
 
-        <service android:enabled="true" android:name="com.softdesignermonteria.cobromovil.SincronizarCobroMovil" />
+        <service
+            android:name="com.softdesignermonteria.cobromovil.SincronizarCobroMovil"
+            android:enabled="true" />
 
         <activity
             android:name="com.softdesignermonteria.cobromovil.Imprimir_recibo"
             android:label="@string/title_activity_imprimir_recibo" >
+        </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Clientes"
+            android:label="@string/title_activity_clientes" >
         </activity>
     </application>
 

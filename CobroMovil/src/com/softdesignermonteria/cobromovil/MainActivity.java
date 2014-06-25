@@ -21,6 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 		private Button entrar;
+		private Button registrarse;
 		private EditText usuario;
 		private EditText clave;
 		private SQLiteDatabase db;
@@ -77,6 +78,7 @@ public class MainActivity extends Activity {
 			clave = (EditText)findViewById(R.id.clave);
 			userlogueado = (TextView)findViewById(R.id.userlogueado);
 			entrar = (Button)findViewById(R.id.entrar);
+			registrarse = (Button)findViewById(R.id.BtnRegistrarse);
 			usuario.requestFocus();			
 			/*
 			 * 
@@ -92,69 +94,67 @@ public class MainActivity extends Activity {
 			 */
 	        entrar.setOnClickListener(new OnClickListener() {
 				
-			public void onClick(View v) {
+	        		public void onClick(View v) {
 					
-					//Recuperamos los valores de los campos de texto
-					String usu = usuario.getText().toString();
-					String cla = clave.getText().toString();
-
-					//Alternativa 1: método rawQuery()
-					Cursor c = db.rawQuery("select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'", null);
-					
-					Log.e("SOY MD5:","select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + cla + "'");
-										
-					if (c.moveToFirst()) {
-						//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
-						Intent i = new Intent();
-						i.setClass(MainActivity.this, MenuPrincipal.class);
-				        i.putExtra("pnombre_usuario", usuario.getText().toString());
-				        i.putExtra("pclave_usuario", clave.getText().toString());
-				      
-				        int index = c.getColumnIndex("cobradores_id");
-				        String cobradores_id = c.getString(index);
-				        
-				        int index2 = c.getColumnIndex("cedula_cobrador");
-				        String cedula_cobrador = c.getString(index2);
-				        
-				        int index3 = c.getColumnIndex("nombre");
-				        String nombre_usuario = c.getString(index3);
-				        
-				        globalVariable.setCobradores_id(cobradores_id);
-				        globalVariable.setCedula_cobrador(cedula_cobrador);
-				        globalVariable.setUserlogueado(nombre_usuario);
-				        
-				        //Log.e("SOY cobradores_id:",cobradores_id);
-				        //Log.e("SOY cobradores_cedula:",cedula_cobrador);
-				        
-				        startActivity(i);
-						
-				    }else{
-						
-						
-				    	query_vacio(v);
-				    	usuario.setText("");
-			            clave.setText("");
-			            usuario.requestFocus();
-				    	
-				    	//Notificación(toast) personalizada con imagen
-				        /*Toast toast3 = new Toast(getApplicationContext());
-				        
-				        LayoutInflater inflater = getLayoutInflater();
-				        View layout = inflater.inflate(R.layout.mensaje_error,
-				                        (ViewGroup) findViewById(R.id.lytLayout));
-				 
-				        TextView txtMsg = (TextView)layout.findViewById(R.id.txtMensaje);
-				        txtMsg.setText("Error: Usuario y/o clave errados");
-				 
-				        toast3.setDuration(Toast.LENGTH_SHORT);
-				        toast3.setView(layout);
-				        toast3.show();*/
-				        
-						
-					 }
-				}
+							//Recuperamos los valores de los campos de texto
+							String usu = usuario.getText().toString();
+							String cla = clave.getText().toString();
+		
+							//Alternativa 1: método rawQuery()
+							Cursor c = db.rawQuery("select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'", null);
+							
+							Log.e("SOY MD5:","select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'");
+												
+							if (c.moveToFirst()) {
+								//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
+								Intent i = new Intent();
+								i.setClass(MainActivity.this, MenuPrincipal.class);
+						        i.putExtra("pnombre_usuario", usuario.getText().toString());
+						        i.putExtra("pclave_usuario", clave.getText().toString());
+						      
+						        int index = c.getColumnIndex("cobradores_id");
+						        String cobradores_id = c.getString(index);
+						        
+						        int index2 = c.getColumnIndex("cedula_cobrador");
+						        String cedula_cobrador = c.getString(index2);
+						        
+						        int index3 = c.getColumnIndex("nombre");
+						        String nombre_usuario = c.getString(index3);
+						        
+						        globalVariable.setCobradores_id(cobradores_id);
+						        globalVariable.setCedula_cobrador(cedula_cobrador);
+						        globalVariable.setUserlogueado(nombre_usuario);
+						        
+						        
+						        startActivity(i);
+								
+						    }else{
+								
+						    	query_vacio(v);
+						    	usuario.setText("");
+					            clave.setText("");
+					            usuario.requestFocus();
+								
+							 }
+	        		}
 				
 			});
+	        
+	        
+	        
+	        registrarse.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
+					Intent i = new Intent();
+					i.setClass(MainActivity.this, MenuPrincipal.class);
+			        i.putExtra("pnombre_usuario", usuario.getText().toString());
+			        i.putExtra("pclave_usuario", clave.getText().toString());
+			        
+			        startActivity(i);
+				}
+				
+	        });
 	        
 	        
 						

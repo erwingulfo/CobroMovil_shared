@@ -2,19 +2,11 @@ package com.softdesignermonteria.cobromovil;
 
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -601,41 +593,56 @@ public class Menu_sincronizar extends Activity {
 				//modifcamos propiedad del progressbar
 				pDialog_clientes.setMax(respJSON.length());
 				
-				String[] clientes = new String[respJSON.length()];
+				int clientes_id = 0;
+				String cedula = "";
+				String nombres = "";
+				String direccion = "";
+				String telefono = "";
+				String celular = "";
+				String referencia_id = "";
+				String sql_insert_clientes = "";
+				
+				
+				
 				for (int i = 0; i < respJSON.length(); i++) {
-					JSONObject obj = respJSON.getJSONObject(i);
-					int clientes_id = obj.getInt("id");
-					String cedula = obj.getString("nit");
-					String nombres = obj.getString("nombres");
-					String direccion = obj
-							.getString("direccion");
-					String telefono = obj.getString("telefono");
-					String celular = obj.getString("celular");
-					String sql_insert_clientes = "insert into clientes "
-							+ " (clientes_id,cedula,nombres,direccion,telefono,celular) "
-							+ "values" + " (" + clientes_id + ",'" + cedula
-							+ "','" + nombres+ "','" + direccion + "','"
-							+ telefono + "','" + celular + "') ";
+					
+					JSONObject obj       = respJSON.getJSONObject(i);
+					clientes_id          = obj.getInt("id");
+					cedula               = obj.getString("nit");
+					nombres              = obj.getString("nombres");
+					direccion            = obj.getString("direccion");
+					telefono             = obj.getString("telefono");
+					celular              = obj.getString("celular");
+					referencia_id        = obj.getString("referencia_id");
+				
+					sql_insert_clientes  = "insert into clientes "
+											+ " ( clientes_id"
+											+ "   ,cedula"
+											+ "   ,nombres"
+											+ "   ,direccion"
+											+ "   ,telefono"
+											+ "   ,celular"
+											+ "   ,referencia_id"
+											+ " ) "
+											+ "   values" 
+											+ " (" 
+											+ "   ,'" + clientes_id   + "'"
+											+ "   ,'" + cedula        + "'"
+											+ "   ,'" + nombres       + "'"
+											+ "   ,'" + direccion     + "'"
+											+ "   ,'" + telefono      + "'"
+											+ "   ,'" + celular       + "'"
+											+ "   ,'" + referencia_id + "'"
+											+ "  ) ";
+					
 					Log.i(this.getClass().toString(),sql_insert_clientes);
 					db.execSQL(sql_insert_clientes);
 					
 					//*actualizamos barra de prograso*/
 					pDialog_clientes.setProgress(i+1);
 					
-					//clientes[i] = "" + clientes_id +"-"+ cedula + "-"+ nombres + "-" + telefono + "-"+ celular ;
-					
 				}
 				
-				// Rellenamos la lista con los resultados
-				/*ArrayAdapter<String> adaptador =
-			    new ArrayAdapter<String>(Menu_sincronizar.this,
-				android.R.layout.simple_list_item_1, clientes);
-				lst.setAdapter(adaptador);*/
-				//mostrar_sincronizados(respJSON.length(),"Clientes sincronizados");
-				
-				//cerramos barra progreso
-				
-								
 			}
 			
 			db.close();

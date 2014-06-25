@@ -38,7 +38,9 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 			+ "		nombres VARCHAR(300) NOT NULL, "
 			+ "		direccion VARCHAR(250) NOT NULL, "
 			+ "		telefono VARCHAR(20) NOT NULL, "
-			+ "		celular VARCHAR(20) NOT NULL" + "					)";
+			+ "		celular VARCHAR(20) NOT NULL,"
+			+ "		referencia_id INTEGER NOT NULL "
+			+ "					)";
 
 	/**
 	 * Creation Tabla Cobradores
@@ -131,6 +133,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 		Log.i(this.getClass().toString(), "On Upgrade...");
 		borrar_tablas(db);
 		creacion_tablas(db);
+		
 		String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 				+ md5("admin") + "','2','34444');";
 		db.execSQL(insert_usu);

@@ -6,30 +6,21 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textColor="#ffffff"
-        android:text="Bienvenido:" />
-
-    <TextView
         android:id="@+id/userlogueado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv1"
         android:layout_alignParentTop="true"
-        android:textColor="#ffffff"
-        android:layout_toRightOf="@+id/tv1" />
+        android:layout_toRightOf="@+id/tv1"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/nombre_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv1"
-        android:textColor="#ffffff"
-        android:layout_marginTop="22dp" />
+        android:layout_marginTop="22dp"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/clave_usuario"
@@ -37,20 +28,42 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/nombre_usuario"
-        android:textColor="#ffffff"
-        android:layout_marginTop="27dp" />
+        android:layout_marginTop="27dp"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/bienvenidos"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/m_reportes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/BtnMenuPrinicipalAgregarClientes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv1"
-        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/nombre_usuario"
         android:drawableLeft="@drawable/ic_action_import_export"
         android:gravity="left"
-        android:text="Sincronizar" />
+        android:text="@string/sincronizar"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/BtnMenuPrinicipalAgregarClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/clave_usuario"
+        android:drawableLeft="@drawable/ic_action_person"
+        android:gravity="left"
+        android:text="@string/agregar_clientes"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/b_m_clientes"
@@ -58,11 +71,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/m_reportes"
+        android:layout_below="@+id/BtnMenuPrinicipalAgregarClientes"
         android:drawableLeft="@drawable/ic_action_person"
-        android:textColor="#ffffff"
         android:gravity="left"
-        android:text="Buscar Clientes" />
+        android:text="@string/buscar_clientes"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/b_m_recaudos"
@@ -71,10 +84,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/b_m_clientes"
-        android:textColor="#ffffff"
         android:drawableLeft="@drawable/ic_action_cloud"
         android:gravity="left"
-        android:text="Recaudos" />
+        android:text="@string/recaudos"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/b_m_reportes"
@@ -83,9 +96,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/b_m_recaudos"
-        android:textColor="#ffffff"
         android:drawableLeft="@drawable/ic_action_copy"
         android:gravity="left"
-        android:text="Reportes" />
+        android:text="@string/reportes"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
