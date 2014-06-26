@@ -2,6 +2,7 @@ package com.softdesignermonteria.cobromovil;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,12 +21,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Clientes extends Activity {
 
@@ -38,7 +41,7 @@ public class Clientes extends Activity {
 
 	private EditText direccion;
 	private EditText telefono;
-	private EditText valor;
+	
 
 	private String Msg = "";
 
@@ -72,15 +75,13 @@ public class Clientes extends Activity {
 		nombre_database = globalVariable.getNombre_database();
 		version_database = globalVariable.getVersion_database();
 
-		cedula = (EditText) findViewById(R.id.TextClientesCedula);
-		nombre1 = (EditText) findViewById(R.id.TextClientesNombre1);
-		nombre2 = (EditText) findViewById(R.id.TextClkientesNombre2);
+		cedula    = (EditText) findViewById(R.id.TextClientesCedula);
+		nombre1   = (EditText) findViewById(R.id.TextClientesNombre1);
+		nombre2   = (EditText) findViewById(R.id.TextClkientesNombre2);
 		apellido1 = (EditText) findViewById(R.id.TxtClientesApellido1);
 		apellido2 = (EditText) findViewById(R.id.TextClientesApellido2);
 		direccion = (EditText) findViewById(R.id.TextClientesDireccion);
-		telefono = (EditText) findViewById(R.id.TextClientesTelefono);
-
-		valor = (EditText) findViewById(R.id.TextClientesValorAPrestar);
+		telefono  = (EditText) findViewById(R.id.TextClientesTelefono);
 
 		enviar = (Button) findViewById(R.id.ButtonClientesEnviar);
 
@@ -89,10 +90,7 @@ public class Clientes extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				HttpClient httpClient = new DefaultHttpClient();
-				HttpPost post = new HttpPost(url_servidor
-						+ "/clientes_movil/add/");
-				post.setHeader("content-type", "application/json");
+				
 
 				// Construimos el objeto cliente en formato JSON
 				JSONObject dato = new JSONObject();
@@ -106,18 +104,27 @@ public class Clientes extends Activity {
 					dato.put("apellido2", apellido2.getText().toString());
 					dato.put("direccion", direccion.getText().toString());
 					dato.put("telefono", telefono.getText().toString());
-					dato.put("valor", valor.getText().toString());
+					
 
 					StringEntity entity;
 					try {
-						entity = new StringEntity(dato.toString());
+						
+						
+						
+						String jsonencabezado    = URLEncoder.encode(dato.toString(), "UTF-8");
+						
+						HttpClient httpClient = new DefaultHttpClient();
+						HttpPost post = new HttpPost(url_servidor + "clientes_movil/add/?clientes="+jsonencabezado);
+						post.setHeader("content-type", "application/json");
+						
+						//entity = new StringEntity(dato.toString());
 
-						post.setEntity(entity);
+						//post.setEntity(entity);
 
 						HttpResponse resp;
 						try {
 							resp = httpClient.execute(post);
-							Log.i(this.getClass().toString(),"Se envio al Cliente a guadar");
+							Log.i(this.getClass().toString(),"Se envio al Cliente a guadar" + jsonencabezado );
 
 							System.out.println(post.getURI());
 							System.out.println(resp.getParams());
@@ -128,13 +135,13 @@ public class Clientes extends Activity {
 							 
 							if(obj.getBoolean("mensaje")==true){
 								//db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
-								
-								Log.i(this.getClass().toString(),"Success: "+ obj.getBoolean("descripcion") );
+								success(v,obj.getString("descripcion"));
+								Log.i(this.getClass().toString(),"Success: "+ obj.getString("descripcion") );
 							}else{
-								Log.i(this.getClass().toString(),"Error: "+ obj.getBoolean("descripcion") );
+								Log.i(this.getClass().toString(),"Error: "+ obj.getString("descripcion") );
 								//Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
+								error(v,obj.getString("descripcion"));
 								
-								//errores="Usp Error cargado Recibos al servidor";
 							}
 
 						} catch (ClientProtocolException e) {
@@ -163,6 +170,21 @@ public class Clientes extends Activity {
 		});
 
 	}
+	
+	
+	public void success(View v, String msg) {
+		Toast toast = Toast.makeText(this, "Cliente Agregado. Actualice su Cartera", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+    }
+
+    public void error(View v, String msg) {
+		Toast toast = Toast.makeText(this, "Error. Cliente no Agregado", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+    }
+    
+    
 
 	public boolean AgregarClientes() {
 
