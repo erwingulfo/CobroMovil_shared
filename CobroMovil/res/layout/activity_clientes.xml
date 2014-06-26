@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/textView2"
         android:layout_marginTop="20dp"
-        android:text="@string/cedula" />
+        android:text="@string/cedula"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView2"
@@ -22,7 +23,8 @@
         android:layout_alignBaseline="@+id/TextClientesNombre1"
         android:layout_alignBottom="@+id/TextClientesNombre1"
         android:layout_alignParentLeft="true"
-        android:text="@string/nombre1" />
+        android:text="@string/nombre1"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TextClientesNombre1"
@@ -33,7 +35,9 @@
         android:layout_below="@+id/TextClientesCedula"
         android:ems="10"
         android:hint="@string/nombre1"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView3"
@@ -42,7 +46,8 @@
         android:layout_alignBaseline="@+id/TextClkientesNombre2"
         android:layout_alignBottom="@+id/TextClkientesNombre2"
         android:layout_alignParentLeft="true"
-        android:text="@string/nombre2" />
+        android:text="@string/nombre2"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView4"
@@ -50,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/TxtClientesApellido1"
         android:layout_alignParentLeft="true"
-        android:text="@string/apellido1" />
+        android:text="@string/apellido1"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView5"
@@ -59,7 +65,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TxtClientesApellido1"
         android:layout_marginTop="30dp"
-        android:text="@string/apellido2" />
+        android:text="@string/apellido2"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView6"
@@ -67,7 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:text="@string/direccion" />
+        android:text="@string/direccion"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TextClkientesNombre2"
@@ -78,7 +86,9 @@
         android:layout_below="@+id/TextClientesNombre1"
         android:ems="10"
         android:hint="@string/nombre2"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TextClientesCedula"
@@ -89,7 +99,9 @@
         android:layout_alignTop="@+id/textView1"
         android:ems="10"
         android:hint="@string/cedula"
-        android:inputType="textPersonName" />
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TxtClientesApellido1"
@@ -100,7 +112,8 @@
         android:layout_toRightOf="@+id/textView7"
         android:ems="10"
         android:hint="@string/apellido1"
-        android:inputType="textPersonName" >
+        android:inputType="textPersonName"
+        android:textColor="#ffff" >
 
         <requestFocus />
     </EditText>
@@ -114,7 +127,9 @@
         android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="@string/apellido2"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TextClientesDireccion"
@@ -125,7 +140,9 @@
         android:layout_alignTop="@+id/textView6"
         android:ems="10"
         android:hint="@string/direccion"
-        android:inputType="text" />
+        android:inputType="text"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView9"
@@ -134,7 +151,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextClientesDireccion"
         android:layout_marginTop="18dp"
-        android:text="@string/telefono" />
+        android:text="@string/telefono"
+        android:textColor="#ffff" />
 
     <EditText
         android:id="@+id/TextClientesTelefono"
@@ -146,7 +164,8 @@
         android:layout_alignParentRight="true"
         android:ems="10"
         android:hint="@string/telefono"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:textColor="#ffff" />
 
     <TextView
         android:id="@+id/textView7"
@@ -155,7 +174,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextClientesTelefono"
         android:layout_marginTop="19dp"
-        android:text="@string/referencia" />
+        android:text="@string/referencia"
+        android:textColor="#ffff" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteClientesReferencia"
@@ -164,7 +184,10 @@
         android:layout_alignLeft="@+id/TextClientesTelefono"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textView7"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="@string/referencia"
+        android:singleLine="true"
+        android:textColor="#ffff" />
 
     <Button
         android:id="@+id/ButtonClientesEnviar"

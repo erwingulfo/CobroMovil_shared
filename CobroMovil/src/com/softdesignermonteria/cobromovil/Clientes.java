@@ -90,105 +90,120 @@ public class Clientes extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				
-
-				// Construimos el objeto cliente en formato JSON
-				JSONObject dato = new JSONObject();
-
-				try {
-
-					dato.put("cedula", cedula.getText().toString());
-					dato.put("nombre1", nombre1.getText().toString());
-					dato.put("nombre2", nombre2.getText().toString());
-					dato.put("apellido1", apellido1.getText().toString());
-					dato.put("apellido2", apellido2.getText().toString());
-					dato.put("direccion", direccion.getText().toString());
-					dato.put("telefono", telefono.getText().toString());
+					int sw=0;
+					String msg2 = "";
 					
+					if( cedula.getText().toString().equals("")    ){ sw=1; msg2 += " Cedula Obligatorio"; } 
+					if( nombre1.getText().toString().equals("")   ){ sw=1; msg2 += " Nombre1 Obligatorio"; }
+					if( apellido2.getText().toString().equals("") ){ sw=1; msg2 += " Apellido1 Obligatorio"; }
+					if( direccion.getText().toString().equals("") ){ sw=1; msg2 += " Direccion Obligatorio"; }
+					if( telefono.getText().toString().equals("")  ){ sw=1; msg2 += " Telefono Obligatorio"; }
+					
+					
+					if(sw==0){ AgregarClientes(); }else{ errorValidacion(msg2);}
 
-					StringEntity entity;
-					try {
-						
-						
-						
-						String jsonencabezado    = URLEncoder.encode(dato.toString(), "UTF-8");
-						
-						HttpClient httpClient = new DefaultHttpClient();
-						HttpPost post = new HttpPost(url_servidor + "clientes_movil/add/?clientes="+jsonencabezado);
-						post.setHeader("content-type", "application/json");
-						
-						//entity = new StringEntity(dato.toString());
-
-						//post.setEntity(entity);
-
-						HttpResponse resp;
-						try {
-							resp = httpClient.execute(post);
-							Log.i(this.getClass().toString(),"Se envio al Cliente a guadar" + jsonencabezado );
-
-							System.out.println(post.getURI());
-							System.out.println(resp.getParams());
-							String respStr = EntityUtils.toString(resp.getEntity());
-							System.out.println(respStr.getBytes());
-							JSONArray respJSON = new JSONArray(respStr);
-							JSONObject obj = respJSON.getJSONObject(0); 
-							 
-							if(obj.getBoolean("mensaje")==true){
-								//db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
-								success(v,obj.getString("descripcion"));
-								Log.i(this.getClass().toString(),"Success: "+ obj.getString("descripcion") );
-							}else{
-								Log.i(this.getClass().toString(),"Error: "+ obj.getString("descripcion") );
-								//Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
-								error(v,obj.getString("descripcion"));
-								
-							}
-
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
-						}
-
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
-					}
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
-				}
-
-			}
-		});
+				}	
+			});
 
 	}
 	
 	
-	public void success(View v, String msg) {
+	public void success(String msg) {
 		Toast toast = Toast.makeText(this, "Cliente Agregado. Actualice su Cartera", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
     }
 
-    public void error(View v, String msg) {
-		Toast toast = Toast.makeText(this, "Error. Cliente no Agregado", Toast.LENGTH_SHORT);
+    public void error(String msg) {
+		Toast toast = Toast.makeText(this, "Error. Cliente no Agregado" + msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
     }
     
+    public void errorValidacion(String msg) {
+		Toast toast = Toast.makeText(this, "Error." + msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+    }
     
 
-	public boolean AgregarClientes() {
+	public void AgregarClientes() {
+		// Construimos el objeto cliente en formato JSON
+		JSONObject dato = new JSONObject();
 
-		return true;
+		try {
+
+			dato.put("cedula", cedula.getText().toString());
+			dato.put("nombre1", nombre1.getText().toString());
+			dato.put("nombre2", nombre2.getText().toString());
+			dato.put("apellido1", apellido1.getText().toString());
+			dato.put("apellido2", apellido2.getText().toString());
+			dato.put("direccion", direccion.getText().toString());
+			dato.put("telefono", telefono.getText().toString());
+			
+
+			StringEntity entity;
+			try {
+				
+				
+				
+				String jsonencabezado    = URLEncoder.encode(dato.toString(), "UTF-8");
+				
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpPost post = new HttpPost(url_servidor + "clientes_movil/add/?clientes="+jsonencabezado);
+				post.setHeader("content-type", "application/json");
+				
+				//entity = new StringEntity(dato.toString());
+
+				//post.setEntity(entity);
+
+				HttpResponse resp;
+				try {
+					resp = httpClient.execute(post);
+					Log.i(this.getClass().toString(),"Se envio al Cliente a guadar" + jsonencabezado );
+
+					System.out.println(post.getURI());
+					System.out.println(resp.getParams());
+					String respStr = EntityUtils.toString(resp.getEntity());
+					System.out.println(respStr.getBytes());
+					JSONArray respJSON = new JSONArray(respStr);
+					JSONObject obj = respJSON.getJSONObject(0); 
+					 
+					if(obj.getBoolean("mensaje")==true){
+						//db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
+						success(obj.getString("descripcion"));
+						Log.i(this.getClass().toString(),"Success: "+ obj.getString("descripcion") );
+					}else{
+						Log.i(this.getClass().toString(),"Error: "+ obj.getString("descripcion") );
+						//Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
+						error(obj.getString("descripcion"));
+						
+					}
+
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
+				}
+
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.i(this.getClass().toString(),"Error: "+ e.getMessage() );
+		}
+
+	
+	
 	}
 
 }
