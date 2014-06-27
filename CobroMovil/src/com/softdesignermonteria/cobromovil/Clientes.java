@@ -22,13 +22,20 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AutoCompleteTextView;
+
+import com.softdesignermonteria.cobromovil.clases.ModelClientes;
 
 public class Clientes extends Activity {
 
@@ -41,6 +48,7 @@ public class Clientes extends Activity {
 
 	private EditText direccion;
 	private EditText telefono;
+	private AutoCompleteTextView auto; 
 	
 
 	private String Msg = "";
@@ -48,6 +56,14 @@ public class Clientes extends Activity {
 	private String url_servidor;
 	private String nombre_database;
 	private int version_database;
+	
+	private ModelClientes[] datos =
+		    new ModelClientes[]{
+		        new ModelClientes("1", "Subtítulo largo 1", "", ""),
+		        new ModelClientes("2", "Subtítulo largo 2", "", ""),
+		        new ModelClientes("3", "Subtítulo largo 3", "", ""),
+		        new ModelClientes("4", "Subtítulo largo 4", "", ""),
+		        new ModelClientes("5", "Subtítulo largo 5", "", "")};
 
 	// private String Msg="";
 
@@ -82,6 +98,12 @@ public class Clientes extends Activity {
 		apellido2 = (EditText) findViewById(R.id.TextClientesApellido2);
 		direccion = (EditText) findViewById(R.id.TextClientesDireccion);
 		telefono  = (EditText) findViewById(R.id.TextClientesTelefono);
+		auto      = (AutoCompleteTextView) findViewById(R.id.autoCompleteClientesReferencia);
+		
+		
+		AutoCompleteReferencias adaptador =  new AutoCompleteReferencias(this);	 
+		auto.setAdapter(adaptador);
+	
 
 		enviar = (Button) findViewById(R.id.ButtonClientesEnviar);
 
@@ -205,5 +227,36 @@ public class Clientes extends Activity {
 	
 	
 	}
+	
 
+
+		@SuppressWarnings("rawtypes")
+		public class AutoCompleteReferencias extends ArrayAdapter {
+			 
+			Activity context;
+			 
+			 AutoCompleteReferencias(Activity context) {
+				//super(context, R.layout.lista_clientes, datos);
+		        super(context, R.layout.lista_clientes, 0);
+		        this.context = context;
+		    }
+			 
+			 public View getView(int position, View convertView, ViewGroup parent) {
+			        LayoutInflater inflater = context.getLayoutInflater();
+			        View item = inflater.inflate(R.layout.lista_clientes, null);
+			 
+			        TextView lblTitulo = (TextView)item.findViewById(R.id.LblTitulo);
+			      //  lblTitulo.setText(datos[position].getTitulo());
+			 
+			        TextView lblSubtitulo = (TextView)item.findViewById(R.id.LblSubTitulo);
+			      //  lblSubtitulo.setText(datos[position].getSubtitulo());
+			 
+			        return(item);
+			 }
+		}
+
+		
+		
 }
+
+
