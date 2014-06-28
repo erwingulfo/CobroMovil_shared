@@ -626,7 +626,7 @@ public class Menu_sincronizar extends Activity {
 											+ " ) "
 											+ "   values" 
 											+ " (" 
-											+ "   ,'" + clientes_id   + "'"
+											+ "    '" + clientes_id   + "'"
 											+ "   ,'" + cedula        + "'"
 											+ "   ,'" + nombres       + "'"
 											+ "   ,'" + direccion     + "'"

@@ -17,24 +17,28 @@ import org.json.JSONObject;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AutoCompleteTextView;
 
+import com.softdesignermonteria.cobromovil.autocompleteclientes.AutocompleteCustomArrayAdapter;
+import com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteTextChangedListener;
+import com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView;
 import com.softdesignermonteria.cobromovil.clases.ModelClientes;
 
 public class Clientes extends Activity {
@@ -48,7 +52,8 @@ public class Clientes extends Activity {
 
 	private EditText direccion;
 	private EditText telefono;
-	private AutoCompleteTextView auto; 
+	private TextView nombre_referencia;
+	public AutoCompleteTextView auto; 
 	
 
 	private String Msg = "";
@@ -57,14 +62,8 @@ public class Clientes extends Activity {
 	private String nombre_database;
 	private int version_database;
 	
-	private ModelClientes[] datos =
-		    new ModelClientes[]{
-		        new ModelClientes("1", "Subtítulo largo 1", "", ""),
-		        new ModelClientes("2", "Subtítulo largo 2", "", ""),
-		        new ModelClientes("3", "Subtítulo largo 3", "", ""),
-		        new ModelClientes("4", "Subtítulo largo 4", "", ""),
-		        new ModelClientes("5", "Subtítulo largo 5", "", "")};
-
+	public ArrayAdapter<ModelClientes> myAdapter;
+	
 	// private String Msg="";
 
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
@@ -98,11 +97,36 @@ public class Clientes extends Activity {
 		apellido2 = (EditText) findViewById(R.id.TextClientesApellido2);
 		direccion = (EditText) findViewById(R.id.TextClientesDireccion);
 		telefono  = (EditText) findViewById(R.id.TextClientesTelefono);
-		auto      = (AutoCompleteTextView) findViewById(R.id.autoCompleteClientesReferencia);
+		nombre_referencia = (TextView) findViewById(R.id.TextClientesNombreReferencia);
 		
+		auto      = (CustomAutoCompleteView) findViewById(R.id.autoCompleteClientesReferencia);
 		
-		AutoCompleteReferencias adaptador =  new AutoCompleteReferencias(this);	 
-		auto.setAdapter(adaptador);
+		auto.setOnItemClickListener(new OnItemClickListener() {
+			 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                 
+                RelativeLayout rl = (RelativeLayout) arg1;
+                TextView tv = (TextView) rl.getChildAt(0);
+                auto.setText(tv.getText().toString());
+                
+                TextView tv1 = (TextView) rl.getChildAt(1);
+                nombre_referencia.setText(tv1.getText().toString());
+                 
+            }
+
+        });
+         
+        // add the listener so it will tries to suggest while the user types
+		auto.addTextChangedListener(new CustomAutoCompleteTextChangedListener(this));
+         
+        // ObjectItemData has no value at first
+        ModelClientes[] ObjectItemData = new ModelClientes[0];
+         
+        // set the custom ArrayAdapter
+        myAdapter = new AutocompleteCustomArrayAdapter(this, R.layout.lista_clientes, ObjectItemData);
+        auto.setAdapter(myAdapter);
+	
 	
 
 		enviar = (Button) findViewById(R.id.ButtonClientesEnviar);
@@ -117,7 +141,7 @@ public class Clientes extends Activity {
 					
 					if( cedula.getText().toString().equals("")    ){ sw=1; msg2 += " Cedula Obligatorio"; } 
 					if( nombre1.getText().toString().equals("")   ){ sw=1; msg2 += " Nombre1 Obligatorio"; }
-					if( apellido2.getText().toString().equals("") ){ sw=1; msg2 += " Apellido1 Obligatorio"; }
+					if( apellido1.getText().toString().equals("") ){ sw=1; msg2 += " Apellido1 Obligatorio"; }
 					if( direccion.getText().toString().equals("") ){ sw=1; msg2 += " Direccion Obligatorio"; }
 					if( telefono.getText().toString().equals("")  ){ sw=1; msg2 += " Telefono Obligatorio"; }
 					
@@ -228,32 +252,58 @@ public class Clientes extends Activity {
 	
 	}
 	
-
-
-		@SuppressWarnings("rawtypes")
-		public class AutoCompleteReferencias extends ArrayAdapter {
-			 
-			Activity context;
-			 
-			 AutoCompleteReferencias(Activity context) {
-				//super(context, R.layout.lista_clientes, datos);
-		        super(context, R.layout.lista_clientes, 0);
-		        this.context = context;
-		    }
-			 
-			 public View getView(int position, View convertView, ViewGroup parent) {
-			        LayoutInflater inflater = context.getLayoutInflater();
-			        View item = inflater.inflate(R.layout.lista_clientes, null);
-			 
-			        TextView lblTitulo = (TextView)item.findViewById(R.id.LblTitulo);
-			      //  lblTitulo.setText(datos[position].getTitulo());
-			 
-			        TextView lblSubtitulo = (TextView)item.findViewById(R.id.LblSubTitulo);
-			      //  lblSubtitulo.setText(datos[position].getSubtitulo());
-			 
-			        return(item);
-			 }
-		}
+	
+	
+	
+	
+	 // Read records related to the search term
+    public ModelClientes[] read(String searchTerm) {
+ 
+        // select query
+        String sql = "";
+        sql += "SELECT clientes_id,nombres,direccion,telefono FROM clientes " ;
+        sql += " WHERE  nombres LIKE '%" + searchTerm + "%'";
+        sql += " ORDER BY nombres DESC";
+        sql += " LIMIT 0,5";
+ 
+        TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+		SQLiteDatabase db = usdbh.getWritableDatabase();
+ 
+        // execute the query
+        Cursor cursor = db.rawQuery(sql, null);
+ 
+        int recCount = cursor.getCount();
+         
+        ModelClientes[] ObjectItemData = new ModelClientes[recCount];
+        int x = 0;
+         
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+ 
+                String clientes_id = cursor.getString(cursor.getColumnIndex("clientes_id"));
+                String nombre = cursor.getString(cursor.getColumnIndex("nombres"));
+                String direccion = cursor.getString(cursor.getColumnIndex("direccion"));
+                String telefono = cursor.getString(cursor.getColumnIndex("telefono"));
+                Log.e("LLenando Clientes", "objectName: " + clientes_id);
+                 
+                ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono);
+ 
+                ObjectItemData[x] = myObject;
+                 
+                x++;
+                 
+            } while (cursor.moveToNext());
+        }
+ 
+        cursor.close();
+        db.close();
+ 
+        return ObjectItemData;
+         
+    }
+ 
+	
 
 		
 		

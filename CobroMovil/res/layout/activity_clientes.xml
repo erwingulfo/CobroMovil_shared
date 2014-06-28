@@ -177,7 +177,7 @@
         android:text="@string/referencia"
         android:textColor="#ffff" />
 
-    <AutoCompleteTextView
+    <com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView
         android:id="@+id/autoCompleteClientesReferencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -187,16 +187,30 @@
         android:ems="10"
         android:hint="@string/referencia"
         android:singleLine="true"
+        android:completionThreshold="1"
         android:textColor="#ffff" />
 
     <Button
         android:id="@+id/ButtonClientesEnviar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/autoCompleteClientesReferencia"
+        android:layout_marginBottom="31dp"
         android:drawableLeft="@drawable/ic_action_save"
         android:text="@string/enviar" />
+
+    <TextView
+        android:id="@+id/TextClientesNombreReferencia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ButtonClientesEnviar"
+        android:layout_alignLeft="@+id/autoCompleteClientesReferencia"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoCompleteClientesReferencia"
+        android:drawableLeft="@drawable/ic_action_person"
+        android:textColor="#fff"
+        android:textSize="@dimen/dieciocho_dp" />
 
 </RelativeLayout>

@@ -5,7 +5,7 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/Admin/Mis documentos/adt-bundle-windows-x86-20130917/adt-bundle-windows-x86-20130917/sdk/platforms/android-14/android.jar" sourcepath="C:/Documents and Settings/Admin/Mis documentos/adt-bundle-windows-x86-20130917/adt-bundle-windows-x86-20130917/sdk/sources/android-14">
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Android/android-studio/sdk/platforms/android-14/android.jar" sourcepath="C:/Documents and Settings/Admin/Mis documentos/adt-bundle-windows-x86-20130917/adt-bundle-windows-x86-20130917/sdk/sources/android-14">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/C:/Documents and Settings/Admin/Mis documentos/adt-bundle-windows-x86-20130917/adt-bundle-windows-x86-20130917/sdk/docs/reference"/>
 		</attributes>

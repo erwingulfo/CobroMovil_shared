@@ -78,6 +78,7 @@ public class SincronizarCobroMovil extends Service {
 								total_recibos=c1.getInt(temp);
 							}while(c1.moveToNext());
 						}
+						c1.close();
 						//modifcamos propiedad del progressbar
 						if(total_recibos>0){
 								String sql_recaudos; 
@@ -128,7 +129,7 @@ public class SincronizarCobroMovil extends Service {
 												j=j+1;
 											}while(cRecaudosDetalles.moveToNext());
 										}
-										
+										cRecaudosDetalles.close();
 										encabezado.put("detalles",detalles);
 										
 										System.out.println(encabezado);
@@ -170,12 +171,15 @@ public class SincronizarCobroMovil extends Service {
 										}
 										
 									}while(cRecaudos.moveToNext());
+									cRecaudos.close();
 								}//si recibos encabezado
 						
 						}//si recibos mayor a cero
 						else{
 							sw=false;
 						}
+						
+						
 						
 					}
 					
