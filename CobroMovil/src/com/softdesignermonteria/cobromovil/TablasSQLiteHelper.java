@@ -4,17 +4,23 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.softdesignermonteria.cobromovil.clases.ModelClientes;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
+	
+	final String nombre_database = "cobro_movil";
+	final int version_database = 1;
 
 	/**
 	 * Base de datos en desarrollo version antes de lanzamiento oficial
-	 * Version=10
+	 * Version=1
 	 */
 
 	/**
@@ -121,24 +127,41 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int versionAnterior,
 			int versionNueva) {
-		/**
-		 * NOTA: Por simplicidad del ejemplo aquí utilizamos directamente la
-		 * opción de eliminar la tabla anterior y crearla de nuevo vacía con el
-		 * nuevo formato. Sin embargo lo normal será que haya que migrar datos
-		 * de la tabla antigua a la nueva, por lo que este método debería ser
-		 * más elaborado. Se elimina la versión anterior de la tabla
-		 * 
-		 */
-
-		Log.i(this.getClass().toString(), "On Upgrade...");
-		borrar_tablas(db);
-		creacion_tablas(db);
 		
-		String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
-				+ md5("admin") + "','2','34444');";
-		db.execSQL(insert_usu);
-		Log.i(this.getClass().toString(),
-				"Insercion de usuario por defecto despues de actualizar");
+				/**
+				 * NOTA: Por simplicidad del ejemplo aquí utilizamos directamente la
+				 * opción de eliminar la tabla anterior y crearla de nuevo vacía con el
+				 * nuevo formato. Sin embargo lo normal será que haya que migrar datos
+				 * de la tabla antigua a la nueva, por lo que este método debería ser
+				 * más elaborado. Se elimina la versión anterior de la tabla
+				 * 
+				 */
+		
+					if(versionNueva==1){
+						
+						Log.i(this.getClass().toString(), "On Upgrade...");
+						borrar_tablas(db);
+						creacion_tablas(db);
+						
+						String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+								+ md5("admin") + "','2','34444');";
+						db.execSQL(insert_usu);
+						Log.i(this.getClass().toString(),
+								"Insercion de usuario por defecto despues de actualizar");
+					}	
+		
+				if(versionNueva==2){
+				
+						Log.i(this.getClass().toString(), "On Upgrade...");
+						borrar_tablas(db);
+						creacion_tablas(db);
+						
+						String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+								+ md5("admin") + "','2','34444');";
+						db.execSQL(insert_usu);
+						Log.i(this.getClass().toString(),
+								"Insercion de usuario por defecto despues de actualizar");
+			   }		
 
 	}
 
@@ -208,5 +231,64 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 		}
 		return "";
 	}
+	
+
+	 // Read records related to the search term
+   public ModelClientes[] ObtenerTodosClientes( Context context, String searchTerm ) {
+
+       // select query
+       String sql = "";
+       sql += "SELECT clientes_id,nombres,direccion,telefono,cedula,celular ";
+       sql += " FROM clientes " ;
+       sql += " WHERE  1=1 and ";
+       sql += " (";
+       sql += "   nombres LIKE '%" + searchTerm + "%' ";
+       sql += "   or  cedula LIKE '" + searchTerm + "%' ";
+       sql += " )  ";
+       sql += " ORDER BY nombres DESC";
+       sql += " LIMIT 0,10";
+       
+       
+       Log.i(this.getClass().toString(),
+				sql);
+       
+       TablasSQLiteHelper usdbh = new TablasSQLiteHelper(context,nombre_database, null, version_database);
+		SQLiteDatabase db = usdbh.getWritableDatabase();
+
+       // execute the query
+       Cursor cursor = db.rawQuery(sql, null);
+
+       int recCount = cursor.getCount();
+        
+       ModelClientes[] ObjectItemData = new ModelClientes[recCount];
+       int x = 0;
+        
+       // looping through all rows and adding to list
+       if (cursor.moveToFirst()) {
+           do {
+
+               String clientes_id = cursor.getString(cursor.getColumnIndex("clientes_id"));
+               String nombre = cursor.getString(cursor.getColumnIndex("nombres"));
+               String direccion = cursor.getString(cursor.getColumnIndex("direccion"));
+               String telefono = cursor.getString(cursor.getColumnIndex("telefono"));
+               String cedula = cursor.getString(cursor.getColumnIndex("cedula"));
+               String celular = cursor.getString(cursor.getColumnIndex("celular"));
+               Log.e("LLenando Clientes", "objectName: " + clientes_id);
+                
+               ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono,cedula,celular);
+
+               ObjectItemData[x] = myObject;
+                
+               x++;
+                
+           } while (cursor.moveToNext());
+       }
+
+       cursor.close();
+       db.close();
+
+       return ObjectItemData;
+        
+   }
 
 }

@@ -2,48 +2,48 @@ package com.softdesignermonteria.cobromovil;
 
 import java.util.ArrayList;
 
-import android.R.menu;
+
+import com.softdesignermonteria.cobromovil.clases.ModelClientes;
+
 import android.os.Bundle;
 import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.softdesignermonteria.cobromovil.TablasSQLiteHelper;
+import com.softdesignermonteria.cobromovil.listaclientes.*;
+
+
 
 public class Busqueda_clientes extends Activity {
 	
 	private EditText nit_nombres;
 	private Button consultar_clientes;
-	private Button limpiar;
-	private TextView tv2;
-	private TextView tv3;
-	private TextView tv4;
+	private TextView textuserlogueado;
 	private String user_logueado;
 	
 	private String url_servidor;
 	private String nombre_database;
 	private int version_database;
-	private String parametro;
 	public ArrayList<String> menu = new ArrayList<String>();
 	public ArrayList<String> adaptador = new ArrayList<String>();
 	
+	public ArrayAdapter<ModelClientes> myAdapter;
+	public ListView listaclientesList;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_busqueda_clientes);
-	
+		final Context context = this;
 		/*
 		 * Pegar este codigo en todas las actividades que lo requieran
 		 * */
@@ -53,35 +53,43 @@ public class Busqueda_clientes extends Activity {
 		version_database = globalVariable.getVersion_database();
 		user_logueado	 = globalVariable.getUserlogueado();
 		
-		tv2 = (TextView)findViewById(R.id.tv7);
-		tv3 = (TextView)findViewById(R.id.tv3);
-		tv4 = (TextView)findViewById(R.id.tv4);
+		textuserlogueado = (TextView)findViewById(R.id.BusquedaClientesUserLogueado);
+		textuserlogueado.setText(user_logueado);
+		
 		nit_nombres=(EditText)findViewById(R.id.nit_nombres);
 		
-		tv4.setText(user_logueado);
+		listaclientesList = (CustomListViewInfoClientes) findViewById(R.id.listViewListaClientes);
+		
+		ModelClientes[] ObjectItemData = new ModelClientes[0];
+        
+        // set the custom ArrayAdapter
+        myAdapter = new ListViewInfoClientesArrayAdapter(context, R.layout.info_clientes, ObjectItemData);
+        listaclientesList.setAdapter(myAdapter);
+		
+		
+		
 
 		consultar_clientes = (Button) findViewById(R.id.consultar_clientes);
 		consultar_clientes.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Log.i(this.getClass().toString(), "Presiona Boton Buscar");
-				// setContentView(R.layout.activity_menu_clientes);cambios nuevoss
 				
-				/*Limpiamos el listview*/
-				/*ArrayList<String> borrar = new ArrayList<String>();
-				borrar.add("");
-				ArrayAdapter<String> limpiar = new ArrayAdapter<String>(Busqueda_clientes.this,
-			    android.R.layout.simple_list_item_1, borrar);*/
+		        
+				    String userInput = nit_nombres.getText().toString();
+		        
+		          // if you want to see in the logcat what the user types
+		            Log.e(this.getClass().toString(), "User input: " + userInput);
+		     
+		            TablasSQLiteHelper  t =  new TablasSQLiteHelper (context, nombre_database, null, version_database);
+		            ModelClientes[] myObjs = t.ObtenerTodosClientes(context, userInput.toString());
+
+		            myAdapter = new ListViewInfoClientesArrayAdapter(context, R.layout.info_clientes, myObjs);
+		             
+		            listaclientesList.setAdapter(myAdapter);
+		            
+		            Log.e(this.getClass().toString(), "despues de lista clientes");
 				
-				
-				if (consultar_clientes()) {
-					System.out
-							.println("Clientes Consultados Satisfactoriamente");
-					Log.i(this.getClass().toString(),
-							"Clientes Consultados Satisfactoriamente");
-				} else {
-					System.out.println("Oops clientes no encontrado");
-					Log.i(this.getClass().toString(), "Oops clientes no encontrados");
-				}
+			
 			}
 		});
 		
@@ -89,72 +97,7 @@ public class Busqueda_clientes extends Activity {
 		
 	}
 	
-	public boolean consultar_clientes() {
-		boolean sw = true;
-		
-		
-		parametro=nit_nombres.getText().toString();
-			
-		try {
-			
-			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
-			SQLiteDatabase db = usdbh.getWritableDatabase();
-			// Si hemos abierto correctamente la base de datos
-			tv3.setText("");
-								
-			if (db != null) {
-				
-				   tv2.setVisibility(View.VISIBLE);
-				
-					Cursor c = db.rawQuery("select * from clientes where cedula="+"'"+parametro+"'", null);
-					
-					String cadena="select * from clientes where cedula="+"'"+parametro+"'";
-					
-					Log.i("Sql", "Sentencia:"+cadena);
-															
-					if (c.moveToFirst()) {
-					     //Recorremos el cursor hasta que no haya más registros
-						do{
-					
-						//Log.i("Sql", "pos"+pos+":"+pos);
-							
-						String id = c.getString(0);
-						String cedula = c.getString(1);
-					    String nombres = c.getString(2);
-					    String direccion = c.getString(3);
-					    String telefono = c.getString(4);
-					    String celular = c.getString(5);
-					  					    
-					    tv3.append(" " + id +" - "+ cedula +" - " + nombres + " - "+ direccion+ " - "+ telefono+ " - " + celular+"\n");
-					    
-					    ArrayAdapter<String> adaptador =
-					    		new ArrayAdapter<String>(Busqueda_clientes.this,
-					    android.R.layout.simple_list_item_1, menu);
-					    //lv.setAdapter(adaptador);
-					    
-					    					    
-					    } while(c.moveToNext());
-										
-				    }else{
-				    	
-				    	tv2.setVisibility(View.VISIBLE);				    	
-				    	tv3.append("Cliente no existe");
-				    }
-				  
-				 
-				}
-				
-		  db.close();
-
-		} catch (Exception ex) {
-			Log.e("Consulta de clientes", "Error!", ex);
-			sw = false;
-		}
-
-		return sw;
-		
-
-	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,5 +105,7 @@ public class Busqueda_clientes extends Activity {
 		getMenuInflater().inflate(R.menu.busqueda_clientes, menu);
 		return true;
 	}
+	
+	
 
 }

@@ -45,7 +45,7 @@ public class CustomAutoCompleteTextChangedListener implements TextWatcher{
             Clientes.myAdapter.notifyDataSetChanged();
              
             // get suggestions from the database
-            ModelClientes[] myObjs = Clientes.read(userInput.toString());
+            ModelClientes[] myObjs = Clientes.Read(userInput.toString());
              
             // update the adapter
             Clientes.myAdapter = new AutocompleteCustomArrayAdapter(Clientes, R.layout.lista_clientes, myObjs);

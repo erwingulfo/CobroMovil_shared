@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
 	<TextView
-	    android:id="@+id/LblTitulo"
+	    android:id="@+id/LbListaClientesCredito"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentTop="true"
@@ -15,11 +15,11 @@
 	    android:textStyle="bold" />
 
 	<TextView
-	    android:id="@+id/LblSubTitulo"
+	    android:id="@+id/LbListaClientesCedula"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/LblTitulo"
-	    android:layout_below="@+id/LblTitulo"
+	    android:layout_alignLeft="@+id/LbListaClientesCredito"
+	    android:layout_below="@+id/LbListaClientesCredito"
 	    android:drawableLeft="@drawable/ic_action_person2"
 	    
 	    android:textStyle="normal" />

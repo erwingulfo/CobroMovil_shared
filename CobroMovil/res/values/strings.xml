@@ -43,5 +43,11 @@
     <string name="reportes">Reportes</string>
     <string name="bienvenidos">Bienvenidos</string>
     <string name="items">Items</string>
+    <string name="Buscar">Buscar</string>
+    <string name="busqueda_por_cedula">Búsqueda por cédula:</string>
+    <string name="Resultado_de_la_busqueda">Resultado de la Búsqueda:</string>
+    <string name="Bienvenido">Bienvenido</string>
+    <string name="buscar_cliente_cedula_nombre">Cedula/nombre</string>
+    <string name="no_hay_resultados">No hay Resultados</string>
 
 </resources>

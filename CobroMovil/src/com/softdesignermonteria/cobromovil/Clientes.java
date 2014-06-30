@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -62,6 +63,8 @@ public class Clientes extends Activity {
 	private String nombre_database;
 	private int version_database;
 	
+	private Context context;
+	
 	public ArrayAdapter<ModelClientes> myAdapter;
 	
 	// private String Msg="";
@@ -77,6 +80,8 @@ public class Clientes extends Activity {
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		
+		context = this;
 
 		/**
 		 * Asignacion de valores de variables globales android se especifica
@@ -253,56 +258,15 @@ public class Clientes extends Activity {
 	}
 	
 	
+	public ModelClientes[] Read(String valor_filtro) {
+		// TODO Auto-generated constructor stub
+		
+		  TablasSQLiteHelper  t =  new TablasSQLiteHelper (context, nombre_database, null, version_database);
+          ModelClientes[] myObjs = t.ObtenerTodosClientes(context, valor_filtro.toString());
+          
+          return myObjs;
+	}
 	
-	
-	
-	 // Read records related to the search term
-    public ModelClientes[] read(String searchTerm) {
- 
-        // select query
-        String sql = "";
-        sql += "SELECT clientes_id,nombres,direccion,telefono FROM clientes " ;
-        sql += " WHERE  nombres LIKE '%" + searchTerm + "%'";
-        sql += " ORDER BY nombres DESC";
-        sql += " LIMIT 0,5";
- 
-        TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
-		SQLiteDatabase db = usdbh.getWritableDatabase();
- 
-        // execute the query
-        Cursor cursor = db.rawQuery(sql, null);
- 
-        int recCount = cursor.getCount();
-         
-        ModelClientes[] ObjectItemData = new ModelClientes[recCount];
-        int x = 0;
-         
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
- 
-                String clientes_id = cursor.getString(cursor.getColumnIndex("clientes_id"));
-                String nombre = cursor.getString(cursor.getColumnIndex("nombres"));
-                String direccion = cursor.getString(cursor.getColumnIndex("direccion"));
-                String telefono = cursor.getString(cursor.getColumnIndex("telefono"));
-                Log.e("LLenando Clientes", "objectName: " + clientes_id);
-                 
-                ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono);
- 
-                ObjectItemData[x] = myObject;
-                 
-                x++;
-                 
-            } while (cursor.moveToNext());
-        }
- 
-        cursor.close();
-        db.close();
- 
-        return ObjectItemData;
-         
-    }
- 
 	
 
 		

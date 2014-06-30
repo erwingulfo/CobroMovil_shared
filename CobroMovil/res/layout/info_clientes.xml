@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:orientation="vertical" >
+ 
+	<TextView
+	    android:id="@+id/LbInfoClientesClientes_id"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:drawableLeft="@drawable/ic_action_cloud"
+	    android:textColor="#fff"
+	    android:textSize="@dimen/dieciocho_dp"
+	    android:textStyle="bold" />
+	
+	<TextView
+	    android:id="@+id/LbInfoClientesCedula"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbInfoClientesClientes_id"
+	    android:layout_below="@+id/LbInfoClientesClientes_id"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#fff"
+	    android:textStyle="normal" />
+	
+	<TextView
+	    android:id="@+id/LbInfoClientesNombres"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbInfoClientesCedula"
+	    android:layout_below="@+id/LbInfoClientesCedula"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#fff"
+	    android:textStyle="normal" />
+
+	
+
+	<TextView
+	    android:id="@+id/LbInfoClientesDireccion"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbInfoClientesNombres"
+	    android:layout_below="@+id/LbInfoClientesNombres"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#fff"
+	    android:textStyle="normal" />
+
+	<TextView
+	    android:id="@+id/LbInfoClientesTelefonos"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/LbInfoClientesDireccion"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#fff"
+	    android:textStyle="normal" />
+
+	<TextView
+	    android:id="@+id/LbInfoClientesCelular"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/LbInfoClientesTelefonos"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#fff"
+	    android:textStyle="normal" />
+	
+</RelativeLayout>

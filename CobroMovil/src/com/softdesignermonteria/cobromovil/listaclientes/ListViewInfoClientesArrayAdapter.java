@@ -1,19 +1,17 @@
-package com.softdesignermonteria.cobromovil.autocompleteclientes;
+package com.softdesignermonteria.cobromovil.listaclientes;
 
-import com.softdesignermonteria.cobromovil.Clientes;
-import com.softdesignermonteria.cobromovil.MainActivity;
 import com.softdesignermonteria.cobromovil.R;
 import com.softdesignermonteria.cobromovil.clases.ModelClientes;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class AutocompleteCustomArrayAdapter extends ArrayAdapter<ModelClientes> {
+public class ListViewInfoClientesArrayAdapter extends ArrayAdapter<ModelClientes> {
 
 	final String TAG = "AutocompleteCustomArrayAdapter.java";
 
@@ -21,7 +19,7 @@ public class AutocompleteCustomArrayAdapter extends ArrayAdapter<ModelClientes> 
 	int layoutResourceId;
 	ModelClientes data[] = null;
 
-	public AutocompleteCustomArrayAdapter(Context mContext,
+	public ListViewInfoClientesArrayAdapter(Context mContext,
 			int layoutResourceId, ModelClientes[] data) {
 
 		super(mContext, layoutResourceId, data);
@@ -47,7 +45,7 @@ public class AutocompleteCustomArrayAdapter extends ArrayAdapter<ModelClientes> 
 			 */
 			if (convertView == null) {
 				// inflate the layout
-				LayoutInflater inflater = ((Clientes) mContext)
+				LayoutInflater inflater = ((Activity) mContext) 
 						.getLayoutInflater();
 				convertView = inflater.inflate(layoutResourceId, parent, false);
 			}
@@ -57,14 +55,31 @@ public class AutocompleteCustomArrayAdapter extends ArrayAdapter<ModelClientes> 
 
 			// get the TextView and then set the text (item name) and tag (item
 			// ID) values
-			TextView textViewItemSubTitulo = (TextView) convertView
-					.findViewById(R.id.LbListaClientesCedula);
-			textViewItemSubTitulo.setText(objectItem.getNombre());
+			TextView txt1 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesClientes_id);
+			txt1.setText(objectItem.getClientes_id());
 
-			TextView textViewItemTitulo = (TextView) convertView
-					.findViewById(R.id.LbListaClientesCredito);
-			textViewItemTitulo.setText(objectItem.getClientes_id());
+			TextView txt2 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesCedula);
+			txt2.setText(objectItem.getCedula());
 			
+			TextView txt3 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesDireccion);
+			txt3.setText(objectItem.getDireccion());
+			
+			TextView txt4 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesTelefonos);
+			txt4.setText(objectItem.getTelefono());
+			
+			TextView txt5 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesCelular);
+			txt5.setText(objectItem.getCelular());
+			
+			TextView txt6 = (TextView) convertView
+					.findViewById(R.id.LbInfoClientesNombres);
+			txt6.setText(objectItem.getNombre());
+			
+		
 			
 			// in case you want to add some style, you can do something like:
 			//textViewItemTitulo.setBackgroundColor(Color.CYAN);
