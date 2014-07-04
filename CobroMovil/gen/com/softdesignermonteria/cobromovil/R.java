@@ -52,11 +52,11 @@ public final class R {
         public static final int BtnRegistrarse=0x7f080021;
         public static final int BusquedaClientesUserLogueado=0x7f080001;
         public static final int ButtonClientesEnviar=0x7f080016;
-        public static final int LbInfoClientesCedula=0x7f08003f;
+        public static final int LbInfoClientesCedula=0x7f08003e;
         public static final int LbInfoClientesCelular=0x7f080042;
         public static final int LbInfoClientesClientes_id=0x7f08003d;
         public static final int LbInfoClientesDireccion=0x7f080040;
-        public static final int LbInfoClientesNombres=0x7f08003e;
+        public static final int LbInfoClientesNombres=0x7f08003f;
         public static final int LbInfoClientesTelefonos=0x7f080041;
         public static final int LbListaClientesCedula=0x7f080044;
         public static final int LbListaClientesCredito=0x7f080043;
