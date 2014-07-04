@@ -49,5 +49,11 @@
     <string name="Bienvenido">Bienvenido</string>
     <string name="buscar_cliente_cedula_nombre">Cedula/nombre</string>
     <string name="no_hay_resultados">No hay Resultados</string>
+    <string name="title_activity_creditos">Creditos</string>
+    <string name="codigo_cobrador">Codigo Cobrador</string>
+    <string name="clientes">Cliente:</string>
+    <string name="recaudo_martes">recaudo_martes</string>
+    <string name="recaudomartes">Recaudo Martes</string>
+    <string name="title_activity_recaudo_martes">RecaudoMartes</string>
 
 </resources>

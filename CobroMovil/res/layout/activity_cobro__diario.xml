@@ -42,7 +42,7 @@
     </ListView>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/TextCodigoCobrador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/lv_recaudos"
@@ -58,7 +58,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/lv_recaudos"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/textView1" 
+        android:layout_toRightOf="@+id/TextCodigoCobrador" 
         android:textColor="#ffffff"/>
 
 </RelativeLayout>

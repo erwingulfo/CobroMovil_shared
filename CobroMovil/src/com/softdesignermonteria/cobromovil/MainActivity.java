@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(1);
+				globalVariable.setVersion_database(11);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
 				
 				/*
@@ -114,6 +114,8 @@ public class MainActivity extends Activity {
 						      
 						        int index = c.getColumnIndex("cobradores_id");
 						        String cobradores_id = c.getString(index);
+						        
+						        Log.e("Main Activity","cobradores_id = " + cobradores_id);
 						        
 						        int index2 = c.getColumnIndex("cedula_cobrador");
 						        String cedula_cobrador = c.getString(index2);

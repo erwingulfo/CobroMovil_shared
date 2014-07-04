@@ -87,6 +87,14 @@
             android:name="com.softdesignermonteria.cobromovil.Clientes"
             android:label="@string/title_activity_clientes" >
         </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.Creditos"
+            android:label="@string/title_activity_creditos" >
+        </activity>
+        <activity
+            android:name="com.softdesignermonteria.cobromovil.RecaudoMartes"
+            android:label="@string/title_activity_recaudo_martes" >
+        </activity>
     </application>
 
 </manifest>

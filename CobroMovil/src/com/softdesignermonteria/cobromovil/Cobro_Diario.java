@@ -66,7 +66,7 @@ public class Cobro_Diario extends Activity {
 		fecha_recaudo=(EditText)findViewById(R.id.fecha_recaudo);
 		ver_recaudo=  (Button)findViewById(R.id.ver_recaudo);
 		lv_recaudos=  (ListView)findViewById(R.id.lv_recaudos);
-		textView1=    (TextView)findViewById(R.id.textView1);
+		textView1=    (TextView)findViewById(R.id.TextCodigoCobrador);
 		sum_rec=      (TextView)findViewById(R.id.sum_rec);
 		
 		fecha_recaudo.append(fecha);

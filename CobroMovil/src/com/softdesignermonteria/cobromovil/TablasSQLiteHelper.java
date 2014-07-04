@@ -16,7 +16,7 @@ import android.util.Log;
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	
 	final String nombre_database = "cobro_movil";
-	final int version_database = 1;
+	final int version_database = 11;
 
 	/**
 	 * Base de datos en desarrollo version antes de lanzamiento oficial
@@ -114,7 +114,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 		/**
 		 * Se ejecuta la sentencia SQL de creación de la tabla
 		 */
-		creacion_tablas(db);
+		creacion_tablas10(db);
 
 		String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 				+ md5("admin") + "','2','34444');";
@@ -136,12 +136,14 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 				 * más elaborado. Se elimina la versión anterior de la tabla
 				 * 
 				 */
+					Log.i(this.getClass().toString(), "Version Anterior "+versionAnterior);
+					Log.i(this.getClass().toString(), "Version nueva "+versionNueva);
 		
-					if(versionNueva==1){
+					if(versionNueva<11){
 						
-						Log.i(this.getClass().toString(), "On Upgrade...");
+						Log.i(this.getClass().toString(), "On Upgrade... <11 "+"Version nueva "+versionNueva);
 						borrar_tablas(db);
-						creacion_tablas(db);
+						creacion_tablas10(db);
 						
 						String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 								+ md5("admin") + "','2','34444');";
@@ -150,22 +152,48 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 								"Insercion de usuario por defecto despues de actualizar");
 					}	
 		
-				if(versionNueva==2){
-				
-						Log.i(this.getClass().toString(), "On Upgrade...");
-						borrar_tablas(db);
-						creacion_tablas(db);
-						
-						String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
-								+ md5("admin") + "','2','34444');";
-						db.execSQL(insert_usu);
-						Log.i(this.getClass().toString(),
-								"Insercion de usuario por defecto despues de actualizar");
-			   }		
+					if(versionNueva==11){
+					
+							Log.i(this.getClass().toString(), "On Upgrade... == 11");
+							borrar_tablas(db);
+							creacion_tablas11(db);
+							
+							String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+									+ md5("admin") + "','2','34444');";
+							db.execSQL(insert_usu);
+							Log.i(this.getClass().toString(),
+									"Insercion de usuario por defecto despues de actualizar");
+				   }		
 
 	}
 
-	private void creacion_tablas(SQLiteDatabase db) {
+	private void creacion_tablas11(SQLiteDatabase db) {
+		/**
+		 * Sentence creation table users
+		 */
+
+		db.execSQL(sqlCreateUsuarios);
+
+		/**
+		 * Sentence creation table clients
+		 */
+		db.execSQL(sqlCreateClientes);
+
+		/**
+		 * Sentence creation table cooperators
+		 */
+		db.execSQL(sqlCreateCobradores);
+
+		/**
+		 * Sentence creation table carter
+		 */
+		db.execSQL(sqlCreateCartera);
+		
+		
+
+	}
+	
+	private void creacion_tablas10(SQLiteDatabase db) {
 		/**
 		 * Sentence creation table users
 		 */

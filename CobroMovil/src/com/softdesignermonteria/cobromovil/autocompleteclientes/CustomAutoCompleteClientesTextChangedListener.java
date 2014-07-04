@@ -9,12 +9,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
  
-public class CustomAutoCompleteTextChangedListener implements TextWatcher{
+public class CustomAutoCompleteClientesTextChangedListener implements TextWatcher{
  
     public static final String TAG = "CustomAutoCompleteTextChangedListener.java";
     Context context;
      
-    public CustomAutoCompleteTextChangedListener(Context context){
+    public CustomAutoCompleteClientesTextChangedListener(Context context){
         this.context = context;
     }
      
