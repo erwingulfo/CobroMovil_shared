@@ -115,12 +115,12 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 		 * Se ejecuta la sentencia SQL de creación de la tabla
 		 */
 		creacion_tablas10(db);
-
-		String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
-				+ md5("admin") + "','2','34444');";
+		Log.i(this.getClass().toString(), "On Create...  ");
+		/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+				+ md5("admin") + "','1','34444');";
 		String cadena = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','admin','2','34444');";
-		db.execSQL(insert_usu);
-		Log.e("", cadena);
+		db.execSQL(insert_usu);*/
+		//Log.e("", cadena);
 
 	}
 
@@ -145,11 +145,11 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 						borrar_tablas(db);
 						creacion_tablas10(db);
 						
-						String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+						/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 								+ md5("admin") + "','2','34444');";
 						db.execSQL(insert_usu);
 						Log.i(this.getClass().toString(),
-								"Insercion de usuario por defecto despues de actualizar");
+								"Insercion de usuario por defecto despues de actualizar");*/
 					}	
 		
 					if(versionNueva==11){
@@ -158,9 +158,9 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 							borrar_tablas(db);
 							creacion_tablas11(db);
 							
-							String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+							/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 									+ md5("admin") + "','2','34444');";
-							db.execSQL(insert_usu);
+							db.execSQL(insert_usu);*/
 							Log.i(this.getClass().toString(),
 									"Insercion de usuario por defecto despues de actualizar");
 				   }		

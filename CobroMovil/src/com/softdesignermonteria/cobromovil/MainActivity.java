@@ -1,14 +1,32 @@
 package com.softdesignermonteria.cobromovil;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -18,6 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class MainActivity extends Activity {
 
 		private Button entrar;
@@ -30,26 +49,41 @@ public class MainActivity extends Activity {
 		private String url_servidor;
 		private String nombre_database;
 		private int version_database;
-				
+		private Context context;
+		
+		
+		@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+		@Override		
         public void onCreate(Bundle savedInstanceState){
         	
         	super.onCreate(savedInstanceState);
         	
 			setContentView(R.layout.activity_main);
+			
+			context = this;
 			/**
 			 * 
 			 * Lanzando servicio por debajo de sincronizacion de recaudos
 			 * 
 			 * */
-			Intent service = new Intent(this, SincronizarCobroMovil.class);
-			startService(service);
 			
-			/**
-			 * Asignacion de valores de variables globales android
-			 * se especifica nombre de la base de datos
-			 * version de la base de datos
-			 * url de los webservices
-			 */
+				Intent service = new Intent(this, SincronizarCobroMovil.class);
+				startService(service);
+				
+				
+				if (android.os.Build.VERSION.SDK_INT > 9) {
+					StrictMode.ThreadPolicy policy =
+					new StrictMode.ThreadPolicy.Builder().permitAll().build();
+					StrictMode.setThreadPolicy(policy);
+				}
+			
+			
+				/**
+				 * Asignacion de valores de variables globales android
+				 * se especifica nombre de la base de datos
+				 * version de la base de datos
+				 * url de los webservices
+				 */
 				final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 				
 				/*
@@ -66,6 +100,7 @@ public class MainActivity extends Activity {
 				 * asignacion de valores a variables privadas de esta clase
 				 * 
 				 * */
+				
 				url_servidor     = globalVariable.getUrl_servidor();
 				nombre_database  = globalVariable.getNombre_database();
 				version_database = globalVariable.getVersion_database();
@@ -148,17 +183,100 @@ public class MainActivity extends Activity {
 				
 				public void onClick(View v) {
 					//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
-					Intent i = new Intent();
-					i.setClass(MainActivity.this, MenuPrincipal.class);
-			        i.putExtra("pnombre_usuario", usuario.getText().toString());
-			        i.putExtra("pclave_usuario", clave.getText().toString());
-			        
-			        startActivity(i);
+					
+					TablasSQLiteHelper usdbh = new TablasSQLiteHelper(context,nombre_database, null, version_database);
+					SQLiteDatabase db = usdbh.getWritableDatabase();
+					
+					// Si hemos abierto correctamente la base de datos
+				
+						
+					try {
+						
+						JSONObject admin = new JSONObject();
+						admin.put("usuario", usuario.getText().toString());
+						admin.put("clave",   clave.getText().toString());
+						
+						try {
+							
+							String jsonencabezado    = URLEncoder.encode(admin.toString(), "UTF-8");
+							
+							HttpClient httpClient = new DefaultHttpClient();
+							HttpPost post = new HttpPost(url_servidor+"login_movil/validar/?login="+jsonencabezado);
+							post.setHeader("content-type", "application/json");
+							System.out.println(post.getURI());
+							
+							System.out.println("ANTES DEL POST de ejecutar");
+							
+							HttpResponse resp = httpClient.execute(post);
+							
+							System.out.println("despues del DEL POST de ejecutar");
+							
+							String respStr = EntityUtils.toString(resp.getEntity());
+							JSONArray respJSON = new JSONArray(respStr);
+							JSONObject obj = respJSON.getJSONObject(0);
+						
+							System.out.println("despues de ejecutar");
+							
+							//System.out.println(resp.getParams());
+							//System.out.println(respStr.getBytes());
+							//System.out.println(admin);
+							
+							if(obj.getBoolean("mensaje")==true){
+								if (db != null) {
+									System.out.println("si mensaje es true");
+									
+									db.execSQL("delete  from where nombre = '"+usuario.getText().toString()+"'; ");
+									JSONObject obj2 = respJSON.getJSONObject(1);
+									String insert_usu = " insert into usuarios "
+															+ "(nombre,clave,cobradores_id,cedula_cobrador) "
+															+ " values "
+															+ "("
+															+ " '" +obj2.getString("nombre") + "', "
+															+ " '" +obj2.getString("clave") + "', "
+															+ " '" +obj2.getString("cobradores_id") + "', "
+															+ " '" +obj2.getString("cedula_cobrador") + "'  "
+															+ ");";
+									db.execSQL(insert_usu);
+									
+									System.out.println("si mensaje es false");
+									
+									usuario_validado(v);
+									
+									System.out.println("si mensaje es false 2");
+								}else{
+									 error_validacion(v,"No se Pudo Abrir la base de datos");
+								}
+								db.close();
+							}else{
+							
+								error_validacion(v,obj.getString("descripcion").toString());
+							}
+							
+						} catch (ClientProtocolException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							System.out.println(e.getMessage());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							System.out.println(e.getMessage());
+						}
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println(e.getMessage());
+					}
+					
+					
+					
+					
+				
 				}
 				
 	        });
 	        
-	        
+	      
 						
 		}
         
@@ -169,11 +287,28 @@ public class MainActivity extends Activity {
         }
     
         public void query_vacio(View v) {
-			Toast toast = Toast.makeText(this, "Usuario y/o clave errados", Toast.LENGTH_SHORT);
-	        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-	        toast.show();
+			Toast toast1 = Toast.makeText(this, " Usuario y/o clave errados ", Toast.LENGTH_SHORT);
+	        toast1.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+	        toast1.show();
         }
         
+        public void usuario_validado(View v) {
+			Toast toast2 = Toast.makeText(this, "Usuario Validado Satisfactoriamente / Puede loguearse Normanlmente", Toast.LENGTH_SHORT);
+	        toast2.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+	        toast2.show();
+        }
+        
+        public void usuario_no_validado(View v) {
+			Toast toast3 = Toast.makeText(this, " Usuario No Existe y/o Usuario y Contraseña Incorrectos ", Toast.LENGTH_SHORT);
+	        toast3.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+	        toast3.show();
+        }
+        
+        public void error_validacion(View v, String msg) {
+			Toast toast4 = Toast.makeText(this, msg , Toast.LENGTH_SHORT);
+	        toast4.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+	        toast4.show();
+        }
   
         public static String md5(String s){
             MessageDigest digest;
@@ -190,5 +325,10 @@ public class MainActivity extends Activity {
             }
             return "";
         }
+        
+        
+        
+        
+        
 
   }
