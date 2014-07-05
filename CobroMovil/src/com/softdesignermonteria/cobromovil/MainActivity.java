@@ -223,9 +223,10 @@ public class MainActivity extends Activity {
 							
 							if(obj.getBoolean("mensaje")==true){
 								if (db != null) {
+									
 									System.out.println("si mensaje es true");
 									
-									db.execSQL("delete  from where nombre = '"+usuario.getText().toString()+"'; ");
+									db.execSQL("delete  from usuarios where nombre = '"+usuario.getText().toString()+"'; ");
 									JSONObject obj2 = respJSON.getJSONObject(1);
 									String insert_usu = " insert into usuarios "
 															+ "(nombre,clave,cobradores_id,cedula_cobrador) "
@@ -236,6 +237,9 @@ public class MainActivity extends Activity {
 															+ " '" +obj2.getString("cobradores_id") + "', "
 															+ " '" +obj2.getString("cedula_cobrador") + "'  "
 															+ ");";
+									
+									System.out.println(insert_usu);
+									
 									db.execSQL(insert_usu);
 									
 									System.out.println("si mensaje es false");
