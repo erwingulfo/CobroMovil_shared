@@ -55,5 +55,10 @@
     <string name="recaudo_martes">recaudo_martes</string>
     <string name="recaudomartes">Recaudo Martes</string>
     <string name="title_activity_recaudo_martes">RecaudoMartes</string>
+    <string name="ingrese_cedula">Ingrese Cedula</string>
+    <string name="Guardar">Guardar</string>
+    <string name="valor_a_recaudar">Valor a recaudar</string>
+    <string name="informacion_del_cliente">Información del Cliente</string>
+    <string name="informacion_del_credito">Información del crédito</string>
 
 </resources>

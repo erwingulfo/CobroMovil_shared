@@ -75,6 +75,7 @@ public class Recaudos extends Activity {
 		bt_buscar_cliente = (Button) findViewById(R.id.bt_buscar_cliente);
 		bt_recaudar = (Button) findViewById(R.id.bt_recaudar);
 		valor_recaudo = (EditText) findViewById(R.id.valor_recaudo);
+		
 		tv = (TextView) findViewById(R.id.tv);
 		tv2 = (TextView) findViewById(R.id.tv2);
 		TextView1 = (TextView) findViewById(R.id.tv1);

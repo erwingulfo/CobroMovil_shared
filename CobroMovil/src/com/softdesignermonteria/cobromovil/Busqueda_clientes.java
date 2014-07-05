@@ -112,6 +112,7 @@ public class Busqueda_clientes extends Activity {
 					        
 					        i.putExtra("clientes_id", temp.getClientes_id());
 					        i.putExtra("nombre_cliente", temp.getNombre());
+					        i.putExtra("cedula_cliente", temp.getCedula());
 					        startActivity(i);
 				    	}
 				        
@@ -121,6 +122,7 @@ public class Busqueda_clientes extends Activity {
 					        
 					        i.putExtra("clientes_id", temp.getClientes_id());
 					        i.putExtra("nombre_cliente", temp.getNombre());
+					        i.putExtra("cedula_cliente", temp.getCedula());
 					        startActivity(i);
 				    	}
 				    	

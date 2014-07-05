@@ -21,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv1"
+        android:layout_below="@+id/TextRecaudosCedula"
         android:layout_toLeftOf="@+id/bt_buscar_cliente"
-        android:hint="Ingrese Cédula"
+        android:hint="@string/cedula"
         android:inputType="number"
         android:textColor="#ffffff" />
 
@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/bt_buscar_cliente"
-        android:text="1. Información del Cliente"
+        android:text="@string/informacion_del_cliente"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 
@@ -62,36 +62,36 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/cedula"
         android:drawableLeft="@drawable/ic_action_search"
-        android:text="Buscar"
+        android:text="@string/Buscar"
         android:textColor="#ffffff" />
 
     <TextView
-        android:id="@+id/tv6"
+        android:id="@+id/TextRecaudosUserLogueado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textColor="#ffffff"
-        android:text="Bienvenido:" />
+        android:text="@string/Bienvenido"
+        android:textColor="#ffffff" />
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/TextRecaudosCedula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv6"
-        android:text="Ingrese Cédula"
+        android:layout_below="@+id/TextRecaudosUserLogueado"
+        android:text="@string/ingrese_cedula"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/tv5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv1"
+        android:layout_above="@+id/TextRecaudosCedula"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tv6"
+        android:layout_toRightOf="@+id/TextRecaudosUserLogueado"
         android:textColor="#ffffff" />
 
     <TextView
@@ -101,7 +101,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv"
-        android:text="2. Información del crédito"
+        android:text="@string/informacion_del_credito"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 
@@ -112,7 +112,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/cedula"
         android:layout_below="@+id/tv2"
-        android:hint="Valor a recaudar"
+        android:hint="@string/valor_a_recaudar"
         android:inputType="number"
         android:textColor="#ffffff"
         android:visibility="invisible" />
@@ -126,7 +126,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/valor_recaudo"
         android:drawableLeft="@drawable/ic_action_save"
-        android:text="Guardar"
+        android:text="@string/Guardar"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 

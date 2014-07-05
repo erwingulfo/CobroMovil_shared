@@ -78,4 +78,19 @@ public class AutocompleteCustomArrayAdapter extends ArrayAdapter<ModelClientes> 
 		return convertView;
 
 	}
+	
+	   
+		public int getCount() {
+		 return data.length;
+	   }
+	
+	   public ModelClientes getItem(int arg0) {
+	         return data[arg0];
+	   }
+	
+	   public long getItemId(int position) {
+	         return position;
+	   }
+  
+	   
 }
