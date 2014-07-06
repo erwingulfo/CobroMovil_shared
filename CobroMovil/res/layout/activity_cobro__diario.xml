@@ -28,35 +28,35 @@
         android:layout_alignBottom="@+id/fecha_recaudo"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/fecha_recaudo"
-        android:text="Ver" 
+        android:text="@string/ver"
         android:textColor="#ffffff" />
 
-    <ListView
-        android:id="@+id/lv_recaudos"
+    <com.softdesignermonteria.cobromovil.listacobrodiario.CustomListViewListaCobroDiario
+        android:id="@+id/ListViewListaCobroDiario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fecha_recaudo"
         android:layout_below="@+id/fecha_recaudo"
         android:layout_marginTop="41dp" 
-        android:textColor="#ffffff">
-    </ListView>
+        android:textColor="#ffffff"
+    />
 
     <TextView
         android:id="@+id/TextCodigoCobrador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lv_recaudos"
+        android:layout_alignLeft="@+id/ListViewListaCobroDiario"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="17dp"
-        android:text="Total Recaudo:" 
-        android:textColor="#ffffff"/>
+        android:text="@string/total_recaudo"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/sum_rec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/lv_recaudos"
+        android:layout_alignRight="@+id/ListViewListaCobroDiario"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/TextCodigoCobrador" 
         android:textColor="#ffffff"/>

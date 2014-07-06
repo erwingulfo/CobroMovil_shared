@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:orientation="vertical" >
+ 
+	<TextView
+	    android:id="@+id/LbListaRecaudosClientes_id"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:drawableLeft="@drawable/ic_action_cloud"
+	    android:textColor="#FFF"
+	    android:textSize="@dimen/dieciocho_dp"
+	    android:textStyle="bold" />
+	
+	<TextView
+	    android:id="@+id/LbListaRecaudosCedula"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbListaRecaudosClientes_id"
+	    android:layout_below="@+id/LbListaRecaudosClientes_id"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#FFF"
+	    android:textStyle="normal" />
+	
+	<TextView
+	    android:id="@+id/LbListaRecaudosNombres"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbListaRecaudosCedula"
+	    android:layout_below="@+id/LbListaRecaudosCedula"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#FFF"
+	    android:textStyle="normal" />
+
+	<TextView
+	    android:id="@+id/LbListaRecaudosValorRecaudado"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/LbListaRecaudosNombres"
+	    android:layout_below="@+id/LbListaRecaudosNombres"
+	    android:drawableLeft="@drawable/ic_action_person"
+	    android:textColor="#FFF"
+	    android:textStyle="normal" />
+	
+</RelativeLayout>

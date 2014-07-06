@@ -60,5 +60,7 @@
     <string name="valor_a_recaudar">Valor a recaudar</string>
     <string name="informacion_del_cliente">Información del Cliente</string>
     <string name="informacion_del_credito">Información del crédito</string>
+    <string name="ver">Ver</string>
+    <string name="total_recaudo">Total Recaudo:</string>
 
 </resources>

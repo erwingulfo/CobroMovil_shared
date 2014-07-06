@@ -4,14 +4,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.xml.transform.Templates;
+import com.softdesignermonteria.cobromovil.clases.ModelClientes;
 
-import org.w3c.dom.Text;
+import com.softdesignermonteria.cobromovil.listacobrodiario.CustomListViewListaCobroDiario;
+import com.softdesignermonteria.cobromovil.listacobrodiario.ListViewCobroDiarioArrayAdapter;
 
-import android.R.integer;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -30,13 +30,18 @@ public class Cobro_Diario extends Activity {
 	private Button ver_recaudo;
 	private String url_servidor;
 	private SQLiteDatabase db;
-	private TextView userlogueado;
 	private TextView textView1;
 	private TextView sum_rec;
-	private ListView lv_recaudos;
+	
 	private String nombre_database;
 	private int version_database;
 	private String cobradores_id;
+	
+	public ArrayAdapter<ModelClientes> myAdapter;
+	public ListView listaCobroDiarioList;
+	private Context context;
+	
+	
 	
 	DecimalFormat formateador = new DecimalFormat("###,###.00");
 
@@ -44,6 +49,8 @@ public class Cobro_Diario extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cobro__diario);
+		
+		context = this;
 		
 		String fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		
@@ -54,9 +61,7 @@ public class Cobro_Diario extends Activity {
 		 * Definicion y asignacion de valores globales para la app
 		 * 
 		 * */
-		globalVariable.setNombre_database("cobro_movil");
-		globalVariable.setVersion_database(10);
-		globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
+		
 		
 		url_servidor     = globalVariable.getUrl_servidor();
 		nombre_database  = globalVariable.getNombre_database();
@@ -65,14 +70,25 @@ public class Cobro_Diario extends Activity {
 		
 		fecha_recaudo=(EditText)findViewById(R.id.fecha_recaudo);
 		ver_recaudo=  (Button)findViewById(R.id.ver_recaudo);
-		lv_recaudos=  (ListView)findViewById(R.id.lv_recaudos);
+		//lv_recaudos=  (ListView)findViewById(R.id.ListViewListaCobroDiario);
 		textView1=    (TextView)findViewById(R.id.TextCodigoCobrador);
 		sum_rec=      (TextView)findViewById(R.id.sum_rec);
 		
 		fecha_recaudo.append(fecha);
 		
-		TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, nombre_database, null, version_database);
-        db = usdbh.getWritableDatabase();
+		
+		listaCobroDiarioList = (CustomListViewListaCobroDiario)findViewById(R.id.ListViewListaCobroDiario);
+		
+		//ModelClientes[] ObjectItemData = new ModelClientes[0];
+        
+        // set the custom ArrayAdapter
+        //myAdapter = new ListViewCobroDiarioArrayAdapter(context, R.layout.lista_recaudos, ObjectItemData);
+        //listaCobroDiarioList.setAdapter(myAdapter);
+        
+        
+		
+		//TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, nombre_database, null, version_database);
+        //db = usdbh.getWritableDatabase();
 		
         ver_recaudo.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -99,7 +115,7 @@ public class Cobro_Diario extends Activity {
 			
 		}
 		
-		public boolean ver_recaudos(){
+		/*public boolean ver_recaudos(){
 			//Recuperamos los valores de los campos de texto
 			
 			boolean sw = true;
@@ -176,7 +192,7 @@ public class Cobro_Diario extends Activity {
 							}while(c.moveToNext());
 						    
 						    
-						    sum_rec.append(" "+formateador.format(total_recaudo));	
+						    sum_rec.setText( formateador.format(total_recaudo) );	
 						}
 						
 						ArrayAdapter<String> adaptador1 =
@@ -195,9 +211,89 @@ public class Cobro_Diario extends Activity {
 			return sw;
 			
 
-		}
+		}*/
 				
-	
+		public boolean ver_recaudos(){
+			//Recuperamos los valores de los campos de texto
+			
+			boolean sw = true;
+			
+			try {
+				
+				TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+				SQLiteDatabase db = usdbh.getWritableDatabase();
+				
+				if (db != null) {
+					
+						String sql = "select "
+										+ "	c.cedula,c.nombres,r.valor_pagado,c.clientes_id "
+										+ " from clientes c,recaudos r " 
+										+ "    where c.cedula=r.cedula "
+										+ "			and r.cobradores_id='"+cobradores_id+"' " 
+										+ "			and r.fecha like'%"+fecha_recaudo.getText().toString()+"%'";
+												
+						Log.i("Variable", "Query: "+sql);
+						
+						Cursor cursor = db.rawQuery(sql, null);
+					    int recCount = cursor.getCount();
+					        
+					    ModelClientes[] ObjectItemData = new ModelClientes[recCount];
+					    int x = 0;
+					       
+						int cedula_temp=0;
+						int clientes_id_temp=0;
+						String cedula;
+						String clientes_id;
+						int nombres_temp=0;
+						String nombres;
+						int valor_pagado_temp=0;
+						double valor_pagado=0;
+						double total_recaudo=0;
+						
+						if(cursor.moveToFirst()){
+												
+							
+						    do{
+							
+							cedula_temp = cursor.getColumnIndex("cedula");
+							cedula=cursor.getString(cedula_temp);
+							
+							clientes_id_temp = cursor.getColumnIndex("clientes_id");
+							clientes_id=cursor.getString(clientes_id_temp);
+							
+							nombres_temp= cursor.getColumnIndex("nombres");
+							nombres=cursor.getString(nombres_temp);
+							
+							valor_pagado_temp= cursor.getColumnIndex("valor_pagado");
+							valor_pagado=cursor.getDouble(valor_pagado_temp);
+														
+							total_recaudo=total_recaudo+valor_pagado;
+							
+							ModelClientes myObject = new ModelClientes(clientes_id,nombres,"0","0",cedula,"0",String.valueOf(valor_pagado));
+ 			                ObjectItemData[x] = myObject;
+				            x++;
+				                
+													
+							}while(cursor.moveToNext());
+						    
+						    myAdapter = new ListViewCobroDiarioArrayAdapter(context, R.layout.lista_recaudos, ObjectItemData);
+				             
+				            listaCobroDiarioList.setAdapter(myAdapter);
+						    sum_rec.setText( formateador.format(total_recaudo) );	
+						}
+						
+						cursor.close();
+					}
+						
+						db.close();
+									
+			}catch (Exception ex) {
+				Log.e("Consulta de clientes", "Error!", ex);
+				sw = false;
+			}
+			return sw;
+
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

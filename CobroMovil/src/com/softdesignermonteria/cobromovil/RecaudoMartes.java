@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import com.softdesignermonteria.cobromovil.autocompleteclientes.AutocompleteCustomArrayAdapter;
 import com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteClientesTextChangedListener;
+import com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteRecaudoMartesTextChangedListener;
 import com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView;
 import com.softdesignermonteria.cobromovil.clases.ModelClientes;
 
@@ -28,6 +29,7 @@ import android.os.StrictMode;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -102,25 +104,12 @@ public class RecaudoMartes extends Activity {
  
 		
 		nombre_cliente = (TextView)findViewById(R.id.TextRecaudoMartesNombreCliente);
+		
 		codibo_cobrador = (EditText)findViewById(R.id.EditTextRecaudoMartesCorbradoresId);
 		codibo_cobrador.setText(cobradores_id);
 		codibo_cobrador.setEnabled(false);
 		
-		Bundle bundle = getIntent().getExtras();
-		if(!bundle.isEmpty()){
-			auto.setText(bundle.getString("clientes_id"));
-			nombre_cliente.setText(bundle.getString("nombre_cliente"));
-			cedula_cliente = (bundle.getString("cedula_cliente"));
-			auto.setEnabled(false);
-		}
-		
-		
-		guardar = (Button)findViewById(R.id.ButtonRecaudoMartesGuardar);
-		imprimir = (Button)findViewById(R.id.ButtonRecaudoMartesImprimir);
-		imprimir.setVisibility(View.INVISIBLE);
-		
-		
-		auto      = (CustomAutoCompleteView) findViewById(R.id.autoCompleteClientesReferencia);
+		auto      = (CustomAutoCompleteView) findViewById(R.id.autoCompleteRecaudoMartesClientes);
 		
 		auto.setOnItemClickListener(new OnItemClickListener() {
 			 
@@ -138,7 +127,7 @@ public class RecaudoMartes extends Activity {
         });
          
         // add the listener so it will tries to suggest while the user types
-		auto.addTextChangedListener(new CustomAutoCompleteClientesTextChangedListener(this));
+		auto.addTextChangedListener(new CustomAutoCompleteRecaudoMartesTextChangedListener(this));
          
         // ObjectItemData has no value at first
         ModelClientes[] ObjectItemData = new ModelClientes[0];
@@ -147,6 +136,30 @@ public class RecaudoMartes extends Activity {
         myAdapter = new AutocompleteCustomArrayAdapter(this, R.layout.lista_clientes, ObjectItemData);
         auto.setAdapter(myAdapter);
         
+		
+		Bundle bundle = getIntent().getExtras();
+		if(!bundle.isEmpty()){
+			
+			System.out.println("Actividad Recaudo martes");
+			System.out.println("clientes_id" + bundle.getString("clientes_id"));
+			System.out.println("nombre_cliente" + bundle.getString("nombre_cliente"));
+			System.out.println("cedula_cliente" + bundle.getString("cedula_cliente"));
+			
+			auto.setText(bundle.getString("clientes_id"));
+			nombre_cliente.setText(bundle.getString("nombre_cliente"));
+			cedula_cliente = (bundle.getString("cedula_cliente"));
+			//auto.setEnabled(false);
+		}
+		
+		
+		guardar = (Button)findViewById(R.id.ButtonRecaudoMartesGuardar);
+		imprimir = (Button)findViewById(R.id.ButtonRecaudoMartesImprimir);
+		imprimir.setVisibility(View.INVISIBLE);
+		
+		
+		
+		
+		
         
         guardar.setOnClickListener(new OnClickListener() {
 			
@@ -156,6 +169,7 @@ public class RecaudoMartes extends Activity {
 				
 				guardar(v);
 				imprimir.setVisibility(View.VISIBLE);
+				guardar.setVisibility(View.INVISIBLE);
 			}
 		});
         
@@ -166,6 +180,19 @@ public class RecaudoMartes extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//guardar(v);
+				
+				Intent i = new Intent();
+				i.setClass(RecaudoMartes.this, Imprimir_recibo.class);
+				i.putExtra("provisional", provisional);
+				
+				// i.putExtra("pclave_usuario", clave.getText().toString());
+				startActivity(i);
+				
+				imprimir.setVisibility(View.INVISIBLE);
+				guardar.setVisibility(View.VISIBLE);
+				auto.setEnabled(true);
+				auto.setText("");
+				//guardar.setVisibility(View.INVISIBLE);
 				
 			}
 		});
@@ -298,6 +325,7 @@ public class RecaudoMartes extends Activity {
 					e.printStackTrace();
 				}
 			
+				db.close();
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

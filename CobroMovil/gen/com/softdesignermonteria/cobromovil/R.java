@@ -67,11 +67,16 @@ public final class R {
         public static final int LbInfoClientesTelefonos=0x7f080050;
         public static final int LbListaClientesCedula=0x7f080053;
         public static final int LbListaClientesCredito=0x7f080052;
-        public static final int MnuOpc1=0x7f080057;
-        public static final int MnuOpc2=0x7f080058;
-        public static final int MnuOpc3=0x7f080059;
-        public static final int SubMnuOpc1=0x7f08005a;
-        public static final int SubMnuOpc2=0x7f08005b;
+        public static final int LbListaRecaudosCedula=0x7f080055;
+        public static final int LbListaRecaudosClientes_id=0x7f080054;
+        public static final int LbListaRecaudosNombres=0x7f080056;
+        public static final int LbListaRecaudosValorRecaudado=0x7f080057;
+        public static final int ListViewListaCobroDiario=0x7f08001a;
+        public static final int MnuOpc1=0x7f08005b;
+        public static final int MnuOpc2=0x7f08005c;
+        public static final int MnuOpc3=0x7f08005d;
+        public static final int SubMnuOpc1=0x7f08005e;
+        public static final int SubMnuOpc2=0x7f08005f;
         public static final int TextClientesApellido2=0x7f080011;
         public static final int TextClientesCedula=0x7f08000a;
         public static final int TextClientesDireccion=0x7f080012;
@@ -87,7 +92,7 @@ public final class R {
         public static final int TextRecaudosUserLogueado=0x7f080045;
         public static final int TextViewCreditosNombreCliente=0x7f080007;
         public static final int TxtClientesApellido1=0x7f08000d;
-        public static final int action_settings=0x7f080056;
+        public static final int action_settings=0x7f08005a;
         public static final int autoCompleteClientesReferencia=0x7f080015;
         public static final int autoCompleteCreditosClientes=0x7f08001d;
         public static final int autoCompleteRecaudoMartesClientes=0x7f080036;
@@ -113,9 +118,8 @@ public final class R {
         public static final int imgIcono=0x7f08004b;
         public static final int listViewListaClientes=0x7f080005;
         public static final int lv=0x7f080047;
-        public static final int lv_recaudos=0x7f08001a;
         public static final int lyt1=0x7f080049;
-        public static final int lytLayout=0x7f080054;
+        public static final int lytLayout=0x7f080058;
         public static final int m_reportes=0x7f08002a;
         public static final int nit_nombres=0x7f080003;
         public static final int nombre_usuario=0x7f080028;
@@ -135,7 +139,7 @@ public final class R {
         public static final int tv5=0x7f080046;
         public static final int tv6=0x7f080000;
         public static final int tv7=0x7f08002f;
-        public static final int txtMensaje=0x7f080055;
+        public static final int txtMensaje=0x7f080059;
         public static final int userlogueado=0x7f080024;
         public static final int usuario=0x7f080022;
         public static final int valor_recaudo=0x7f08003d;
@@ -157,7 +161,8 @@ public final class R {
         public static final int campo_usuario_vacio=0x7f03000c;
         public static final int info_clientes=0x7f03000d;
         public static final int lista_clientes=0x7f03000e;
-        public static final int mensaje_error=0x7f03000f;
+        public static final int lista_recaudos=0x7f03000f;
+        public static final int mensaje_error=0x7f030010;
     }
     public static final class menu {
         public static final int busqueda_clientes=0x7f070000;
@@ -232,8 +237,10 @@ public final class R {
         public static final int title_activity_recaudo_martes=0x7f050035;
         public static final int title_activity_recaudos=0x7f05000b;
         public static final int title_activity_reportes=0x7f05000c;
+        public static final int total_recaudo=0x7f05003c;
         public static final int valor_a_prestar=0x7f050022;
         public static final int valor_a_recaudar=0x7f050038;
+        public static final int ver=0x7f05003b;
     }
     public static final class style {
         /** 

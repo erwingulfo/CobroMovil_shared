@@ -226,8 +226,16 @@ public class MainActivity extends Activity {
 									
 									System.out.println("si mensaje es true");
 									
-									db.execSQL("delete  from usuarios where nombre = '"+usuario.getText().toString()+"'; ");
+									
+									
+										
+									
 									JSONObject obj2 = respJSON.getJSONObject(1);
+									
+									db.execSQL("delete  from usuarios where cobradores_id = '"+obj2.getString("cobradores_id")+"' ");
+									System.out.println("delete  from usuarios where cobradores_id = '"+obj2.getString("cobradores_id")+"' ");
+									
+									
 									String insert_usu = " insert into usuarios "
 															+ "(nombre,clave,cobradores_id,cedula_cobrador) "
 															+ " values "

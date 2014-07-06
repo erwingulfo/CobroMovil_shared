@@ -149,6 +149,7 @@ public class Clientes extends Activity {
 					if( apellido1.getText().toString().equals("") ){ sw=1; msg2 += " Apellido1 Obligatorio"; }
 					if( direccion.getText().toString().equals("") ){ sw=1; msg2 += " Direccion Obligatorio"; }
 					if( telefono.getText().toString().equals("")  ){ sw=1; msg2 += " Telefono Obligatorio"; }
+					if( auto.getText().toString().equals("")      ){ sw=1; msg2 += " Referencia Obligatoria"; }
 					
 					
 					if(sw==0){ AgregarClientes(); }else{ errorValidacion(msg2);}
@@ -191,6 +192,7 @@ public class Clientes extends Activity {
 			dato.put("apellido2", apellido2.getText().toString());
 			dato.put("direccion", direccion.getText().toString());
 			dato.put("telefono", telefono.getText().toString());
+			dato.put("referencia_id", auto.getText().toString());
 			
 
 			StringEntity entity;

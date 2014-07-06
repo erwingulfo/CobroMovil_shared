@@ -58,6 +58,7 @@ public class Creditos extends Activity {
 	
 	private Button enviar;
 	private Button RecibosCaja;
+	private String cedula_clientes;
 	
 	public ArrayList<String> menu = new ArrayList<String>();
 	public ArrayList<String> adaptador = new ArrayList<String>();
@@ -122,6 +123,9 @@ public class Creditos extends Activity {
                 
                 TextView tv1 = (TextView) rl.getChildAt(1);
                 nombre_cliente.setText(tv1.getText().toString());
+                
+                ModelClientes temp = myAdapter.getItem(pos);
+                cedula_clientes = temp.getCedula();
                  
             }
 
@@ -164,6 +168,22 @@ public class Creditos extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//ir a actividad descontar  martes.
+				System.out.println("click en Recibos Caja Martes");
+				System.out.println("clientes_id" + auto.getText().toString());
+				System.out.println("nombre_cliente" + nombre_cliente.getText().toString());
+				System.out.println("cedula_cliente" + cedula_clientes);
+				
+				Intent i = new Intent();
+				i.setClass(Creditos.this, RecaudoMartes.class);
+		        
+		        i.putExtra("clientes_id", auto.getText().toString());
+		        i.putExtra("nombre_cliente", nombre_cliente.getText().toString() );
+		        i.putExtra("cedula_cliente", cedula_clientes);
+		        startActivity(i);
+		        
+		        
+		        
+		        
 			}
 		});
 		

@@ -301,9 +301,10 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
                String telefono = cursor.getString(cursor.getColumnIndex("telefono"));
                String cedula = cursor.getString(cursor.getColumnIndex("cedula"));
                String celular = cursor.getString(cursor.getColumnIndex("celular"));
+               String valor_recaudado = String.valueOf("0");
                Log.e("LLenando Clientes", "objectName: " + clientes_id);
                 
-               ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono,cedula,celular);
+               ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono,cedula,celular,valor_recaudado);
 
                ObjectItemData[x] = myObject;
                 
@@ -318,5 +319,6 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
        return ObjectItemData;
         
    }
+  
 
 }
