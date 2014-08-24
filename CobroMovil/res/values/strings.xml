@@ -38,10 +38,10 @@
     <string name="valor_a_prestar">Valor a Prestar</string>
     <string name="agregar_clientes">Agregar Clientes</string>
     <string name="sincronizar">Sincronizar</string>
-    <string name="buscar_clientes">Bucar Clientes</string>
+    <string name="buscar_clientes">Buscar Clientes</string>
     <string name="recaudos">Recaudos</string>
     <string name="reportes">Reportes</string>
-    <string name="bienvenidos">Bienvenidos</string>
+    <string name="bienvenidos">Bienvenidos: </string>
     <string name="items">Items</string>
     <string name="Buscar">Buscar</string>
     <string name="busqueda_por_cedula">Búsqueda por cédula:</string>

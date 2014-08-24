@@ -18,7 +18,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="23dp"
         android:ems="10"
-        android:hint="@string/buscar_cliente_cedula_nombre" />
+        android:hint="@string/buscar_cliente_cedula_nombre"
+        android:textColor="#000" />
 
     <TextView
         android:id="@+id/TextRecaudoMartesBuscarClientes"
@@ -58,7 +59,9 @@
         android:layout_alignTop="@+id/TextRecaudoMartesCorbradores"
         android:layout_toRightOf="@+id/TextRecaudoMartesCorbradores"
         android:ems="10"
-        android:hint="@string/codigo_cobrador" >
+        android:hint="@string/codigo_cobrador"
+        android:textColor="#000" >
+
     </EditText>
 
     <Button

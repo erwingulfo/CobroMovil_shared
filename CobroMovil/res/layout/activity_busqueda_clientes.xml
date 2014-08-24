@@ -55,7 +55,7 @@
         android:layout_toLeftOf="@+id/consultar_clientes"
         android:ems="10"
         android:hint="@string/buscar_cliente_cedula_nombre"
-        android:textColor="#ffffff" />
+        android:textColor="#000" />
 
     <com.softdesignermonteria.cobromovil.listaclientes.CustomListViewInfoClientes
         android:id="@+id/listViewListaClientes"

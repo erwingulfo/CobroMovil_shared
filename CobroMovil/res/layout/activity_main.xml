@@ -17,7 +17,7 @@
         android:layout_marginTop="22dp"
         android:ems="10"
         android:hint="@string/nombre_de_usuario"
-        android:textColor="#ffffff" />
+        android:textColor="#000" />
 
     <TextView
         android:id="@+id/tv1"
@@ -50,7 +50,7 @@
         android:ems="10"
         android:hint="@string/Clave2"
         android:inputType="textPassword"
-        android:textColor="#ffffff" >
+        android:textColor="#000" >
 
         <requestFocus />
     </EditText>

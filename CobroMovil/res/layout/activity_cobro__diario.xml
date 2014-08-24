@@ -17,8 +17,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
         android:ems="10"
-        android:inputType="date" 
-        android:textColor="#ffffff" />
+        android:inputType="date"
+        android:textColor="#000" />
 
     <Button
         android:id="@+id/ver_recaudo"
@@ -58,7 +58,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/ListViewListaCobroDiario"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/TextCodigoCobrador" 
-        android:textColor="#ffffff"/>
+        android:layout_toRightOf="@+id/TextCodigoCobrador"
+        android:textColor="#000" />
 
 </RelativeLayout>

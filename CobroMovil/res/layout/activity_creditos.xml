@@ -36,7 +36,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewCreditosClientes"
         android:ems="10"
-        android:hint="@string/buscar_cliente_cedula_nombre" />
+        android:hint="@string/buscar_cliente_cedula_nombre"
+        android:textColor="#000" />
 
     <Button
         android:id="@+id/ButtonCreditosAgregar"
@@ -66,7 +67,7 @@
         android:ems="10"
         android:hint="@string/valor_a_prestar"
         android:inputType="number"
-        android:textColor="#FFF" >
+        android:textColor="#000" >
 
         <requestFocus />
     </EditText>
@@ -99,6 +100,6 @@
         android:layout_alignTop="@+id/TextCodigoCobrador"
         android:ems="10"
         android:hint="@string/codigo_cobrador"
-        android:textColor="#fff" />
+        android:textColor="#000" />
 
 </RelativeLayout>
