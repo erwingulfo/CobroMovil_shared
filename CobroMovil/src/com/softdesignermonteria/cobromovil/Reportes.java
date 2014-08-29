@@ -34,7 +34,7 @@ public class Reportes extends Activity {
 		version_database = globalVariable.getVersion_database();
 		user_logueado = globalVariable.getUserlogueado();
 		
-		tv1 = (TextView)findViewById(R.id.tv1);
+		tv1 = (TextView)findViewById(R.id.TextView1CampoUsuarioVacio);
 		tv7 = (TextView)findViewById(R.id.tv7);
 		tv7.setText(user_logueado);
 		

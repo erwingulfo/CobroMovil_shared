@@ -62,5 +62,21 @@
     <string name="informacion_del_credito">Información del crédito</string>
     <string name="ver">Ver</string>
     <string name="total_recaudo">Total Recaudo:</string>
+    <string name="RecaudoDiario">Recaudo Diario</string>
+    <color name="WindowBackground">#70a9d2</color>
+    <color name="EditTextBackground">#FFF</color>
+    <color name="TextColor">#000</color>
+    <color name="TextColorHint">#CCC</color>
+    
+    <string name="campo_usuario_vacio">Campo usuario vacio</string>
+    <string name="todo">TODO</string>
+    <string name="BajarClientes">Bajar Clientes</string>
+    <string name="SubirRecaudos">Subir Recaudos</string>
+    <string name="BajarCobradores">Bajar Cobradores</string>
+    <string name="BajarCartera">Bajar Cartera</string>
+    <string name="BajarUsuariosSistema">Bajar Usuarios</string>
+    <string name="BajarTodo">Bajar Todos</string>
+    <string name="IniciarSesion">Iniciar Sesion</string>
+    <string name="Clientes">Clientes</string>
 
 </resources>

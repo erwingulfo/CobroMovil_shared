@@ -78,7 +78,7 @@ public class Recaudos extends Activity {
 		
 		tv = (TextView) findViewById(R.id.tv);
 		tv2 = (TextView) findViewById(R.id.tv2);
-		TextView1 = (TextView) findViewById(R.id.tv1);
+		TextView1 = (TextView) findViewById(R.id.TextView1CampoUsuarioVacio);
 		TextView2 = (TextView) findViewById(R.id.tv7);
 		TextView3 = (TextView) findViewById(R.id.tv3);
 		TextView4 = (TextView) findViewById(R.id.tv4);

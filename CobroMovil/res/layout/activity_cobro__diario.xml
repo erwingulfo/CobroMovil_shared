@@ -2,34 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Cobro_Diario" >
 
-    <EditText
-        android:id="@+id/fecha_recaudo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:inputType="date"
-        android:textColor="#000" />
-
     <Button
         android:id="@+id/ver_recaudo"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/fecha_recaudo"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/fecha_recaudo"
-        android:text="@string/ver"
-        android:textColor="#ffffff" />
+        android:text="@string/ver" />
 
     <com.softdesignermonteria.cobromovil.listacobrodiario.CustomListViewListaCobroDiario
         android:id="@+id/ListViewListaCobroDiario"
@@ -58,7 +44,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/ListViewListaCobroDiario"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/TextCodigoCobrador"
-        android:textColor="#000" />
+        android:layout_toRightOf="@+id/TextCodigoCobrador" />
+
+    <EditText
+        android:id="@+id/fecha_recaudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="date" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

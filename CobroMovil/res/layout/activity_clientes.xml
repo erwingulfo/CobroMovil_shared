@@ -1,216 +1,123 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#494949"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/Clientes"
+    android:gravity="top|clip_vertical"
+    android:overScrollMode="always"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical"
     tools:context="${packageName}.${activityClass}" >
 
-    <TextView
-        android:id="@+id/TextCodigoCobrador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/TextViewCreditosNombreCliente"
-        android:layout_marginTop="20dp"
-        android:text="@string/cedula"
-        android:textColor="#ffff" />
+        android:fillViewport="true"
+        android:scrollbars="vertical" >
 
-    <TextView
-        android:id="@+id/TextViewCreditosNombreCliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextClientesNombre1"
-        android:layout_alignBottom="@+id/TextClientesNombre1"
-        android:layout_alignParentLeft="true"
-        android:text="@string/nombre1"
-        android:textColor="#ffff" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/TextClientesNombre1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextClkientesNombre2"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextClientesCedula"
-        android:ems="10"
-        android:hint="@string/nombre1"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textColor="#000" />
+            <EditText
+                android:id="@+id/TextClientesCedula"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/cedula"
+                android:inputType="number"
+                android:singleLine="true" >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextClkientesNombre2"
-        android:layout_alignBottom="@+id/TextClkientesNombre2"
-        android:layout_alignParentLeft="true"
-        android:text="@string/nombre2"
-        android:textColor="#ffff" />
+                <requestFocus />
+            </EditText>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/TxtClientesApellido1"
-        android:layout_alignParentLeft="true"
-        android:text="@string/apellido1"
-        android:textColor="#ffff" />
+            <EditText
+                android:id="@+id/TextClientesNombre1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/nombre1"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textColor="#000" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TxtClientesApellido1"
-        android:layout_marginTop="30dp"
-        android:text="@string/apellido2"
-        android:textColor="#ffff" />
+            <EditText
+                android:id="@+id/TextClkientesNombre2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/nombre2"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textColor="#000" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="@string/direccion"
-        android:textColor="#ffff" />
+            <EditText
+                android:id="@+id/TxtClientesApellido1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/apellido1"
+                android:inputType="textPersonName"
+                android:textColor="#000" />
 
-    <EditText
-        android:id="@+id/TextClkientesNombre2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TxtClientesApellido1"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextClientesNombre1"
-        android:ems="10"
-        android:hint="@string/nombre2"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textColor="#000" />
+            <EditText
+                android:id="@+id/TextClientesApellido2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/apellido2"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textColor="#000" />
 
-    <EditText
-        android:id="@+id/TextClientesCedula"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextClientesNombre1"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/TextCodigoCobrador"
-        android:ems="10"
-        android:hint="@string/cedula"
-        android:inputType="number"
-        android:singleLine="true"
-        android:textColor="#000" />
+            <EditText
+                android:id="@+id/TextClientesDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/direccion"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="#000" />
 
-    <EditText
-        android:id="@+id/TxtClientesApellido1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextClkientesNombre2"
-        android:layout_toRightOf="@+id/textView7"
-        android:ems="10"
-        android:hint="@string/apellido1"
-        android:inputType="textPersonName"
-        android:textColor="#000" >
+            <EditText
+                android:id="@+id/TextClientesTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/telefono"
+                android:inputType="phone"
+                android:textColor="#000" />
 
-        <requestFocus />
-    </EditText>
+            <com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView
+                android:id="@+id/autoCompleteClientesReferencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:ems="10"
+                android:hint="@string/referencia"
+                android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/TextClientesApellido2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_alignLeft="@+id/TextClientesDireccion"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:hint="@string/apellido2"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textColor="#000" />
+            <TextView
+                android:id="@+id/TextClientesNombreReferencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_person"
+                android:textColor="#000"
+                android:textSize="@dimen/dieciocho_dp" />
 
-    <EditText
-        android:id="@+id/TextClientesDireccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TxtClientesApellido1"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView6"
-        android:ems="10"
-        android:hint="@string/direccion"
-        android:inputType="text"
-        android:singleLine="true"
-        android:textColor="#000" />
+            <Button
+                android:id="@+id/ButtonClientesEnviar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_save"
+                android:text="@string/enviar" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TextClientesDireccion"
-        android:layout_marginTop="18dp"
-        android:text="@string/telefono"
-        android:textColor="#ffff" />
-
-    <EditText
-        android:id="@+id/TextClientesTelefono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView9"
-        android:layout_alignBottom="@+id/textView9"
-        android:layout_alignLeft="@+id/TextClientesDireccion"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:hint="@string/telefono"
-        android:inputType="phone"
-        android:textColor="#000" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TextClientesTelefono"
-        android:layout_marginTop="19dp"
-        android:text="@string/referencia"
-        android:textColor="#ffff" />
-
-    <com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView
-        android:id="@+id/autoCompleteClientesReferencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextClientesTelefono"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textView7"
-        android:completionThreshold="1"
-        android:ems="10"
-        android:hint="@string/referencia"
-        android:singleLine="true"
-        android:textColor="#000" />
-
-    <Button
-        android:id="@+id/ButtonClientesEnviar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="31dp"
-        android:drawableLeft="@drawable/ic_action_save"
-        android:text="@string/enviar" />
-
-    <TextView
-        android:id="@+id/TextClientesNombreReferencia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ButtonClientesEnviar"
-        android:layout_alignLeft="@+id/autoCompleteClientesReferencia"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/autoCompleteClientesReferencia"
-        android:drawableLeft="@drawable/ic_action_person"
-        android:textColor="#000"
-        android:textSize="@dimen/dieciocho_dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

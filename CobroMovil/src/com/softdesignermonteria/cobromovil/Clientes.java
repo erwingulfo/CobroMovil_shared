@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -142,7 +143,9 @@ public class Clientes extends Activity {
 				// TODO Auto-generated method stub
 
 					int sw=0;
+					int sw2=1;
 					String msg2 = "";
+					String msg3 = "Error Sincronizando! Sincronizar Manualmente";
 					
 					if( cedula.getText().toString().equals("")    ){ sw=1; msg2 += " Cedula Obligatorio"; } 
 					if( nombre1.getText().toString().equals("")   ){ sw=1; msg2 += " Nombre1 Obligatorio"; }
@@ -152,7 +155,8 @@ public class Clientes extends Activity {
 					if( auto.getText().toString().equals("")      ){ sw=1; msg2 += " Referencia Obligatoria"; }
 					
 					
-					if(sw==0){ AgregarClientes(); }else{ errorValidacion(msg2);}
+					if(sw==0 ){ AgregarClientes(); sw2=0; }else{ errorValidacion(msg2);}
+					if(sw2==0){ SincronizaClientes( cedula.getText().toString() ); }else{ error(msg3);}
 
 				}	
 			});
@@ -182,7 +186,7 @@ public class Clientes extends Activity {
 	public void AgregarClientes() {
 		// Construimos el objeto cliente en formato JSON
 		JSONObject dato = new JSONObject();
-
+		Log.e("Clientes.java Informacion", "Entro en Agregar Clientes");
 		try {
 
 			dato.put("cedula", cedula.getText().toString());
@@ -270,7 +274,90 @@ public class Clientes extends Activity {
 	}
 	
 	
+	public boolean SincronizaClientes(String Cedula) {
+		boolean sw = true;
+		
+		try {
+			
+			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
+			SQLiteDatabase db = usdbh.getWritableDatabase();
+			// Si hemos abierto correctamente la base de datos
+			if (db != null) {
+				
+				db.execSQL("delete from clientes");
+				
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet del = new HttpGet(url_servidor+"clientes_movil/extraer_clientes/?nit="+Cedula);
+				del.setHeader("content-type", "application/json");
+				
+				HttpResponse resp = httpClient.execute(del);
+				String respStr = EntityUtils.toString(resp.getEntity());
+				JSONArray respJSON = new JSONArray(respStr);
+				
+				//modifcamos propiedad del progressbar
+				
+				int clientes_id = 0;
+				String cedula = "";
+				String nombres = "";
+				String direccion = "";
+				String telefono = "";
+				String celular = "";
+				String referencia_id = "";
+				String sql_insert_clientes = "";
+				
+				
+				
+				for (int i = 0; i < respJSON.length(); i++) {
+					
+					JSONObject obj       = respJSON.getJSONObject(i);
+					clientes_id          = obj.getInt("id");
+					cedula               = obj.getString("nit");
+					nombres              = obj.getString("nombres");
+					direccion            = obj.getString("direccion");
+					telefono             = obj.getString("telefono");
+					celular              = obj.getString("celular");
+					referencia_id        = obj.getString("referencia_id");
+				
+					sql_insert_clientes  = "insert into clientes "
+											+ " ( clientes_id"
+											+ "   ,cedula"
+											+ "   ,nombres"
+											+ "   ,direccion"
+											+ "   ,telefono"
+											+ "   ,celular"
+											+ "   ,referencia_id"
+											+ " ) "
+											+ "   values" 
+											+ " (" 
+											+ "    '" + clientes_id   + "'"
+											+ "   ,'" + cedula        + "'"
+											+ "   ,'" + nombres       + "'"
+											+ "   ,'" + direccion     + "'"
+											+ "   ,'" + telefono      + "'"
+											+ "   ,'" + celular       + "'"
+											+ "   ,'" + referencia_id + "'"
+											+ "  ) ";
+					
+					Log.i(this.getClass().toString(),sql_insert_clientes);
+					db.execSQL(sql_insert_clientes);
+					
+					
+				}
+				
+			}
+			
+			db.close();
 
+		} catch (Exception ex) {
+			Log.e("ServicioRest", "Error!", ex);
+			sw = false;
+		}
+
+		return sw;
+	
+	
+	}
+	
 		
 		
 }

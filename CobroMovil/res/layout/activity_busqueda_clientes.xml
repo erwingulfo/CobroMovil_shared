@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     tools:context=".Busqueda_clientes" >
 
     <TextView
@@ -11,8 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/Bienvenido"
-        android:textColor="#ffffff" />
+        android:text="@string/Bienvenido" />
 
     <TextView
         android:id="@+id/BusquedaClientesUserLogueado"
@@ -43,8 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv6"
-        android:text="@string/buscar_cliente_cedula_nombre"
-        android:textColor="#ffffff" />
+        android:text="@string/buscar_cliente_cedula_nombre" />
 
     <EditText
         android:id="@+id/nit_nombres"
@@ -54,8 +51,7 @@
         android:layout_below="@+id/tv4"
         android:layout_toLeftOf="@+id/consultar_clientes"
         android:ems="10"
-        android:hint="@string/buscar_cliente_cedula_nombre"
-        android:textColor="#000" />
+        android:hint="@string/buscar_cliente_cedula_nombre" />
 
     <com.softdesignermonteria.cobromovil.listaclientes.CustomListViewInfoClientes
         android:id="@+id/listViewListaClientes"

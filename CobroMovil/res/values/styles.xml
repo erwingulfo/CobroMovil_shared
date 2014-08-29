@@ -15,6 +15,35 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+         
+          <!-- <item name="android:layout_width">fill_parent</item>
+	      <item name="android:layout_height">wrap_content</item>
+	      <item name="android:capitalize">characters</item>
+	      <item name="android:typeface">monospace</item>
+	      <item name="android:textSize">12pt</item>-->
+
+      
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+		    <item name="android:windowBackground">@color/WindowBackground</item>
+		    <item name="android:textColor">@color/TextColor</item>
+		    <item name="android:windowFullscreen">true</item>
+
+	    <!-- Custom style on widgets -->
+	   	 <item name="android:editTextStyle">@style/AppTheme_EditTextStyle</item>
+	   	 <item name="android:buttonStyle">@style/AppTheme_ButtonStyle</item>
+	   	 
     </style>
+    
+    <!-- Custom Style EditText Widget -->
+	<style name="AppTheme_EditTextStyle" parent="@android:style/Widget.EditText">
+	    <item name="android:textColorHint">@color/TextColorHint</item>
+	    <item name="android:textColor">@color/TextColor</item>
+	</style>
+	
+	<!-- Custom Style Button Widget -->
+	<style name="AppTheme_ButtonStyle" parent="@android:style/Widget.Button">
+	    <item name="android:textColor">@color/TextColor</item>
+	</style>
+    
 
 </resources>

@@ -2,104 +2,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Creditos" >
 
-    <TextView
-        android:id="@+id/textViewCreditosClientes"
+    <com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView
+        android:id="@+id/autoCompleteCreditosClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextCodigoCobrador"
-        android:layout_marginTop="27dp"
-        android:text="@string/clientes"
-        android:textColor="#fff" />
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="@string/buscar_cliente_cedula_nombre" />
+
+    <EditText
+        android:id="@+id/EditTextCodigoCobrador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/autoCompleteCreditosClientes"
+        android:layout_below="@+id/autoCompleteCreditosClientes"
+        android:ems="10"
+        android:hint="@string/codigo_cobrador" />
 
     <TextView
         android:id="@+id/TextViewCreditosNombreCliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/autoCompleteCreditosClientes"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/autoCompleteCreditosClientes"
-        android:text="@string/no_hay_resultados"
-        android:textColor="#fff" />
+        android:layout_alignLeft="@+id/EditTextCodigoCobrador"
+        android:layout_below="@+id/EditTextCodigoCobrador"
+        android:text="@string/no_hay_resultados" />
 
-    <com.softdesignermonteria.cobromovil.autocompleteclientes.CustomAutoCompleteView
-        android:id="@+id/autoCompleteCreditosClientes"
+    <EditText
+        android:id="@+id/CreditosValorAPrestar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewCreditosClientes"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewCreditosClientes"
+        android:layout_alignLeft="@+id/TextViewCreditosNombreCliente"
+        android:layout_below="@+id/TextViewCreditosNombreCliente"
         android:ems="10"
-        android:hint="@string/buscar_cliente_cedula_nombre"
-        android:textColor="#000" />
+        android:hint="@string/valor_a_prestar"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/ButtonCreditosAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/CreditosValorAPrestar"
+        android:layout_marginTop="17dp"
         android:text="@string/enviar" />
 
     <Button
         android:id="@+id/ButtonRecibosCaja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ButtonCreditosAgregar"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/ButtonCreditosAgregar"
         android:text="@string/recaudomartes" />
-
-    <EditText
-        android:id="@+id/CreditosValorAPrestar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextViewCreditosNombreCliente"
-        android:layout_toRightOf="@+id/TextCodigoCobrador"
-        android:ems="10"
-        android:hint="@string/valor_a_prestar"
-        android:inputType="number"
-        android:textColor="#000" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/CreditosValorAPrestar"
-        android:layout_alignBottom="@+id/CreditosValorAPrestar"
-        android:layout_alignParentLeft="true"
-        android:text="@string/valor_a_prestar"
-        android:textColor="#fff" />
-
-    <TextView
-        android:id="@+id/TextCodigoCobrador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewCreditosClientes"
-        android:layout_alignParentTop="true"
-        android:text="@string/codigo_cobrador"
-        android:textColor="#fff" />
-
-    <EditText
-        android:id="@+id/EditTextCodigoCobrador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/CreditosValorAPrestar"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/TextCodigoCobrador"
-        android:ems="10"
-        android:hint="@string/codigo_cobrador"
-        android:textColor="#000" />
 
 </RelativeLayout>

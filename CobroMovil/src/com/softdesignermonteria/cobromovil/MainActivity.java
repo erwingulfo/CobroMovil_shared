@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(11);
+				globalVariable.setVersion_database(12);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
 				
 				/*
@@ -112,7 +112,7 @@ public class MainActivity extends Activity {
 			usuario = (EditText)findViewById(R.id.usuario);
 			clave = (EditText)findViewById(R.id.clave);
 			userlogueado = (TextView)findViewById(R.id.userlogueado);
-			entrar = (Button)findViewById(R.id.entrar);
+			entrar = (Button)findViewById(R.id.BtnEntrar);
 			registrarse = (Button)findViewById(R.id.BtnRegistrarse);
 			usuario.requestFocus();			
 			/*

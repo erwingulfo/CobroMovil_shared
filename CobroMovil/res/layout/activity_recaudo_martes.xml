@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -18,8 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="23dp"
         android:ems="10"
-        android:hint="@string/buscar_cliente_cedula_nombre"
-        android:textColor="#000" />
+        android:hint="@string/buscar_cliente_cedula_nombre" />
 
     <TextView
         android:id="@+id/TextRecaudoMartesBuscarClientes"
@@ -28,8 +26,7 @@
         android:layout_alignLeft="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/buscar_clientes"
-        android:textColor="#fff" />
+        android:text="@string/buscar_clientes" />
 
     <TextView
         android:id="@+id/TextRecaudoMartesNombreCliente"
@@ -39,28 +36,17 @@
         android:layout_alignRight="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_below="@+id/autoCompleteRecaudoMartesClientes"
         android:hint="@string/Resultado_de_la_busqueda"
-        android:textColor="#fff"
         android:textSize="@dimen/dieciocho_dp" />
-
-    <TextView
-        android:id="@+id/TextRecaudoMartesCorbradores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextRecaudoMartesNombreCliente"
-        android:layout_below="@+id/TextRecaudoMartesNombreCliente"
-        android:text="@string/codigo_cobrador"
-        android:textColor="#FFF" />
 
     <EditText
         android:id="@+id/EditTextRecaudoMartesCorbradoresId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextRecaudoMartesNombreCliente"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/TextRecaudoMartesCorbradores"
-        android:layout_toRightOf="@+id/TextRecaudoMartesCorbradores"
+        android:layout_below="@+id/TextRecaudoMartesNombreCliente"
         android:ems="10"
-        android:hint="@string/codigo_cobrador"
-        android:textColor="#000" >
+        android:hint="@string/codigo_cobrador" >
 
     </EditText>
 
@@ -68,23 +54,20 @@
         android:id="@+id/ButtonRecaudoMartesImprimir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ButtonRecaudoMartesGuardar"
-        android:layout_alignRight="@+id/ButtonRecaudoMartesGuardar"
-        android:layout_below="@+id/ButtonRecaudoMartesGuardar"
+        android:layout_alignBaseline="@+id/ButtonRecaudoMartesGuardar"
+        android:layout_alignBottom="@+id/ButtonRecaudoMartesGuardar"
+        android:layout_alignRight="@+id/EditTextRecaudoMartesCorbradoresId"
         android:drawableLeft="@drawable/ic_action_computer"
-        android:text="@string/imprimir"
-        android:textColor="#FFF" />
+        android:text="@string/imprimir" />
 
     <Button
         android:id="@+id/ButtonRecaudoMartesGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextRecaudoMartesCorbradores"
-        android:layout_alignRight="@+id/EditTextRecaudoMartesCorbradoresId"
         android:layout_below="@+id/EditTextRecaudoMartesCorbradoresId"
         android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/ButtonRecaudoMartesImprimir"
         android:drawableLeft="@drawable/ic_action_cloud"
-        android:text="@string/Guardar"
-        android:textColor="#FFF" />
+        android:text="@string/Guardar" />
 
 </RelativeLayout>

@@ -16,7 +16,7 @@ import android.util.Log;
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	
 	final String nombre_database = "cobro_movil";
-	final int version_database = 11;
+	final int version_database = 12;
 
 	/**
 	 * Base de datos en desarrollo version antes de lanzamiento oficial
@@ -164,6 +164,20 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 							Log.i(this.getClass().toString(),
 									"Insercion de usuario por defecto despues de actualizar");
 				   }		
+					
+					if(versionNueva==12){
+						
+						Log.i(this.getClass().toString(), "On Upgrade... == 11");
+						borrar_tablas(db);
+						creacion_tablas11(db);
+						
+						/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
+								+ md5("admin") + "','2','34444');";
+						db.execSQL(insert_usu);*/
+						Log.i(this.getClass().toString(),
+								"Insercion de usuario por defecto despues de actualizar");
+			   }		
+
 
 	}
 

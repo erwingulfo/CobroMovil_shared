@@ -6,77 +6,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#494949"
     tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/clave"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/IniciarSesion"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/usuario"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="22dp"
+        android:layout_alignLeft="@+id/clave"
+        android:layout_below="@+id/textView1"
         android:ems="10"
-        android:hint="@string/nombre_de_usuario"
-        android:textColor="#000" />
-
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/usuario"
-        android:layout_marginRight="14dp"
-        android:layout_toLeftOf="@+id/usuario"
-        android:text="@string/Usuario"
-        android:textColor="#ffffff" />
-
-    <TextView
-        android:id="@+id/userlogueado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv1"
-        android:layout_alignRight="@+id/tv1"
-        android:layout_below="@+id/tv1"
-        android:layout_marginTop="28dp"
-        android:text="@string/Clave"
-        android:textColor="#ffffff" />
+        android:hint="@string/nombre_de_usuario" />
 
     <EditText
         android:id="@+id/clave"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/userlogueado"
-        android:layout_alignBottom="@+id/userlogueado"
-        android:layout_toRightOf="@+id/tv1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/usuario"
         android:ems="10"
         android:hint="@string/Clave2"
-        android:inputType="textPassword"
-        android:textColor="#000" >
+        android:inputType="textPassword" />
 
-        <requestFocus />
-    </EditText>
+        <Button
+            android:id="@+id/BtnRegistrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/clave"
+            android:layout_below="@+id/clave"
+            android:drawableLeft="@drawable/ic_action_secure"
+            android:text="@string/Registrese" />
 
-    <Button
-        android:id="@+id/entrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/BtnRegistrarse"
-        android:layout_alignRight="@+id/clave"
-        android:layout_below="@+id/clave"
-        android:layout_marginTop="36dp"
-        android:drawableLeft="@drawable/ic_action_secure"
-        android:text="@string/Entrar"
-        android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/BtnRegistrarse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userlogueado"
-        android:layout_alignRight="@+id/clave"
-        android:layout_below="@+id/entrar"
-        android:layout_marginTop="24dp"
-        android:drawableLeft="@drawable/ic_action_secure"
-        android:text="@string/Registrese"
-        android:textColor="#ffffff" />
-
+        <Button
+            android:id="@+id/BtnEntrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/BtnRegistrarse"
+            android:layout_alignBottom="@+id/BtnRegistrarse"
+            android:layout_toLeftOf="@+id/BtnRegistrarse"
+            android:drawableLeft="@drawable/ic_action_secure"
+            android:text="@string/Entrar" />
+   
 </RelativeLayout>

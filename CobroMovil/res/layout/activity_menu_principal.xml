@@ -2,23 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     tools:context=".MainActivity" >
 
     <TextView
         android:id="@+id/userlogueado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tv1"
+        android:layout_alignBottom="@+id/TextView1CampoUsuarioVacio"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tv1"
+        android:layout_toRightOf="@+id/TextView1CampoUsuarioVacio"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/nombre_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv1"
+        android:layout_below="@+id/TextView1CampoUsuarioVacio"
         android:layout_marginTop="22dp"
         android:textColor="#ffffff" />
 
@@ -32,7 +31,7 @@
         android:textColor="#ffffff" />
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/TextView1CampoUsuarioVacio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -50,8 +49,7 @@
         android:layout_alignTop="@+id/nombre_usuario"
         android:drawableLeft="@drawable/ic_action_import_export"
         android:gravity="left"
-        android:text="@string/sincronizar"
-        android:textColor="#ffffff" />
+        android:text="@string/sincronizar" />
 
     <Button
         android:id="@+id/BtnMenuPrinicipalAgregarClientes"
@@ -62,8 +60,7 @@
         android:layout_alignTop="@+id/clave_usuario"
         android:drawableLeft="@drawable/ic_action_person"
         android:gravity="left"
-        android:text="@string/agregar_clientes"
-        android:textColor="#ffffff" />
+        android:text="@string/agregar_clientes" />
 
     <Button
         android:id="@+id/b_m_clientes"
@@ -74,8 +71,7 @@
         android:layout_below="@+id/BtnMenuPrinicipalAgregarClientes"
         android:drawableLeft="@drawable/ic_action_person"
         android:gravity="left"
-        android:text="@string/buscar_clientes"
-        android:textColor="#ffffff" />
+        android:text="@string/buscar_clientes" />
 
     <Button
         android:id="@+id/b_m_recaudos"
@@ -86,8 +82,7 @@
         android:layout_below="@+id/b_m_clientes"
         android:drawableLeft="@drawable/ic_action_cloud"
         android:gravity="left"
-        android:text="@string/recaudos"
-        android:textColor="#ffffff" />
+        android:text="@string/recaudos" />
 
     <Button
         android:id="@+id/b_m_reportes"
@@ -98,7 +93,6 @@
         android:layout_below="@+id/b_m_recaudos"
         android:drawableLeft="@drawable/ic_action_copy"
         android:gravity="left"
-        android:text="@string/reportes"
-        android:textColor="#ffffff" />
+        android:text="@string/reportes" />
 
 </RelativeLayout>

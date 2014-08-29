@@ -50,7 +50,7 @@ public class SincronizarCobroMovil extends Service {
 				
 				ejecutarTarea();
 			}
-		}, 0, 1000 * 60);
+		}, 0, 15000 * 60);
 	}
 
 	private void ejecutarTarea() {
@@ -65,13 +65,13 @@ public class SincronizarCobroMovil extends Service {
 					
 					
 					TablasSQLiteHelper usdbh = new TablasSQLiteHelper(getApplicationContext(),nombre_database, null, version_database);
-					SQLiteDatabase db = usdbh.getWritableDatabase();
+					SQLiteDatabase db2 = usdbh.getWritableDatabase();
 					// Si hemos abierto correctamente la base de datos
-					if (db != null) {
+					if (db2 != null) {
 						/*calculando total de registros a actualizar*/
 						String sql = "select count(*) as total from recaudos where sincronizado = 0 ";
 						Log.i("Variable Sincronizar", "Query Sincronizar: "+sql);
-						Cursor c1 = db.rawQuery(sql, null);
+						Cursor c1 = db2.rawQuery(sql, null);
 						if (c1.moveToFirst()) {
 							do{
 								temp = c1.getColumnIndex("total");
@@ -87,7 +87,7 @@ public class SincronizarCobroMovil extends Service {
 								sql_recaudos = "select * from recaudos where sincronizado = 0 ";
 								
 								Log.i("Variable Sincronizar", "Query Sincronizar: "+sql_recaudos);
-								Cursor cRecaudos = db.rawQuery(sql_recaudos, null);
+								Cursor cRecaudos = db2.rawQuery(sql_recaudos, null);
 								String provisional,clientes_id,cedula,creditos_id,cobradores_id,cedula_cobrador,fecha,valor_pagado_total;
 								String detalle_cxc_id,valor_pagado_cuota;
 								int i = 1;
@@ -116,7 +116,7 @@ public class SincronizarCobroMovil extends Service {
 										
 										JSONObject detalles = new JSONObject();
 										sql_recaudos_detalles = "select * from recaudos_detalles where provisional= '"+provisional+"' ";
-										Cursor cRecaudosDetalles = db.rawQuery(sql_recaudos_detalles, null);
+										Cursor cRecaudosDetalles = db2.rawQuery(sql_recaudos_detalles, null);
 										int j = 0;
 										if (cRecaudosDetalles.moveToFirst()) {
 											do{
@@ -160,7 +160,7 @@ public class SincronizarCobroMovil extends Service {
 										JSONObject obj = respJSON.getJSONObject(0); 
 										 
 										if(obj.getBoolean("mensaje")==true){
-											db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
+											db2.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
 											
 											Log.i(this.getClass().toString(),"Success: "+sql_recaudos_detalles);
 										}else{
@@ -172,6 +172,7 @@ public class SincronizarCobroMovil extends Service {
 										
 									}while(cRecaudos.moveToNext());
 									cRecaudos.close();
+									db2.close();
 								}//si recibos encabezado
 						
 						}//si recibos mayor a cero
@@ -193,7 +194,7 @@ public class SincronizarCobroMovil extends Service {
 					}
 
 					
-					db.close();
+					
 
 				} catch (Exception ex) {
 					Log.e("ServicioRest", "Error!" + ex.getMessage(), ex);

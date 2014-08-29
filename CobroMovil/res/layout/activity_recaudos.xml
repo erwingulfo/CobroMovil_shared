@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#494949"
     tools:context=".Recaudos" >
 
     <TextView
@@ -24,8 +23,7 @@
         android:layout_below="@+id/TextRecaudosCedula"
         android:layout_toLeftOf="@+id/bt_buscar_cliente"
         android:hint="@string/cedula"
-        android:inputType="number"
-        android:textColor="#000" />
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/tv7"
@@ -62,8 +60,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/cedula"
         android:drawableLeft="@drawable/ic_action_search"
-        android:text="@string/Buscar"
-        android:textColor="#ffffff" />
+        android:text="@string/Buscar" />
 
     <TextView
         android:id="@+id/TextRecaudosUserLogueado"
@@ -71,8 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/Bienvenido"
-        android:textColor="#ffffff" />
+        android:text="@string/Bienvenido" />
 
     <TextView
         android:id="@+id/TextRecaudosCedula"
@@ -81,8 +77,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/TextRecaudosUserLogueado"
-        android:text="@string/ingrese_cedula"
-        android:textColor="#ffffff" />
+        android:text="@string/ingrese_cedula" />
 
     <TextView
         android:id="@+id/tv5"
