@@ -748,11 +748,12 @@ public class Menu_sincronizar extends Activity {
 				for (int i = 0; i < respJSON.length(); i++) {
 					JSONObject obj = respJSON.getJSONObject(i);
 					
-					int detalle_cxc_id = obj.getInt("detalle_cxc_id");
-					int cobradores_id  = obj.getInt("cobradores_id");
-					int creditos_id    = obj.getInt("creditos_id");
-					int clientes_id    = obj.getInt("clientes_id");
-					double valor       = obj.getDouble("valor");
+					int detalle_cxc_id   = obj.getInt("detalle_cxc_id");
+					int cobradores_id    = obj.getInt("cobradores_id");
+					int creditos_id      = obj.getInt("creditos_id");
+					int clientes_id      = obj.getInt("clientes_id");
+					double valor         = obj.getDouble("valor");
+					double total_credito = obj.getDouble("total_credito");
 					
 					String vencimiento     = obj.getString("vencimiento");
 					String cedula          = obj.getString("cedula");
@@ -760,8 +761,8 @@ public class Menu_sincronizar extends Activity {
 					
 					
 					String sql_insert_caretra = "insert into cartera "
-							+ " (detalle_cxc_id,creditos_id,clientes_id,cedula,cobradores_id,cedula_cobrador,vencimiento,valor) "
-							+ "values ( '"+ detalle_cxc_id +"','"+ creditos_id +"','"+ clientes_id +"','"+ cedula +"','"+ cobradores_id +"','"+ cedula_cobrador +"','"+ vencimiento +"','"+ valor +"') "; 
+							+ " (detalle_cxc_id,creditos_id,clientes_id,cedula,cobradores_id,cedula_cobrador,vencimiento,valor,total_credito) "
+							+ "values ( '"+ detalle_cxc_id +"','"+ creditos_id +"','"+ clientes_id +"','"+ cedula +"','"+ cobradores_id +"','"+ cedula_cobrador +"','"+ vencimiento +"','"+ valor +"','"+total_credito+"') "; 
 								
 					Log.i(this.getClass().toString(),sql_insert_caretra);
 					db.execSQL(sql_insert_caretra);

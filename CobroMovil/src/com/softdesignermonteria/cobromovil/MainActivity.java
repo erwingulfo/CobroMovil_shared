@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		private Button registrarse;
 		private EditText usuario;
 		private EditText clave;
-		private SQLiteDatabase db;
+		
 		private TextView userlogueado;
 
 		private String url_servidor;
@@ -92,9 +92,9 @@ public class MainActivity extends Activity {
 				 * 
 				 * */
 				globalVariable.setNombre_database("cobro_movil");
-				globalVariable.setVersion_database(12);
+				globalVariable.setVersion_database(13);
 				globalVariable.setUrl_servidor("http://inversionesjd.dydsoluciones.net/");
-				
+				globalVariable.setContext(context);
 				/*
 				 * 
 				 * asignacion de valores a variables privadas de esta clase
@@ -115,13 +115,6 @@ public class MainActivity extends Activity {
 			entrar = (Button)findViewById(R.id.BtnEntrar);
 			registrarse = (Button)findViewById(R.id.BtnRegistrarse);
 			usuario.requestFocus();			
-			/*
-			 * 
-			 * Abrimos la base de datos 'Cobro' en modo escritura
-			 */
-			
-			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this, nombre_database, null, version_database);
-	        db = usdbh.getWritableDatabase();
 			
 			/*
 			 * 
@@ -134,45 +127,57 @@ public class MainActivity extends Activity {
 							//Recuperamos los valores de los campos de texto
 							String usu = usuario.getText().toString();
 							String cla = clave.getText().toString();
-		
-							//Alternativa 1: método rawQuery()
-							Cursor c = db.rawQuery("select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'", null);
 							
-							Log.e("SOY MD5:","select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'");
-												
-							if (c.moveToFirst()) {
-								//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
-								Intent i = new Intent();
-								i.setClass(MainActivity.this, MenuPrincipal.class);
-						        i.putExtra("pnombre_usuario", usuario.getText().toString());
-						        i.putExtra("pclave_usuario", clave.getText().toString());
-						      
-						        int index = c.getColumnIndex("cobradores_id");
-						        String cobradores_id = c.getString(index);
-						        
-						        Log.e("Main Activity","cobradores_id = " + cobradores_id);
-						        
-						        int index2 = c.getColumnIndex("cedula_cobrador");
-						        String cedula_cobrador = c.getString(index2);
-						        
-						        int index3 = c.getColumnIndex("nombre");
-						        String nombre_usuario = c.getString(index3);
-						        
-						        globalVariable.setCobradores_id(cobradores_id);
-						        globalVariable.setCedula_cobrador(cedula_cobrador);
-						        globalVariable.setUserlogueado(nombre_usuario);
-						        
-						        
-						        startActivity(i);
+							TablasSQLiteHelper usdbh = new TablasSQLiteHelper(context,nombre_database, null, version_database);
+							SQLiteDatabase db2 = usdbh.getWritableDatabase();
+							if (db2 != null) {
+								//Alternativa 1: método rawQuery()
+								Cursor c = db2.rawQuery("select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'", null);
 								
-						    }else{
+								Log.e("SOY MD5:","select nombre,clave,cobradores_id,cedula_cobrador from usuarios where nombre='" + usu + "' and clave='" + md5(cla) + "'");
+													
+								if (c.moveToFirst()) {
+									//String actionName= "com.softdesignermonteria.cobromovil.MenuPrincipal";
+									Intent i = new Intent();
+									i.setClass(MainActivity.this, MenuPrincipal.class);
+							        i.putExtra("pnombre_usuario", usuario.getText().toString());
+							        i.putExtra("pclave_usuario", clave.getText().toString());
+							      
+							        int index = c.getColumnIndex("cobradores_id");
+							        String cobradores_id = c.getString(index);
+							        
+							        Log.e("Main Activity","cobradores_id = " + cobradores_id);
+							        
+							        int index2 = c.getColumnIndex("cedula_cobrador");
+							        String cedula_cobrador = c.getString(index2);
+							        
+							        int index3 = c.getColumnIndex("nombre");
+							        String nombre_usuario = c.getString(index3);
+							        
+							        globalVariable.setCobradores_id(cobradores_id);
+							        globalVariable.setCedula_cobrador(cedula_cobrador);
+							        globalVariable.setUserlogueado(nombre_usuario);
+							        
+							        
+							        startActivity(i);
+									
+							    }else{
+									
+							    	query_vacio(v);
+							    	usuario.setText("");
+						            clave.setText("");
+						            usuario.requestFocus();
+									
+								 }
+							
+								c.close();
+								db2.close();
+							}else{
 								
-						    	query_vacio(v);
-						    	usuario.setText("");
-					            clave.setText("");
-					            usuario.requestFocus();
-								
-							 }
+								Log.e(this.getClass().toString(),"Error base de datos cerrada");
+							}
+							
+							
 	        		}
 				
 			});
@@ -222,13 +227,10 @@ public class MainActivity extends Activity {
 							//System.out.println(admin);
 							
 							if(obj.getBoolean("mensaje")==true){
+								
 								if (db != null) {
 									
 									System.out.println("si mensaje es true");
-									
-									
-									
-										
 									
 									JSONObject obj2 = respJSON.getJSONObject(1);
 									

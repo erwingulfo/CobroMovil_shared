@@ -12,7 +12,7 @@
         android:id="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/TextRecaudoMartesBuscarClientes"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="23dp"
@@ -23,16 +23,16 @@
         android:id="@+id/TextRecaudoMartesBuscarClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView2"
         android:text="@string/buscar_clientes" />
 
     <TextView
         android:id="@+id/TextRecaudoMartesNombreCliente"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/autoCompleteRecaudoMartesClientes"
+        android:layout_alignLeft="@+id/textView2"
         android:layout_alignRight="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_below="@+id/autoCompleteRecaudoMartesClientes"
         android:hint="@string/Resultado_de_la_busqueda"
@@ -42,7 +42,7 @@
         android:id="@+id/EditTextRecaudoMartesCorbradoresId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextRecaudoMartesNombreCliente"
+        android:layout_alignLeft="@+id/autoCompleteRecaudoMartesClientes"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/TextRecaudoMartesNombreCliente"
         android:ems="10"
@@ -69,5 +69,25 @@
         android:layout_toLeftOf="@+id/ButtonRecaudoMartesImprimir"
         android:drawableLeft="@drawable/ic_action_cloud"
         android:text="@string/Guardar" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/autoCompleteRecaudoMartesClientes"
+        android:layout_alignBottom="@+id/autoCompleteRecaudoMartesClientes"
+        android:layout_alignParentLeft="true"
+        android:text="@string/clientes"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/EditTextRecaudoMartesCorbradoresId"
+        android:layout_alignBottom="@+id/EditTextRecaudoMartesCorbradoresId"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="@string/codigo_cobrador"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

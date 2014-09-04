@@ -8,11 +8,12 @@ public class ModelClientes {
 	    private String cedula;
 	    private String celular;
 	    private String valor_recaudado;
+	    private String provisional;
 	    
 	    
 	    
 	    public ModelClientes(String clientes_id, String nombre,
-				String direccion, String telefono, String cedula, String celular,String valor_recaudado) {
+				String direccion, String telefono, String cedula, String celular,String valor_recaudado,String provisional) {
 			super();
 			this.clientes_id = clientes_id;
 			this.nombre = nombre;
@@ -21,6 +22,7 @@ public class ModelClientes {
 			this.cedula = cedula;
 			this.celular = celular;
 			this.valor_recaudado = valor_recaudado;
+			this.provisional = provisional;
 			
 		}
 	    
@@ -78,6 +80,16 @@ public class ModelClientes {
 
 		public void setValor_recaudado(String valor_recaudado) {
 			this.valor_recaudado = valor_recaudado;
+		}
+
+
+		public String getProvisional() {
+			return provisional;
+		}
+
+
+		public void setProvisional(String provisional) {
+			this.provisional = provisional;
 		}
 		
 }

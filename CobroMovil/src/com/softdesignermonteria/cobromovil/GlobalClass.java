@@ -1,6 +1,7 @@
 package com.softdesignermonteria.cobromovil;
 
 import android.app.Application;
+import android.content.Context;
 
 public class GlobalClass extends Application{
      
@@ -19,6 +20,8 @@ public class GlobalClass extends Application{
 	private String cedula_cobrador;
 	
 	private String userlogueado;
+	
+	private Context context;
      
 	
 	
@@ -57,6 +60,12 @@ public class GlobalClass extends Application{
 	}
 	public void setUserlogueado(String userlogueado) {
 		this.userlogueado = userlogueado;
+	}
+	public Context getContext() {
+		return context;
+	}
+	public void setContext(Context context) {
+		this.context = context;
 	}
 	
  

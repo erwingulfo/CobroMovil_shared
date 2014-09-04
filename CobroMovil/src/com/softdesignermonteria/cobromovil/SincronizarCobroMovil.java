@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +26,7 @@ public class SincronizarCobroMovil extends Service {
 	private String nombre_database;
 	private String user_logueado;
 	private int version_database;
+	private Context context;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -47,10 +49,10 @@ public class SincronizarCobroMovil extends Service {
 				nombre_database  = globalVariable.getNombre_database();
 				version_database = globalVariable.getVersion_database();
 				user_logueado	 = globalVariable.getUserlogueado();
-				
+				context          = globalVariable.getContext();
 				ejecutarTarea();
 			}
-		}, 0, 15000 * 60);
+		}, 0, 1000 * 60);
 	}
 
 	private void ejecutarTarea() {
@@ -61,8 +63,6 @@ public class SincronizarCobroMovil extends Service {
 				int total_recibos = 0;
 				int temp = 0;
 				try {
-					
-					
 					
 					TablasSQLiteHelper usdbh = new TablasSQLiteHelper(getApplicationContext(),nombre_database, null, version_database);
 					SQLiteDatabase db2 = usdbh.getWritableDatabase();

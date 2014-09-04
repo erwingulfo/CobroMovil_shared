@@ -41,7 +41,7 @@ public class Recaudos extends Activity {
 	private String nombre_database;
 	private int version_database;
 	private String parametro;
-	private int valor_recaudado;
+	private double valor_recaudado;
 	private String clientes_id;
 	private String cedula_cliente;
 	private String cobradores_id;
@@ -86,6 +86,20 @@ public class Recaudos extends Activity {
 		lv = (ListView) findViewById(R.id.lv);
 
 		tv5.setText(user_logueado);
+		
+		try{
+		Bundle bundle = getIntent().getExtras();
+		if( !bundle.isEmpty() && bundle != null){
+			
+			System.out.println("Actividad Recaudo");
+			System.out.println("cedula_cliente" + bundle.getString("cedula_cliente"));
+			
+			cedula.setText(bundle.getString("cedula_cliente"));
+			//auto.setEnabled(false);
+		}
+		}catch(NullPointerException e ){
+			Log.e(this.getClass().toString(), "entra a recaudo directamente y bundle es vacio");
+		}
 
 		bt_buscar_cliente.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -276,7 +290,7 @@ public class Recaudos extends Activity {
 		boolean sw = true;
 		boolean sw_print = false;
 		parametro = cedula.getText().toString();
-		valor_recaudado = Integer.parseInt(valor_recaudo.getText().toString());
+		valor_recaudado = Double.parseDouble(valor_recaudo.getText().toString());
 		String valor_recaudo_temp = valor_recaudo.getText().toString();
 		TextView4.setText("");
 
@@ -297,7 +311,7 @@ public class Recaudos extends Activity {
 		}
 
 		if (valor_recaudado != 0
-				&& valor_recaudado >= Integer.parseInt(valor_cuota_global)) {
+				&& valor_recaudado >= Double.parseDouble(valor_cuota_global)) {
 
 			// Log.e("","Valor Recaudado:"+valor_recaudado);
 
@@ -320,12 +334,12 @@ public class Recaudos extends Activity {
 					Log.i("Sql", "temp:" + provisional);
 
 					String insert_recaudos = "insert into recaudos"
-							+ " (provisional,clientes_id,cedula,creditos_id,cobradores_id,cedula_cobrador,fecha,valor_pagado) "
+							+ " (provisional,clientes_id,cedula,creditos_id,cobradores_id,cedula_cobrador,fecha,valor_pagado,saldo) "
 							+ " values ('" + provisional + "','"
 							+ this.clientes_id + "','" + this.cedula_cliente
 							+ "','" + this.creditos_id + "'," + "'"
 							+ this.cobradores_id + "','" + this.cedula_cobrador
-							+ "','" + fecha + "','" + valor_recaudado + "') ";
+							+ "','" + fecha + "','" + valor_recaudado + "','0') ";
 
 					db.execSQL(insert_recaudos);
 
@@ -346,13 +360,13 @@ public class Recaudos extends Activity {
 					Cursor c = db.rawQuery(Sql1, null);
 					Log.i("Sql", "Sentencia:" + Sql1);
 
-					int valor_pagado_tmp = valor_recaudado; // 50000
+					double valor_pagado_tmp = valor_recaudado; // 50000
 
 					if (c.moveToFirst()) {
 						// Recorremos el cursor hasta que no haya más registros
 
 						String detalle_cxc_id;
-						int cuota = 0;
+						double cuota = 0;
 						int tmp = 0;
 
 						do {
@@ -360,7 +374,7 @@ public class Recaudos extends Activity {
 							tmp = c.getColumnIndex("detalle_cxc_id");
 							detalle_cxc_id = c.getString(tmp);
 							tmp = c.getColumnIndex("valor");
-							cuota = c.getInt(tmp);
+							cuota = c.getDouble(tmp);
 							Log.i("Sql", "cuota: " + cuota);
 
 							// Log.i("Sql", "pos"+pos+":"+pos);
@@ -410,6 +424,8 @@ public class Recaudos extends Activity {
 													// sql, Cursor c
 
 					}// Ubicarse en el primer registro;
+					
+					c.close();
 
 					// TablasSQLiteHelper usdbh1 = new
 					// TablasSQLiteHelper(this,nombre_database, null,
@@ -423,7 +439,7 @@ public class Recaudos extends Activity {
 					Log.e("", "Yo soy el query :" + Sql2);
 
 					String tmpdetalle_cxc_id;
-					int tmpcuota = 0;
+					double tmpcuota = 0;
 					int tmp = 0;
 					String[] ListadoList = new String[tmp_cuotas_pagadas];
 					int TmpIndex = 0;
@@ -434,7 +450,7 @@ public class Recaudos extends Activity {
 							tmp = c1.getColumnIndex("detalle_cxc_id");
 							tmpdetalle_cxc_id = c1.getString(tmp);
 							tmp = c1.getColumnIndex("valor_pagado");
-							tmpcuota = c1.getInt(tmp);
+							tmpcuota = c1.getDouble(tmp);
 							Log.i("Sql", "Yo soy TmpIndex: " + TmpIndex);
 							/*
 							 * "Se pagó la cuota "+detalle_cxc_id+" por valor de: "
@@ -448,7 +464,29 @@ public class Recaudos extends Activity {
 						} while (c1.moveToNext());
 
 					} // fin ubicarse en primer registro
-
+					c1.close();
+					
+					
+					/*actualizando saldo credito y valor pagado*/
+					String sqlsaldo = " select "
+									+ " sum((valor-IFNULL((select sum(rd.valor_pagado) from recaudos_detalles rd where rd.detalle_cxc_id=c.detalle_cxc_id),0))) as saldo "
+									+ " from cartera c "
+									+ "	where c.creditos_id= '" + this.creditos_id + "' ";
+					String sqlpagado = " select sum(valor_pagado) "
+							+ " from recaudos_detalles " + "	where "
+							+ " provisional='" + provisional + "' ";
+					
+					String sqlUpdateRecaudo = " update recaudos set "
+											+ " valor_pagado = IFNULL( ("+sqlpagado+") ,0), "
+											+ " saldo        = IFNULL( ("+sqlsaldo+") ,0) "
+											+ " where  "
+											+ " provisional='" + provisional + "' ";
+					db.execSQL(sqlUpdateRecaudo);
+					Log.i(this.getClass().toString() + "Recaudos", "Recaudo actualizado " + sqlUpdateRecaudo);
+					//Cursor csaldo = db.rawQuery(sqlsaldo, null);
+					
+					
+					
 					ArrayAdapter<String> adaptador = new ArrayAdapter<String>(
 							Recaudos.this, android.R.layout.simple_list_item_1,
 							ListadoList);

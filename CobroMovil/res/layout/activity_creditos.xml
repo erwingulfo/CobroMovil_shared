@@ -13,55 +13,76 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textView2"
         android:ems="10"
         android:hint="@string/buscar_cliente_cedula_nombre" />
-
-    <EditText
-        android:id="@+id/EditTextCodigoCobrador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/autoCompleteCreditosClientes"
-        android:layout_below="@+id/autoCompleteCreditosClientes"
-        android:ems="10"
-        android:hint="@string/codigo_cobrador" />
-
-    <TextView
-        android:id="@+id/TextViewCreditosNombreCliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/EditTextCodigoCobrador"
-        android:layout_below="@+id/EditTextCodigoCobrador"
-        android:text="@string/no_hay_resultados" />
-
-    <EditText
-        android:id="@+id/CreditosValorAPrestar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextViewCreditosNombreCliente"
-        android:layout_below="@+id/TextViewCreditosNombreCliente"
-        android:ems="10"
-        android:hint="@string/valor_a_prestar"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
 
     <Button
         android:id="@+id/ButtonCreditosAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/CreditosValorAPrestar"
-        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/CreditosValorAPrestar"
+        android:layout_alignRight="@+id/CreditosValorAPrestar"
+        android:layout_centerVertical="true"
         android:text="@string/enviar" />
+
+    <EditText
+        android:id="@+id/CreditosValorAPrestar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ButtonCreditosAgregar"
+        android:layout_alignLeft="@+id/TextViewCreditosNombreCliente"
+        android:layout_alignRight="@+id/EditTextCodigoCobrador"
+        android:ems="10"
+        android:hint="@string/valor_a_prestar"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/TextViewCreditosNombreCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/EditTextCodigoCobrador"
+        android:layout_alignRight="@+id/EditTextCodigoCobrador"
+        android:layout_below="@+id/autoCompleteCreditosClientes"
+        android:text="@string/no_hay_resultados" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/EditTextCodigoCobrador"
+        android:layout_alignBottom="@+id/EditTextCodigoCobrador"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="@string/codigo_cobrador"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/EditTextCodigoCobrador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/CreditosValorAPrestar"
+        android:layout_alignLeft="@+id/autoCompleteCreditosClientes"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:hint="@string/codigo_cobrador" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/autoCompleteCreditosClientes"
+        android:layout_alignBottom="@+id/autoCompleteCreditosClientes"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="18dp"
+        android:text="@string/clientes"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/ButtonRecibosCaja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/ButtonCreditosAgregar"
+        android:layout_alignRight="@+id/ButtonCreditosAgregar"
         android:layout_below="@+id/ButtonCreditosAgregar"
         android:text="@string/recaudomartes" />
 

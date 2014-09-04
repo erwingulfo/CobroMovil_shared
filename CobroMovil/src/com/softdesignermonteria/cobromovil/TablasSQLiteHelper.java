@@ -16,7 +16,7 @@ import android.util.Log;
 public class TablasSQLiteHelper extends SQLiteOpenHelper {
 	
 	final String nombre_database = "cobro_movil";
-	final int version_database = 12;
+	final int version_database = 13;
 
 	/**
 	 * Base de datos en desarrollo version antes de lanzamiento oficial
@@ -74,7 +74,8 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 			+ "			cobradores_id INTEGER NOT NULL,"
 			+ "			cedula_cobrador VARCHAR(20) NOT NULL, "
 			+ "			vencimiento VARCHAR(10) NOT NULL, "
-			+ "			valor numeric(10,2) NOT NULL " + "						)";
+			+ "			valor numeric(10,2) NOT NULL, " 
+			+ "			total_credito numeric(10,2) NOT NULL " + "						)";
 	/**
 	 * Creation Tabla Recaudos
 	 * 
@@ -90,6 +91,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 			+ "			cedula_cobrador VARCHAR(20) NOT NULL, "
 			+ "			fecha VARCHAR(20) NOT NULL, "
 			+ "			valor_pagado numeric(10,2) NOT NULL, "
+			+ "			saldo numeric(10,2) NOT NULL, "
 			+ "			sincronizado VARCHAR(2) default '0' " + "											  )";
 
 	/**
@@ -116,12 +118,7 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 		 */
 		creacion_tablas10(db);
 		Log.i(this.getClass().toString(), "On Create...  ");
-		/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
-				+ md5("admin") + "','1','34444');";
-		String cadena = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','admin','2','34444');";
-		db.execSQL(insert_usu);*/
-		//Log.e("", cadena);
-
+		
 	}
 
 	@Override
@@ -152,34 +149,33 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
 								"Insercion de usuario por defecto despues de actualizar");*/
 					}	
 		
-					if(versionNueva==11){
-					
-							Log.i(this.getClass().toString(), "On Upgrade... == 11");
-							borrar_tablas(db);
-							creacion_tablas11(db);
-							
-							/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
-									+ md5("admin") + "','2','34444');";
-							db.execSQL(insert_usu);*/
-							Log.i(this.getClass().toString(),
-									"Insercion de usuario por defecto despues de actualizar");
-				   }		
-					
-					if(versionNueva==12){
+				
+					if(versionNueva==13){
 						
-						Log.i(this.getClass().toString(), "On Upgrade... == 11");
+						Log.i(this.getClass().toString(), "On Upgrade... == 13");
 						borrar_tablas(db);
-						creacion_tablas11(db);
+						/**
+						 * Sentence creation table cooperators
+						 */
+						db.execSQL("DROP TABLE IF EXISTS recaudos");
+						/**
+						 * Sentence creation table cooperators
+						 */
+						db.execSQL("DROP TABLE IF EXISTS recaudos_detalles ");
+						
+						creacion_tablas10(db);
 						
 						/*String insert_usu = "insert into usuarios (nombre,clave,cobradores_id,cedula_cobrador) values ('admin','"
 								+ md5("admin") + "','2','34444');";
 						db.execSQL(insert_usu);*/
 						Log.i(this.getClass().toString(),
 								"Insercion de usuario por defecto despues de actualizar");
-			   }		
+			      }		
 
 
 	}
+	
+	
 
 	private void creacion_tablas11(SQLiteDatabase db) {
 		/**
@@ -316,9 +312,10 @@ public class TablasSQLiteHelper extends SQLiteOpenHelper {
                String cedula = cursor.getString(cursor.getColumnIndex("cedula"));
                String celular = cursor.getString(cursor.getColumnIndex("celular"));
                String valor_recaudado = String.valueOf("0");
+               String provisional = String.valueOf("0");
                Log.e("LLenando Clientes", "objectName: " + clientes_id);
                 
-               ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono,cedula,celular,valor_recaudado);
+               ModelClientes myObject = new ModelClientes(clientes_id,nombre,direccion,telefono,cedula,celular,valor_recaudado,provisional);
 
                ObjectItemData[x] = myObject;
                 

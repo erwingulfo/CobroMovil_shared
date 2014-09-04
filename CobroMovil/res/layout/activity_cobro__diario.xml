@@ -34,8 +34,7 @@
         android:layout_alignLeft="@+id/ListViewListaCobroDiario"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="17dp"
-        android:text="@string/total_recaudo"
-        android:textColor="#ffffff" />
+        android:text="@string/total_recaudo" />
 
     <TextView
         android:id="@+id/sum_rec"
@@ -50,12 +49,10 @@
         android:id="@+id/fecha_recaudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="date" >
-
-        <requestFocus />
-    </EditText>
+        android:inputType="date" />
 
 </RelativeLayout>

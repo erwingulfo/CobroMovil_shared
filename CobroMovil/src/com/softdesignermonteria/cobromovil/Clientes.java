@@ -145,7 +145,7 @@ public class Clientes extends Activity {
 					int sw=0;
 					int sw2=1;
 					String msg2 = "";
-					String msg3 = "Error Sincronizando! Sincronizar Manualmente";
+					
 					
 					if( cedula.getText().toString().equals("")    ){ sw=1; msg2 += " Cedula Obligatorio"; } 
 					if( nombre1.getText().toString().equals("")   ){ sw=1; msg2 += " Nombre1 Obligatorio"; }
@@ -156,7 +156,7 @@ public class Clientes extends Activity {
 					
 					
 					if(sw==0 ){ AgregarClientes(); sw2=0; }else{ errorValidacion(msg2);}
-					if(sw2==0){ SincronizaClientes( cedula.getText().toString() ); }else{ error(msg3);}
+					
 
 				}	
 			});
@@ -186,7 +186,7 @@ public class Clientes extends Activity {
 	public void AgregarClientes() {
 		// Construimos el objeto cliente en formato JSON
 		JSONObject dato = new JSONObject();
-		Log.e("Clientes.java Informacion", "Entro en Agregar Clientes");
+		Log.e(this.getClass().toString() + "Clientes.java Informacion", "Entro en Agregar Clientes");
 		try {
 
 			dato.put("cedula", cedula.getText().toString());
@@ -230,6 +230,17 @@ public class Clientes extends Activity {
 						//db.execSQL("UPDATE recaudos SET sincronizado='1' WHERE provisional= '"+provisional+"' ");
 						success(obj.getString("descripcion"));
 						Log.i(this.getClass().toString(),"Success: "+ obj.getString("descripcion") );
+						
+						Log.i(this.getClass().toString(),"Sincronizamos este cliente en particular" + cedula.getText().toString());
+						 
+						if(!SincronizaClientes( cedula.getText().toString() )){
+							error("Error sincronizando este clientes hagalo manualmente");
+							Log.i(this.getClass().toString(),"Error sincronizando este cliente en particular" + cedula.getText().toString());
+						}else{
+							Log.i(this.getClass().toString(),"sincronizado este cliente en particular" + cedula.getText().toString());
+							success("Cliente Sincronizado en el dispositivo movil");
+						}
+						
 					}else{
 						Log.i(this.getClass().toString(),"Error: "+ obj.getString("descripcion") );
 						//Toast.makeText(Menu_sincronizar.this, "Error Sincronizando Recibo provisional= '"+provisional+"' ", Toast.LENGTH_SHORT).show();
@@ -277,6 +288,8 @@ public class Clientes extends Activity {
 	public boolean SincronizaClientes(String Cedula) {
 		boolean sw = true;
 		
+		Log.e(this.getClass().toString() + "Clientes.java Informacion", "Entro en SincronizaClientes");
+		
 		try {
 			
 			TablasSQLiteHelper usdbh = new TablasSQLiteHelper(this,nombre_database, null, version_database);
@@ -284,14 +297,18 @@ public class Clientes extends Activity {
 			// Si hemos abierto correctamente la base de datos
 			if (db != null) {
 				
-				db.execSQL("delete from clientes");
+				db.execSQL("delete from clientes where cedula = '"+Cedula+"' ");
 				
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet del = new HttpGet(url_servidor+"clientes_movil/extraer_clientes/?nit="+Cedula);
 				del.setHeader("content-type", "application/json");
 				
+				System.out.println(del.getURI());
+				System.out.println(del.getParams());
+				
 				HttpResponse resp = httpClient.execute(del);
 				String respStr = EntityUtils.toString(resp.getEntity());
+				System.out.println(respStr.getBytes());
 				JSONArray respJSON = new JSONArray(respStr);
 				
 				//modifcamos propiedad del progressbar
@@ -349,7 +366,7 @@ public class Clientes extends Activity {
 			db.close();
 
 		} catch (Exception ex) {
-			Log.e("ServicioRest", "Error!", ex);
+			Log.e(this.getClass().toString() + "Clientes.java Informacion", "Error!", ex);
 			sw = false;
 		}
 

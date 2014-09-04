@@ -5,24 +5,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.softdesignermonteria.cobromovil.clases.ModelClientes;
-
 import com.softdesignermonteria.cobromovil.listacobrodiario.CustomListViewListaCobroDiario;
 import com.softdesignermonteria.cobromovil.listacobrodiario.ListViewCobroDiarioArrayAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Cobro_Diario extends Activity {
 	
@@ -226,7 +230,7 @@ public class Cobro_Diario extends Activity {
 				if (db != null) {
 					
 						String sql = "select "
-										+ "	c.cedula,c.nombres,r.valor_pagado,c.clientes_id "
+										+ "	c.cedula,c.nombres,round(r.valor_pagado) as valor_pagado,c.clientes_id, provisional "
 										+ " from clientes c,recaudos r " 
 										+ "    where c.cedula=r.cedula "
 										+ "			and r.cobradores_id='"+cobradores_id+"' " 
@@ -244,9 +248,10 @@ public class Cobro_Diario extends Activity {
 						int clientes_id_temp=0;
 						String cedula;
 						String clientes_id;
+						String provisional;
 						int nombres_temp=0;
 						String nombres;
-						int valor_pagado_temp=0;
+						int valor_pagado_temp=0,provisional_tmp;
 						double valor_pagado=0;
 						double total_recaudo=0;
 						
@@ -266,10 +271,13 @@ public class Cobro_Diario extends Activity {
 							
 							valor_pagado_temp= cursor.getColumnIndex("valor_pagado");
 							valor_pagado=cursor.getDouble(valor_pagado_temp);
+							
+							provisional_tmp = cursor.getColumnIndex("provisional");
+							provisional = cursor.getString(provisional_tmp);
 														
 							total_recaudo=total_recaudo+valor_pagado;
 							
-							ModelClientes myObject = new ModelClientes(clientes_id,nombres,"0","0",cedula,"0",String.valueOf(valor_pagado));
+							ModelClientes myObject = new ModelClientes(clientes_id,nombres,"0","0",cedula,"0",String.valueOf(valor_pagado),provisional);
  			                ObjectItemData[x] = myObject;
 				            x++;
 				                
@@ -279,6 +287,41 @@ public class Cobro_Diario extends Activity {
 						    myAdapter = new ListViewCobroDiarioArrayAdapter(context, R.layout.lista_recaudos, ObjectItemData);
 				             
 				            listaCobroDiarioList.setAdapter(myAdapter);
+				            
+				            listaCobroDiarioList.setOnItemClickListener(new OnItemClickListener() {
+
+				    			@Override
+				    			public void onItemClick(AdapterView<?> arg0, View arg1, int posicion,
+				    					long arg3) {
+				    				// TODO Auto-generated method stub
+				    				Log.i(this.getClass().toString(), "Item Seleccionado posicion "+posicion);
+				    				final ModelClientes temp = myAdapter.getItem(posicion);
+				    				
+				    				final CharSequence[] items = {"Reimprimir Recibo"};
+				    				 
+				    				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				    				builder.setTitle("Escoja Una Opcion");
+				    				builder.setItems(items, new DialogInterface.OnClickListener() {
+				    				    public void onClick(DialogInterface dialog, int item) {
+				    				        //Toast toast = Toast.makeText(getApplicationContext(), "Haz elegido la opcion: " + items[item] , Toast.LENGTH_SHORT);
+				    				        //toast.show();
+				    				    	if(items[item].equals("Reimprimir Recibo")){
+				    					    	Intent i = new Intent();
+				    							i.setClass(Cobro_Diario.this, Imprimir_recibo.class);
+				    					        i.putExtra("provisional", temp.getProvisional());
+				    					        startActivity(i);
+				    				    	}
+				    				    	
+				    				        dialog.cancel();
+				    				        
+				    				    }
+				    				});
+				    				AlertDialog alert = builder.create();
+				    				alert.show();
+				    			}
+				            	
+				    		});
+				            
 						    sum_rec.setText( formateador.format(total_recaudo) );	
 						}
 						

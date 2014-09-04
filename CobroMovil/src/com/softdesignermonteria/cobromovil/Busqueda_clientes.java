@@ -97,7 +97,7 @@ public class Busqueda_clientes extends Activity {
 				Log.i(this.getClass().toString(), "Item Seleccionado posicion getNombre _id "+temp.getNombre());
 				Log.i(this.getClass().toString(), "Item Seleccionado posicion getTelefono _id "+temp.getTelefono());
 				
-				final CharSequence[] items = {"Generar Credito", "Recaudo Martes"};
+				final CharSequence[] items = {"Generar Credito", "Recaudo Martes","Recaudo Cuotas"};
 				 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setTitle("Escoja Una Opcion");
@@ -122,6 +122,16 @@ public class Busqueda_clientes extends Activity {
 					        
 					        i.putExtra("clientes_id", temp.getClientes_id());
 					        i.putExtra("nombre_cliente", temp.getNombre());
+					        i.putExtra("cedula_cliente", temp.getCedula());
+					        startActivity(i);
+				    	}
+				    	
+				    	if(items[item].equals("Recaudo Cuotas")){
+					    	Intent i = new Intent();
+							i.setClass(Busqueda_clientes.this, Recaudos.class);
+					        
+					        //i.putExtra("clientes_id", temp.getClientes_id());
+					        //i.putExtra("nombre_cliente", temp.getNombre());
 					        i.putExtra("cedula_cliente", temp.getCedula());
 					        startActivity(i);
 				    	}

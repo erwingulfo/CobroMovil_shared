@@ -12,7 +12,6 @@
 	    android:layout_alignParentTop="true"
 	    android:layout_centerHorizontal="true"
 	    android:drawableLeft="@drawable/ic_action_cloud"
-	    android:textColor="#fff"
 	    android:textSize="@dimen/dieciocho_dp"
 	    android:textStyle="bold" />
 	
@@ -23,7 +22,6 @@
 	    android:layout_alignLeft="@+id/LbInfoClientesClientes_id"
 	    android:layout_below="@+id/LbInfoClientesClientes_id"
 	    android:drawableLeft="@drawable/ic_action_person"
-	    android:textColor="#fff"
 	    android:textStyle="normal" />
 	
 	<TextView
@@ -33,10 +31,7 @@
 	    android:layout_alignLeft="@+id/LbInfoClientesCedula"
 	    android:layout_below="@+id/LbInfoClientesCedula"
 	    android:drawableLeft="@drawable/ic_action_person"
-	    android:textColor="#fff"
 	    android:textStyle="normal" />
-
-	
 
 	<TextView
 	    android:id="@+id/LbInfoClientesDireccion"
@@ -45,7 +40,6 @@
 	    android:layout_alignLeft="@+id/LbInfoClientesNombres"
 	    android:layout_below="@+id/LbInfoClientesNombres"
 	    android:drawableLeft="@drawable/ic_action_person"
-	    android:textColor="#fff"
 	    android:textStyle="normal" />
 
 	<TextView
@@ -55,7 +49,6 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_below="@+id/LbInfoClientesDireccion"
 	    android:drawableLeft="@drawable/ic_action_person"
-	    android:textColor="#fff"
 	    android:textStyle="normal" />
 
 	<TextView
@@ -65,7 +58,6 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_below="@+id/LbInfoClientesTelefonos"
 	    android:drawableLeft="@drawable/ic_action_person"
-	    android:textColor="#fff"
 	    android:textStyle="normal" />
 	
 </RelativeLayout>
